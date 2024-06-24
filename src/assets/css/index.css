@@ -1,0 +1,7 @@
+* {
+    font-family: var(--font-family-primary);
+}
+
+html {
+    background-color: var(--color-light-gray);
+}

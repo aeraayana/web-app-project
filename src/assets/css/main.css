@@ -1,0 +1,48 @@
+:root{
+    font-size: 16px;
+
+    --color-primary: #002654;
+    --color-primary-light: #E9EEF4;
+    --color-primary-dark: #002654;
+    --color-secondary: #DB0024;
+    --color-secondary-light: #F92F2F1A;
+    --color-secondary-dark: #CE1126;
+    --color-disable: #A6A5A5;
+    --color-disable-light: #DEDEDE;
+
+    --color-binary: #F2F2F2;
+    --color-white: white;
+    --color-black: black;
+    --color-error: #CE1126;
+    --color-error-light: #F92F2F1A;
+    --color-light-gray: #DEDEDE;
+
+    --font-size-bigger: 3rem;  /* 48px */
+    --font-size-big: 2.75rem;  /* 44px */
+    --font-size-semi-big: 2.5rem;  /* 40px */
+    --font-size-normal: 1.125rem;  /* 18px */
+    --font-size-normal-2: 1.25rem;  /* 20px */
+    --font-size-small: 0.5rem;  /* 8px */
+    --font-size-small-2: 1rem;  /* 16px */
+
+    --font-family-primary: "Montserrat";
+    --font-family-secondary: "Open Sans";
+
+    --font-weight-thin: 100;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 800;
+
+}
+
+/* For Testing Purpose */
+.bg-red{
+    background-color: red;
+}
+.bg-blue{
+    background-color: blue;
+}
+.bg-green{
+    background-color: green;
+}
