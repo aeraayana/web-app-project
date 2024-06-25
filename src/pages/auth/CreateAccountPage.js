@@ -33,6 +33,10 @@ const CreateAccountPage = () => {
     const navigate = useNavigate();
     const [values, setValues] = useState( initialState );
 
+    const actionSignInClick = () => {
+        navigate("/sign-in");        
+    }
+
     const handleChange = (e) => {
         console.log(e.target.value)
         setValues({ ...values, [e.target.name]: e.target.value});        
@@ -131,7 +135,7 @@ const CreateAccountPage = () => {
                     <article className='col-center-center w-full'>
                         <Spacing height="1rem" />   {/* 16px */}
                         <p className='description-subtitle' style={{ textAlign: "center" }}>
-                            Sudah Punya Akun? <Hyperlink label="Login" url={"/sign-in"} />
+                            Sudah Punya Akun? <Hyperlink label="Login" onClick={actionSignInClick} />
                         </p>
                     </article>
                 </section>

@@ -28,6 +28,10 @@ const SignInPage = () => {
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value});        
     } 
+
+    const actionCreateAccountClick = () => {
+        navigate("/sign-in");        
+    }
     
     const actionSignInClick = async (e) => {
         e.preventDefault();
@@ -100,7 +104,7 @@ const SignInPage = () => {
                     <article className='col-center-center w-full'>
                         <Spacing height="1rem" />   {/* 16px */}
                         <p className='description-subtitle' style={{ textAlign: "center" }}>
-                            Belum Punya Akun? <Hyperlink label="Daftar Sini" url={"/create-account"} />
+                            Belum Punya Akun? <Hyperlink label="Daftar Sini" onClick={actionCreateAccountClick} />
                         </p>
                     </article>
                 </section>

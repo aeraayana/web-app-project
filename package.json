@@ -1,6 +1,7 @@
 {
   "name": "my-hockey",
   "version": "0.1.0",
+  "homepage": "https://aeraayana.github.io/web-app-project",
   "private": true,
   "dependencies": {
     "@coreui/coreui": "^5.0.0-alpha.1",

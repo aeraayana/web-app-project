@@ -1,12 +1,6 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
-const Hyperlink = ({ label, iconPre, icon, iconPost, width, height, url, color, colorHover, secondary, small, className }) => {
-    const navigate = useNavigate();
-
-    const onClick = () => {
-        navigate(url)
-    }
+const Hyperlink = ({ label, iconPre, icon, iconPost, width, height, onClick, color, colorHover, secondary, small, className }) => {
 
     const Wrapper = styled.a`
         cursor: pointer;
