@@ -4,13 +4,13 @@ const Wrapper = styled.main`
     .title-big{
         font-family: var(--font-family-primary);
         font-weight: var(--font-weight-bold);
-        font-size: var(--font-size-bigger);
+        font-size: var(--font-size-big);
         color: var(--color-primary);
     }
     .description{
         font-family: var(--font-family-secondary);
         font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-normal-2);
+        font-size: var(--font-size-normal-3);
         color: var(--color-black);
     }
     .title{

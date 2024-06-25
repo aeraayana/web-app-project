@@ -10,6 +10,7 @@ import {
     InputTextWithPrompt,
     Spacing
 } from '../../components'
+import { FaArrowLeft, FaChevronLeft } from 'react-icons/fa';
 
 
 const initialState = {
@@ -52,8 +53,12 @@ const SignInPage = () => {
             {/* {user && <Navigate to='/' />} */}
             <Wrapper className='d-flex justify-content-center w-full'>
                 <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
+                    <span>
+                        <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' label="Kembali ke BPLDH.ID" href={"./landing"} />
+                    </span>
                     <article className='col-center w-full'>
-                        <p className='description'>Selamat Datang di</p>
+                        <Spacing height="3.25rem" /> 
+                        <p className='subtitle'>Selamat Datang di</p>
                         <h1 className='title'>Layanan Data Masyarakat</h1>
                         <Spacing height="5.525rem" />   {/* 34px */}
                         <h1 className='text-center' style={{ color: "var(--color-primary-dark)" }}>Log In</h1>

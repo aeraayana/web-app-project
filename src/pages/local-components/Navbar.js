@@ -17,6 +17,10 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
     const navigate = useNavigate();
     const { user, toggleProfileModal, setSearch } = useAppContext();
 
+    const actionSignInClick = () => {
+        navigate("/sign-in");        
+    }
+
     const getDisplayName = () => {
         const name = user.username ?? user.email
         if (name.length > 17)
@@ -47,7 +51,9 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
                         }
                     }}/> } 
             </div>
-
+            <div className="row-start-center">
+                <ButtonSolid label="Dana Masyarakat" width="15rem" onClick={actionSignInClick} />
+            </div>
             {
                 isLoggedIn &&
                 <div className="row-end-center">
