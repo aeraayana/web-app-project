@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/web-app-project/static/css/main.c1893591.css",
-    "main.js": "/web-app-project/static/js/main.a7af024e.js",
+    "main.js": "/web-app-project/static/js/main.b4746f12.js",
     "static/media/hockey.png": "/web-app-project/static/media/hockey.6a55ebbfa228ec08391c.png",
     "static/media/placeholder_img.jpg": "/web-app-project/static/media/placeholder_img.5d5714667a5c533fe652.jpg",
     "static/media/Centre.svg": "/web-app-project/static/media/Centre.9ea37f1cb7998bba1e28dd17a8532187.svg",
@@ -64,10 +64,10 @@
     "static/media/logo-crown-primary.svg": "/web-app-project/static/media/logo-crown-primary.16c6562cb3cbe5807a66fa63a3eeb26a.svg",
     "static/media/logo-crown.svg": "/web-app-project/static/media/logo-crown.95314c3740c0753a9dd0377cdef2718c.svg",
     "main.c1893591.css.map": "/web-app-project/static/css/main.c1893591.css.map",
-    "main.a7af024e.js.map": "/web-app-project/static/js/main.a7af024e.js.map"
+    "main.b4746f12.js.map": "/web-app-project/static/js/main.b4746f12.js.map"
   },
   "entrypoints": [
     "static/css/main.c1893591.css",
-    "static/js/main.a7af024e.js"
+    "static/js/main.b4746f12.js"
   ]
 }
