@@ -1,6 +1,12 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-const Hyperlink = ({ label, iconPre, icon, iconPost, width, height, href, color, colorHover, secondary, small, className }) => {
+const Hyperlink = ({ label, iconPre, icon, iconPost, width, height, url, color, colorHover, secondary, small, className }) => {
+    const navigate = useNavigate();
+
+    const onClick = () => {
+        navigate(url)
+    }
 
     const Wrapper = styled.a`
         cursor: pointer;
@@ -16,8 +22,8 @@ const Hyperlink = ({ label, iconPre, icon, iconPost, width, height, href, color,
     `;
 
     return (
-        <Wrapper href={ href } className={className}>
-            {iconPre && iconPre} 
+        <Wrapper onClick={onClick} className={className}>
+            {iconPre && iconPre}
             <span  style={{ 
                 marginLeft: iconPre? '0.625rem' : '0',
                 marginRight: iconPost? '0.625rem' : '0'

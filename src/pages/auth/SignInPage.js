@@ -54,7 +54,7 @@ const SignInPage = () => {
             <Wrapper className='d-flex justify-content-center w-full'>
                 <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
                     <span>
-                        <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' label="Kembali ke BPLDH.ID" href={"./landing"} />
+                        <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' label="Kembali ke BPLDH.ID" url={"/landing"} />
                     </span>
                     <article className='col-center w-full'>
                         <Spacing height="3.25rem" /> 
@@ -100,7 +100,7 @@ const SignInPage = () => {
                     <article className='col-center-center w-full'>
                         <Spacing height="1rem" />   {/* 16px */}
                         <p className='description-subtitle' style={{ textAlign: "center" }}>
-                            Belum Punya Akun? <Hyperlink label="Daftar Sini" href={"./create-account"} />
+                            Belum Punya Akun? <Hyperlink label="Daftar Sini" url={"/create-account"} />
                         </p>
                     </article>
                 </section>
