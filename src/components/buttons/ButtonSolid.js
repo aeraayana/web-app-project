@@ -9,7 +9,7 @@ const ButtonSolid = ({ label, iconPre, icon, disabled, iconPost, width, height, 
 
     const Wrapper = styled(CButton)`
         padding: 0;
-        background-color: ${bgColor? bgColor : ( secondary? `var(--color-secondary)` : `var(--color-primary)` )};
+        background-color: ${bgColor? bgColor : ( secondary? `var(--color-secondary)` : `var(--color-primary-dark)` )};
         color: ${color? color : `var(--color-white)`};
         border: none;
         border-radius: 0.3125rem;

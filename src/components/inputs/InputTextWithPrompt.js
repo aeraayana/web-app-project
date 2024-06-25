@@ -25,6 +25,11 @@ const Wrapper = styled.div`
         font-size: var(--font-size-normal);
         padding-top: 0.5rem;
     }
+
+    .password{
+        -webkit-text-security: disc;
+        text-security: disc;
+    }
 `;
 
 

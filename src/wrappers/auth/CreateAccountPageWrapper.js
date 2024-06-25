@@ -4,7 +4,7 @@ const Wrapper = styled.main`
     .title{
         font-family: var(--font-family-primary);
         font-weight: var(--font-weight-semibold);
-        font-size: var(--font-size-bigger);
+        font-size: var(--font-size-big);
         color: var(--color-black);
     }
 
@@ -30,6 +30,7 @@ const Wrapper = styled.main`
     }
 
     .input-container{
+        width: 50%;
         padding: 3.875rem 4.8125rem 3.875rem 4.8125rem;   /* 62px 77px 62px 77px */
     }
 

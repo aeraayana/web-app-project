@@ -3,152 +3,136 @@ import { Navigate } from 'react-router-dom';
 import { useAppContext } from '../../context/appContext';
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { generateErrorMessage } from "../../configs/globalfunctions"
-
-import hockeyImg from '../../assets/images/auth/hockey.png'
-import appleLogo from '../../assets/images/auth/createaccount/apple.svg'
-import facebookLogo from '../../assets/images/auth/createaccount/facebook.svg'
-import googleLogo from '../../assets/images/auth/createaccount/google.svg'
 
 import {
-    LogoStar,
     ButtonSolid,
-    ButtonOutlined,
     InputTextWithPrompt,
     Spacing,
-    ChoiceBoxStringWithPrompt
+    ChoiceBoxStringWithPrompt,
+    Hyperlink
 } from '../../components'
+import RadioChoiceBoxWithPrompt from '../../components/choicebox/RadioChoiceBoxWithPrompt';
 
-const roleOptions = ['Coach','Athlete','Scout','School'];
+const roleOptions = ['Pilih Jenis Kelompok', '','','',''];
+const idOptions = ['KTP', 'SIM', 'Kartu Mahasiswa']
 
 const initialState = {
+    namaPenanggungJawab: '',
+    namaKelompokMasyarakat: roleOptions[0],
+    jenisKelompokMasyarakat: roleOptions[0],
+    noTelp: '',
     email: '',
-    password: '',
-    passwordConfirm: '',
-    role: roleOptions[0],
-
-    passwordNotMatchError: '',
+    userId: '',
+    jenisId: idOptions[0],
 }
 
 const CreateAccountPage = () => {
-    const { user, errorDetail, registerUser, isLoading } = useAppContext();
+    document.body.style = 'background-image: linear-gradient(var(--color-primary-dark), var(--color-primary));';
+
+    const { user, registerUser, isLoading } = useAppContext();
     const navigate = useNavigate();
     const [values, setValues] = useState( initialState );
 
     const handleChange = (e) => {
+        console.log(e.target.value)
         setValues({ ...values, [e.target.name]: e.target.value});        
     } 
-        
-    const actionCancelClick = (e) => {
-        e.preventDefault();
-        navigate(-1);        
-    }
 
     const actionCreateAccountClick = async (e) => {
         e.preventDefault();
-        const { email, password, passwordConfirm, role} = values;
+        const { userId, noTelp, email } = values;
 
-        if( password===passwordConfirm ){
-            setValues({ ...values, passwordNotMatchError: ""})
-        }else{
-            setValues({ ...values, passwordNotMatchError: "Password do not match"})
-            return;
-        }
-
-        const success = await registerUser({ email: email, password: password,  role: role});
+        const success = await registerUser({ email: email, noTelp: noTelp, userId: userId });
         if( success ){
             navigate("/verify-email");        
         }
     }
 
     const actionChangeRole = (e) => {
-        setValues({ ...values, role: e.target.value});
+        setValues({ ...values, jenisId: e.target.value});
     };
 
     return (
         <React.Fragment>
             {user && <Navigate to='/' />}
-            <Wrapper className='row-between-start w-full'>
-                <section className='image-container'> 
-                    <img src={hockeyImg} alt='hockey-img' className='image' />                
-                </section>
-                
-                <section className='input-container col-start-start w-full'>
-                    <article className='col-start-start w-full'>                    
-                        <LogoStar/>
-                        <Spacing height="2.75rem" />   {/* 44px */}
-                        <h1 className='title'>Create Account</h1>
-                        <Spacing height="1rem" />   {/* 16px */}
-                        <p className='description'>Enter your e-mail and password to create a new account.</p>
-                        <Spacing height="2.125rem" />   {/* 34px */}
-                        <form className='col-start-start w-full'>
-                            <InputTextWithPrompt
-                                type="email"
-                                prompt="Email"
-                                id="email"
-                                name="email"
-                                onChange={handleChange}
-                                errorMessage={errorDetail && generateErrorMessage(errorDetail.email) }
-                                className="w-full"/>
-                            <Spacing height="1.25rem" />   {/* 20px */}
-                            <div className='row-between-center w-full'>
-                                <InputTextWithPrompt 
-                                    type="password"
-                                    prompt="Password"
-                                    id="password"
-                                    name="password"
-                                    onChange={handleChange}
-                                    errorMessage={ values.passwordNotMatchError || (errorDetail && generateErrorMessage(errorDetail.password) )}
-                                    className="w-full"/>
-                                <Spacing minWidth="1.25rem" width="1.25rem" />   {/* 20px */}
-                                <InputTextWithPrompt 
-                                    type="password"
-                                    prompt="Re-enter Password"
-                                    id="passwordConfirm"
-                                    name="passwordConfirm"
-                                    errorMessage={ values.passwordNotMatchError || (errorDetail && generateErrorMessage(errorDetail.passwordConfirm) )}
-                                    onChange={handleChange}
-                                    className="w-full"/>
-                            </div>
+            <Wrapper className='d-flex justify-content-center w-full'> 
+                <section className='input-container rounded col-center w-1/4' style={{ backgroundColor:"white", margin:"2.025rem" }}>
+                    <article className='col-center w-full h-1/4'>
+                        <Spacing height="0.01rem" />
+                        <h1 className='title' style={{ color:"var(--color-primary)" }}>Daftar Akun</h1>
+                        <Spacing height="2.5rem" />   {/* 16px */}
+                        <form className='w-full'>
+                            <ChoiceBoxStringWithPrompt
+                                className="w-full"
+                                id="jenisKelompokMasyarakat"
+                                name="jenisKelompokMasyarakat"
+                                prompt="Jenis Kelompok Masyarakat"
+                                options={roleOptions}
+                                onChange={actionChangeRole} />
                             <Spacing height="1.25rem" />   {/* 20px */}
                             <ChoiceBoxStringWithPrompt
                                 className="w-full"
-                                id="role"
-                                name="role"
-                                prompt="Role"
+                                id="namaKelompokMasyarakat"
+                                name="namaKelompokMasyarakat"
+                                prompt="Nama Kelompok Masyarakat"
                                 options={roleOptions}
-                                errorMessage={errorDetail && generateErrorMessage(errorDetail.role) }
                                 onChange={actionChangeRole} />
+                            <Spacing height="1.25rem" />
+                            <InputTextWithPrompt 
+                                type="nama"
+                                prompt="Nama Penanggung Jawab"
+                                id="nama"
+                                placeholder='contoh: Budi Hendrawan'
+                                name="nama"
+                                onChange={handleChange}
+                                className="w-full"/>
+                            <Spacing height="1.25rem" />   {/* 20px */}
+                            <RadioChoiceBoxWithPrompt 
+                                name='jenisId'
+                                options={idOptions}
+                                onChange={handleChange}
+                                prompt='Jenis Identitas'
+                                className='w-full'
+                                />
+                            <Spacing height="1.25rem" />   {/* 20px */}
+                            <InputTextWithPrompt
+                                type="userId"
+                                prompt="Nomor Identitas"
+                                id="userId"
+                                name="userId"
+                                placeholder="Masukkan 16 Digit Angka"
+                                onChange={handleChange}
+                                className="w-full"/>
+                            <Spacing height="1.25rem" />   {/* 20px */}
+                            <InputTextWithPrompt 
+                                type="noTelp"
+                                prompt="Nomor HP"
+                                id="noTelp"
+                                name="noTelp"
+                                placeholder='contoh: 08128128121'
+                                onChange={handleChange}
+                                className="w-full"/>
+                            <Spacing height="1.25rem" />   {/* 20px */}
+                            <InputTextWithPrompt 
+                                type="email"
+                                prompt="Email"
+                                id="email"
+                                placeholder='contoh: budihen@gmail.com'
+                                name="email"
+                                onChange={handleChange}
+                                className="w-full"/>
                             <Spacing height="2.75rem" />   {/* 44px */}
-                            <div className='row-between-center w-full'>
-                                <ButtonOutlined 
-                                    className="w-full" 
-                                    label="Cancel" 
-                                    secondary 
-                                    disabled={isLoading}
-                                    onClick={actionCancelClick}/>
-                                <Spacing minWidth="1.25rem" />   {/* 20px */}
-                                <ButtonSolid 
-                                    className="w-full" 
-                                    label="Create Account" 
-                                    disabled={isLoading}
-                                    onClick={actionCreateAccountClick}/>
-                            </div>
+                            <ButtonSolid className="w-full" 
+                                label="Login" 
+                                disabled={isLoading}
+                                onClick={actionCreateAccountClick} />
                         </form>
                     </article>
-                    <Spacing height="2.75rem" />   {/* 44px */}
                     <article className='col-center-center w-full'>
-                        <div className='row-center-center w-full'>
-                            <div className='or-line'></div>
-                            <span className='label-or' >Or</span>
-                            <div className='or-line'></div>
-                        </div>    
-                        <Spacing height="1.25rem" />   {/* 20px */}
-                        <ButtonOutlined iconPre={googleLogo} borderColor="var(--color-disable-light)" color="var(--color-black)" className="w-full" label="Continue with Google"/>
-                        <Spacing height="1.25rem" />   {/* 20px */}
-                        <ButtonSolid iconPre={facebookLogo} bgColor="#1877F2" color="var(--color-white)" className="w-full" label="Continue with Facebook"/>
-                        <Spacing height="1.25rem" />   {/* 20px */}
-                        <ButtonSolid iconPre={appleLogo} bgColor="var(--color-black)" color="var(--color-white)" className="w-full" label="Continue with Apple"/>
+                        <Spacing height="1rem" />   {/* 16px */}
+                        <p className='description-subtitle' style={{ textAlign: "center" }}>
+                            Sudah Punya Akun? <Hyperlink label="Login" href={"./sign-in"} />
+                        </p>
                     </article>
                 </section>
             </Wrapper>

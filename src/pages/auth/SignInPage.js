@@ -4,11 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { generateErrorMessage } from "../../configs/globalfunctions"
 
-import hockeyImg from '../../assets/images/auth/hockey.png'
-
 import {
-    LogoStar,
-    ContainerOutlined,
     ButtonSolid,
     Hyperlink,
     InputTextWithPrompt,
@@ -22,6 +18,7 @@ const initialState = {
 }
 
 const SignInPage = () => {
+    document.body.style = 'background-image: linear-gradient(var(--color-primary-dark), var(--color-primary));';
 
     const { user, loginUser, isLoading, errorDetail } = useAppContext();
     const navigate = useNavigate();
@@ -35,10 +32,6 @@ const SignInPage = () => {
         e.preventDefault();
         const { email, password } = values;
         await loginUser( {email: email, password: password} );
-    };
-
-    const actionRegisterClick = () => {
-        navigate('/create-account');
     };
 
     useEffect(() => {
@@ -57,26 +50,21 @@ const SignInPage = () => {
     return (
         <React.Fragment>
             {/* {user && <Navigate to='/' />} */}
-            <Wrapper className='row-between-start w-full'>
-                <section className='image-container'> 
-                    <img src={hockeyImg} alt='hockey-img' className='image' />                
-                </section>
-                
-                <section className='input-container col-start-start w-full'>
-
-                    <article className='col-start-start w-full'>                    
-                        <LogoStar/>
-                        <Spacing height="2.75rem" />   {/* 44px */}
-                        <h1 className='title'>Sign In</h1>
-                        <Spacing height="1rem" />   {/* 16px */}
-                        <p className='description'>Login with the data you entered during your registration.</p>
-                        <Spacing height="2.125rem" />   {/* 34px */}
+            <Wrapper className='d-flex justify-content-center w-full'>
+                <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
+                    <article className='col-center w-full'>
+                        <p className='description'>Selamat Datang di</p>
+                        <h1 className='title'>Layanan Data Masyarakat</h1>
+                        <Spacing height="5.525rem" />   {/* 34px */}
+                        <h1 className='text-center' style={{ color: "var(--color-primary-dark)" }}>Log In</h1>
+                        <Spacing height="0.5rem" />
                         <form className='col-start-start w-full'>
                             <InputTextWithPrompt
                                 type="email"
                                 prompt="Email"
                                 id="email"
                                 name="email"
+                                placeholder='olivia@email.com'
                                 errorMessage={errorDetail && generateErrorMessage(errorDetail.email) }
                                 value={ values.email }
                                 onChange={handleChange}
@@ -84,7 +72,7 @@ const SignInPage = () => {
                             <Spacing height="1.25rem" />   {/* 20px */}
                             <InputTextWithPrompt 
                                 type="password"
-                                prompt="Password"
+                                prompt="Sandi"
                                 id="password"
                                 name="password"
                                 errorMessage={errorDetail && generateErrorMessage(errorDetail.password) }
@@ -92,31 +80,23 @@ const SignInPage = () => {
                                 onChange={handleChange}
                                 className="w-full"/>
                             <Spacing height="2.75rem" />   {/* 44px */}
+                            <div className='row-end-center w-full'>
+                                <Hyperlink label="Lupa Sandi" href={"./forgot-password"} />
+                            </div>
+                            <Spacing height="1.25rem" />
                             <ButtonSolid className="w-full" 
                                 label="Login" 
                                 disabled={isLoading}
                                 onClick={actionSignInClick} />
                             <Spacing height="1.25rem" />   {/* 20px */}
                         </form>
-                        <div className='row-end-center w-full'>
-                                <Hyperlink label="Did you forget your password?" href={"./forgot-password"} />
-                        </div>
                     </article>
                     <Spacing height="2.75rem" />   {/* 44px */}
-                    <article className='col-start-start w-full'>                    
-                        <ContainerOutlined color="#CACACA" className="w-full" padding="2rem">   {/* 32px */}
-                            <h2 className='subtitle'>Sign Up</h2>
-                            <Spacing height="1rem" />   {/* 16px */}
-                            <p className='description-subtitle'>Login with the data you entered during your registration.</p>
-                            <Spacing height="2.0625rem" />   {/* 33px */}
-                            <ButtonSolid 
-                                label="Create Account"
-                                color="var(--color-primary)"
-                                bgColor="var(--color-primary-light)"
-                                onClick={actionRegisterClick}
-                                disabled={isLoading}
-                                className="w-full" />
-                        </ContainerOutlined>
+                    <article className='col-center-center w-full'>
+                        <Spacing height="1rem" />   {/* 16px */}
+                        <p className='description-subtitle' style={{ textAlign: "center" }}>
+                            Belum Punya Akun? <Hyperlink label="Daftar Sini" href={"./create-account"} />
+                        </p>
                     </article>
                 </section>
             </Wrapper>
