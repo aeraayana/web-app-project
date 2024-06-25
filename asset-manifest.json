@@ -1,10 +1,9 @@
 {
   "files": {
     "main.css": "/web-app-project/static/css/main.c1893591.css",
-    "main.js": "/web-app-project/static/js/main.a04f076b.js",
+    "main.js": "/web-app-project/static/js/main.ef8fdaea.js",
     "static/media/hockey.png": "/web-app-project/static/media/hockey.6a55ebbfa228ec08391c.png",
-    "static/media/hockey-player.png": "/web-app-project/static/media/hockey-player.c7b845b935746ae5c6b2.png",
-    "static/media/laptop.png": "/web-app-project/static/media/laptop.1dc55f846f7e2bf3ca22.png",
+    "static/media/placeholder_img.jpg": "/web-app-project/static/media/placeholder_img.5d5714667a5c533fe652.jpg",
     "static/media/Centre.svg": "/web-app-project/static/media/Centre.9ea37f1cb7998bba1e28dd17a8532187.svg",
     "static/media/Montserrat-BlackItalic.ttf": "/web-app-project/static/media/Montserrat-BlackItalic.fd62a10743bd89a3d97c.ttf",
     "static/media/Montserrat-MediumItalic.ttf": "/web-app-project/static/media/Montserrat-MediumItalic.82736aaa11c64709055f.ttf",
@@ -30,15 +29,14 @@
     "static/media/OpenSans-Regular.ttf": "/web-app-project/static/media/OpenSans-Regular.9a6cfa5890d7f3eef585.ttf",
     "static/media/OpenSans-Light.ttf": "/web-app-project/static/media/OpenSans-Light.ba19b360bc99b580b45b.ttf",
     "static/media/OpenSans-SemiBold.ttf": "/web-app-project/static/media/OpenSans-SemiBold.dcf2e322dbaa037ca821.ttf",
+    "static/media/logo.svg": "/web-app-project/static/media/logo.7536d93a02809b19154e34a28fd6105a.svg",
     "static/media/Goaltender.svg": "/web-app-project/static/media/Goaltender.1333c198b42f2eb472fa1b673783b736.svg",
     "static/media/Montserrat-BlackItalic.woff2": "/web-app-project/static/media/Montserrat-BlackItalic.74a49feb441ff349ee79.woff2",
     "static/media/Montserrat-MediumItalic.woff2": "/web-app-project/static/media/Montserrat-MediumItalic.5e3cb8be8b422f491586.woff2",
-    "static/media/banner-4.png": "/web-app-project/static/media/banner-4.85012784fdffd38a0a86.png",
     "static/media/Montserrat-LightItalic.woff2": "/web-app-project/static/media/Montserrat-LightItalic.f950e679a6a5e611a838.woff2",
     "static/media/Montserrat-BoldItalic.woff2": "/web-app-project/static/media/Montserrat-BoldItalic.1b14e835b9b3013f47e8.woff2",
     "static/media/Montserrat-ThinItalic.woff2": "/web-app-project/static/media/Montserrat-ThinItalic.35f3fc5e0092ee55c6eb.woff2",
     "static/media/Montserrat-Medium.woff2": "/web-app-project/static/media/Montserrat-Medium.70ace3870f471997ceb7.woff2",
-    "static/media/banner-1.png": "/web-app-project/static/media/banner-1.a87d1c1ea15e3ab800ee.png",
     "static/media/Montserrat-Black.woff2": "/web-app-project/static/media/Montserrat-Black.a04aceecdab55c0e2ea1.woff2",
     "static/media/Montserrat-Bold.woff2": "/web-app-project/static/media/Montserrat-Bold.002079d85a6f27587d17.woff2",
     "static/media/Montserrat-Regular.woff2": "/web-app-project/static/media/Montserrat-Regular.9429985be4f46ec8fcfc.woff2",
@@ -56,11 +54,9 @@
     "static/media/OpenSans-Light.woff2": "/web-app-project/static/media/OpenSans-Light.b0c36ec467c5dc09f4e5.woff2",
     "static/media/OpenSans-ExtraBold.woff2": "/web-app-project/static/media/OpenSans-ExtraBold.62e59661197ab1636f77.woff2",
     "static/media/OpenSans-Bold.woff2": "/web-app-project/static/media/OpenSans-Bold.61042fe6058533e523f3.woff2",
-    "static/media/banner-2.png": "/web-app-project/static/media/banner-2.06b83c36c7ad550a355a.png",
-    "static/media/banner-5.png": "/web-app-project/static/media/banner-5.430cb1ea2cb9d109ded4.png",
     "static/media/not-found.svg": "/web-app-project/static/media/not-found.5eb3e64476624b8a49d7d75cc64a0d40.svg",
+    "static/media/readMoreImg.svg": "/web-app-project/static/media/readMoreImg.bc7472aa9a5f8d4dd3b6ec55d62416fb.svg",
     "static/media/main.svg": "/web-app-project/static/media/main.f1624efcba3ac7e36d1e54d5606200bb.svg",
-    "static/media/logo.svg": "/web-app-project/static/media/logo.7fc7a5a62f6b5c9e1cce51ee0e9cc903.svg",
     "index.html": "/web-app-project/index.html",
     "static/media/icon-uncheck.svg": "/web-app-project/static/media/icon-uncheck.1a7fb2ffc3fbee6fdb0777c168cd2c80.svg",
     "static/media/icon-check.svg": "/web-app-project/static/media/icon-check.c3425eab864e7b0105777eceeec7644d.svg",
@@ -68,10 +64,10 @@
     "static/media/logo-crown-primary.svg": "/web-app-project/static/media/logo-crown-primary.16c6562cb3cbe5807a66fa63a3eeb26a.svg",
     "static/media/logo-crown.svg": "/web-app-project/static/media/logo-crown.95314c3740c0753a9dd0377cdef2718c.svg",
     "main.c1893591.css.map": "/web-app-project/static/css/main.c1893591.css.map",
-    "main.a04f076b.js.map": "/web-app-project/static/js/main.a04f076b.js.map"
+    "main.ef8fdaea.js.map": "/web-app-project/static/js/main.ef8fdaea.js.map"
   },
   "entrypoints": [
     "static/css/main.c1893591.css",
-    "static/js/main.a04f076b.js"
+    "static/js/main.ef8fdaea.js"
   ]
 }
