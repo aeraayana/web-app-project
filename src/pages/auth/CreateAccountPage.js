@@ -27,7 +27,7 @@ const initialState = {
 }
 
 const CreateAccountPage = () => {
-    document.body.style = 'background-image: linear-gradient(var(--color-primary-dark), var(--color-primary));';
+    document.body.style = 'background-image: linear-gradient(145deg, var(--color-primary-dark), var(--color-primary-light));';
 
     const { user, registerUser, isLoading } = useAppContext();
     const navigate = useNavigate();
@@ -38,7 +38,7 @@ const CreateAccountPage = () => {
     }
 
     const handleChange = (e) => {
-        console.log(e.target.value)
+        console.log(values);
         setValues({ ...values, [e.target.name]: e.target.value});        
     } 
 
@@ -61,11 +61,13 @@ const CreateAccountPage = () => {
             {user && <Navigate to='/' />}
             <Wrapper className='d-flex justify-content-center w-full'> 
                 <section className='input-container rounded col-center w-1/4' style={{ backgroundColor:"white", margin:"2.025rem" }}>
-                    <article className='col-center w-full h-1/4'>
+                    <div className='col-center-center'>
+                        <h1 className='title' style={{ color:"var(--color-primary)", width:"80%" }}>Daftar Akun</h1>
+                    </div>
+                    <article className='col-center-center w-full h-1/4'>
                         <Spacing height="0.01rem" />
-                        <h1 className='title' style={{ color:"var(--color-primary)" }}>Daftar Akun</h1>
                         <Spacing height="2.5rem" />   {/* 16px */}
-                        <form className='w-full'>
+                        <form className='col-start-start' style={{ width: "80%" }}>
                             <ChoiceBoxStringWithPrompt
                                 className="w-full"
                                 id="jenisKelompokMasyarakat"
@@ -97,6 +99,8 @@ const CreateAccountPage = () => {
                                 onChange={handleChange}
                                 prompt='Jenis Identitas'
                                 className='w-full'
+                                color={'var(--color-primary-dark)'}
+                                value={values?.jenisId}
                                 />
                             <Spacing height="1.25rem" />   {/* 20px */}
                             <InputTextWithPrompt

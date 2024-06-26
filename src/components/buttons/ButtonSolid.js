@@ -9,11 +9,15 @@ const ButtonSolid = ({ label, iconPre, icon, disabled, iconPost, width, height, 
 
     const Wrapper = styled(CButton)`
         padding: 0;
-        background-color: ${bgColor? bgColor : ( secondary? `var(--color-secondary)` : `var(--color-primary-dark)` )};
+        background-color: ${bgColor? bgColor : ( secondary? `var(--color-secondary)` : `var(--color-primary)` )};
         color: ${color? color : `var(--color-white)`};
         border: none;
         border-radius: 0.3125rem;
         font-weight: var(--font-weight-semibold);
+        &:hover {
+            background-color: var(--color-primary-dark);
+            border-color: var(--color-primary-dark);
+        },
         font-size: ${ fontSize? fontSize : "var(--font-size-normal)"};
         ${ width &&
             `width: ` + width + `;` 

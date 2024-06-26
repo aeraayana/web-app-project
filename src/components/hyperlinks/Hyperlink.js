@@ -16,7 +16,7 @@ const Hyperlink = ({ label, iconPre, icon, iconPost, width, height, onClick, col
     `;
 
     return (
-        <Wrapper onClick={onClick} className={className}>
+        <Wrapper onClick={ onClick } className={className}>
             {iconPre && iconPre}
             <span  style={{ 
                 marginLeft: iconPre? '0.625rem' : '0',

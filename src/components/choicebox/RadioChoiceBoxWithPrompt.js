@@ -25,9 +25,48 @@ const Wrapper = styled.div`
         font-size: var(--font-size-normal);
         padding-top: 0.5rem;
     }
+    
+    input[type="checkbox"]:checked + label::after {
+        content: '';
+        position: absolute;
+        height: 2ex;
+        width: 2ex;
+        background: rgba(0, 0, 0, 0);
+        top: 0.4ex;
+        left: 0ex;
+        border-radius: 20px;
+        border: 6px solid var(--color-primary-light);
+    }
+            
+    input[type="checkbox"] {
+        line-height: 2.1ex;
+    }
+
+    input[type="radio"],
+        input[type="checkbox"] {
+        display: none;
+    }
+            
+    input[type="checkbox"] + label {
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+    }
+            
+    input[type="checkbox"] + label::before {
+        content: "";
+        display: inline-block;
+        vertical-align: -10%;
+        height: 2ex;
+        width: 2ex;
+        background-color: white;
+        border: 1px solid rgb(166, 166, 166);
+        border-radius: 20px;
+        margin-right: 0.5em;
+    }
 `;
 
-const RadioChoiceBoxWithPrompt = ({ prompt, type, options, name, onChange, errorMessage, className, width, onBlur }) => {
+const RadioChoiceBoxWithPrompt = ({ prompt, color, type, options, name, onChange, errorMessage, className, width, onBlur, value }) => {
 
     const isError = errorMessage && errorMessage.length>0;
 
@@ -35,13 +74,16 @@ const RadioChoiceBoxWithPrompt = ({ prompt, type, options, name, onChange, error
         <Wrapper className={`col-start-start ${className}`} >
             {prompt && <label className="label" htmlFor={name} >{prompt}</label> }
             <div className="row-start-start">
-                {options.map((option) => (
+                {options.map((option, i) => (
                     <WrapperChoiceBox 
+                        className="regular-radio"
+                        checked={option === value}
                         type={type}
                         name={name}
+                        color={color}
                         onChange={onChange}
                         onBlur={onBlur}
-                        id={`jenis${option}`}
+                        id={`${name}${i}`}
                         value={option}
                         label={option}
                         style={{

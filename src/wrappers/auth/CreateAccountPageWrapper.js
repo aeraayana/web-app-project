@@ -31,7 +31,7 @@ const Wrapper = styled.main`
 
     .input-container{
         width: 50%;
-        padding: 3.875rem 4.8125rem 3.875rem 4.8125rem;   /* 62px 77px 62px 77px */
+        padding: 2.875rem 1.8125rem 3.875rem 1.8125rem;  
     }
 
     .image-container{

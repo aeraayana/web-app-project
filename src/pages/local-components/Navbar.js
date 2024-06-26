@@ -21,12 +21,12 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
         navigate("/sign-in");        
     }
 
-    const getDisplayName = () => {
-        const name = user.username ?? user.email
-        if (name.length > 17)
-            return name.slice(0, 12) + '...'
-        return name
-    }
+    // const getDisplayName = () => {
+    //     const name = user.username ?? user.email
+    //     if (name.length > 17)
+    //         return name.slice(0, 12) + '...'
+    //     return name
+    // }
 
     const Wrapper = styled.nav`
         padding-left: 1.5rem;
@@ -51,26 +51,29 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
                         }
                     }}/> } 
             </div>
-            <div className="row-start-center">
-                <ButtonSolid label="Dana Masyarakat" width="15rem" onClick={actionSignInClick} />
-            </div>
+            {!isLoggedIn && 
+                <div className="row-start-center">
+                    <ButtonSolid label="Dana Masyarakat" width="15rem" onClick={actionSignInClick} />
+                </div>
+            }
             {
                 isLoggedIn &&
                 <div className="row-end-center">
-                    <ButtonSolid 
+                    {/* <ButtonSolid 
                         label={"Premium"} 
                         height="2.25rem" 
                         width="8.3125rem" 
                         iconPre={ <LogoCrown />} 
-                        fontSize="1rem" />
+                        fontSize="1rem" /> */}
                     <Spacing width="1.25rem" />
                     <ButtonProfile 
-                        imageSource={user.avatar ? HOST_ASSET_URL + user.avatar : null}  
-                        label={getDisplayName()} 
+                        // imageSource={user.avatar ? HOST_ASSET_URL + user.avatar : null}  
+                        // label={getDisplayName()} 
                         height="2.25rem" 
                         fontSize="1rem"
                         width="12.375rem" 
-                        style={{ fontSize: "1rem" }} onClick={toggleProfileModal}/>
+                        style={{ fontSize: "1rem" }} onClick={toggleProfileModal}
+                        />
                 </div>
             }
         </Wrapper>

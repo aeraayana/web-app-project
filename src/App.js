@@ -68,7 +68,7 @@ function App() {
     return (
     <BrowserRouter>
         <Routes>
-            <Route path='/'
+            <Route path='/' 
                 element={
                     <ProtectedRoute> 
                         <UserLayoutPage />
