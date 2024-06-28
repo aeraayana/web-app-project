@@ -5,7 +5,8 @@ const ContainerCardSection = ({ color, secondary, thickness, children, padding, 
     const Wrapper = styled.section`
         background-color: white;
         padding: ${ padding? padding : '1.25rem' };    // 20px
-        border-radius: 1rem;
+        border-radius: 0.625rem;
+        overflow-x: scroll;
         border: solid 0.0625rem var(--color-light-gray);
     `;
 

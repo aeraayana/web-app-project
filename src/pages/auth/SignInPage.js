@@ -11,7 +11,7 @@ import {
     Logo,
     Spacing
 } from '../../components'
-import { FaArrowLeft, FaChevronLeft } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 
 
 const initialState = {
@@ -114,6 +114,8 @@ const SignInPage = () => {
                                 <Spacing height="1.25rem" />
                                 <ButtonSolid className="w-full" 
                                     label="Login" 
+                                    color={'white'}
+                                    hoverColor={'white'}
                                     disabled={isLoading}
                                     onClick={actionSignInClick} />
                                 <Spacing height="1.25rem" />   {/* 20px */}

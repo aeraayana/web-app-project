@@ -8,6 +8,13 @@ const Wrapper = styled.main`
         color: var(--color-black);
     }
 
+    .title-sub{
+        font-family: var(--font-family-secondary);
+        font-weight: var(--font-weight-light);
+        font-size: var(--font-size-big);
+        color: var(--color-black);
+    }
+
     .description{
         font-family: var(--font-family-secondary);
         font-weight: var(--font-weight-normal);
@@ -17,20 +24,21 @@ const Wrapper = styled.main`
 
     .subtitle{
         font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-semibold);
+        font-weight: var(--font-weight-normal);
         font-size: 1.5rem;   /* 24px */
         color: var(--color-black);
     }
 
     .description-subtitle{
-        font-family: var(--font-family-secondary);
-        font-weight: var(--font-weight-normal);
+        font-family: var(--font-family-primary);
+        font-weight: var(--font-weight-light);
         font-size: var(--font-size-normal);
         color: #4D4D4D;
     }
 
     .input-container{
-        padding: 3.875rem 4.8125rem 3.875rem 4.8125rem;   /* 62px 77px 62px 77px */
+        width: 50%;
+        padding: 1.875rem 1.8125rem 3.875rem 1.8125rem;  
     }
 
     .image-container{

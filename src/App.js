@@ -70,9 +70,9 @@ function App() {
         <Routes>
             <Route path='/' 
                 element={
-                    <ProtectedRoute> 
+                    // <ProtectedRoute> 
                         <UserLayoutPage />
-                    </ProtectedRoute>
+                    // </ProtectedRoute>
                 }>
 
                 <Route index element={<UserMembershipPage/>}></Route>

@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-const ContainerCardArticle = ({ color, secondary, thickness, children, padding, className }) => {
+const ContainerCardArticle = ({ bgColor, thickness, border, borderRadius, children, className }) => {
 
     const Wrapper = styled.article`
-        background-color: white;
+        background-color: ${bgColor ? bgColor : 'white'};
         padding: 1.25rem;
-        border-radius: 1rem;
-        border: solid 0.0625rem var(--color-light-gray);
+        border-radius: ${borderRadius ? borderRadius : '1rem'};
+        border: solid ${thickness ? thickness : "0.0625rem"} ${border ? border : 'var(--color-grey)'};
     `;
 
     return <Wrapper className={className}> {children} </Wrapper>;

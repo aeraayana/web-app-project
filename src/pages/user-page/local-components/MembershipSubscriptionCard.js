@@ -1,22 +1,25 @@
 import styled from "styled-components";
 import {
-    LogoCrown,
-    IconCheck,
-    IconUnCheck,
+    // LogoCrown,
+    // IconCheck,
+    // IconUnCheck,
     ContainerCardArticle,
     Spacing,
-    ButtonSolid
 } from "../../../components";
 
-const MembershipSubscriptionCard = ({name, amount, isBestValue, payValue, onClick}) => {
+const MembershipSubscriptionCard = ({name, isBestValue, isEmpty, onClick, width, height}) => {
 
     const Wrapper = styled(ContainerCardArticle)`
-        width: 405px;
+        ${ width &&
+            `width: ` + width + `;` 
+        }
+        
+        height: ${ height? height : `3.25rem` }; //52px
 
         font-family: var(--font-family-secondary);
         font-size: var(--font-size-small-2);
         font-weight: var(--font-weight-semibold);
-        color: #0000007F;
+        border: var(--color-disabled)
 
         h1, p, span {
             padding: 0;
@@ -24,50 +27,36 @@ const MembershipSubscriptionCard = ({name, amount, isBestValue, payValue, onClic
         }
 
         .membership-tag {
-            font-family: var(--font-family-secondary);
+            font-family: var(--font-family-primary);
             font-size: var(--font-size-normal);
-            font-weight: var(--font-weight-semibold);
-            color: black;
+            font-weight: var(--font-weight-light);
+            color: grey;
         }
 
         .price-tag {
-            font-family: var(--font-family-primary);
+            font-family: var(--font-family-secondary);
             font-size: var(--font-size-semi-big);
             font-weight: var(--font-weight-semibold);
-            color: black;
+            color: grey;
         }
-
+            
         .price-tag > span {
+            font-family: var(--font-family-secondary);
             font-size: var(--font-size-small-2);
         }
 
         span {
-            font-weight: var(--font-weight-semibold);
+            font-weight: var(--font-weight-normal);
         }
 
         b {
             font-weight: var(--font-weight-semibold);
             color: black;
         }
-
-        .ribbon {
-            /* clip ribbon end shape */
-            background-color: #E9EEF4;
-            clip-path: polygon(0 0, 100% 0, 95% 50%, 100% 100%, 0 100%, 5% 50%);
-            width: 20.8125rem;    //333px
-            height: 2rem;   // 32px
-        }
-
-        .ribbon > h1 {
-            font-family: var(--font-family-primary);
-            font-size: var(--font-size-normal);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-primary);
-        }
     `;
 
     return (
-        <Wrapper className={"col-start-start"} >
+        <Wrapper border='var(--color-disable)' bgColor={"var(--color-disable-light)"} borderRadius='0.4rem' thickness={'0.05rem'} className={"col-start-start"} >
             { isBestValue && 
                 <div className="w-full row-center-center">
                     <div className="ribbon row-center-center"> 
@@ -77,16 +66,12 @@ const MembershipSubscriptionCard = ({name, amount, isBestValue, payValue, onClic
             }
             { isBestValue && <Spacing height="0.5rem" /> }   {/* 8px */}
             <h1 className="membership-tag">{name}</h1>
-            <Spacing height="0.25rem" />   {/* 4px */}
-            <div className="row-start-end price-tag">
-                <h1>{amount} USD*</h1>
-                <span style={{ paddingBottom: "0.3125rem"  }}>/month</span> {/* 5px */}
+            <Spacing height="2.7rem"/>   {/* 4px */}
+            <div className="row-center-center price-tag w-full">
+                {isEmpty && <span>Tidak Ada {name}</span>}
             </div>
             <Spacing height="0.25rem" />   {/* 4px */}
-            <p> <b>{payValue} USD*</b> every <b> 12 </b> month</p>
-            <p> *Local taxes may apply </p>
             <Spacing height="1rem" />   {/* 16px */}
-            <ButtonSolid width={"100%"} label="Subscribe Now" onClick={onclick} color={"white"} />
         </Wrapper>
     )
 }

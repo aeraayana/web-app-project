@@ -1,19 +1,15 @@
 import Wrapper from '../../wrappers/auth/ForgotPasswordPageWrapper';
-import { Navigate } from 'react-router-dom';
 import { useAppContext } from '../../context/appContext';
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { generateErrorMessage } from "../../configs/globalfunctions"
-
-import hockeyImg from '../../assets/images/auth/hockey.png'
 
 import {
-    LogoStar,
     ButtonSolid,
-    ButtonOutlined,
-    InputTextWithPrompt,
-    Spacing
+    Spacing,
+    Hyperlink,
+    InputTextSearch
 } from '../../components'
+import { FaArrowLeft, FaAt } from 'react-icons/fa';
 
 
 const initialState = {
@@ -21,6 +17,8 @@ const initialState = {
 }
 
 const ForgotPasswordPage = () => {
+    document.body.style = 'background-image: linear-gradient(145deg, var(--color-primary-dark), var(--color-primary-light));';
+
     const { user, forgotPassword, errorDetail, isLoading } = useAppContext();
     const navigate = useNavigate();
     const [values, setValues] = useState( initialState );
@@ -31,16 +29,17 @@ const ForgotPasswordPage = () => {
 
     const actionCancelClick = (e) => {
         e.preventDefault();
-        navigate(-1);        
+        navigate('/sign-in');        
     }
 
     const actionConfirmClick = async (e) => {
         e.preventDefault();
-        const { email } = values;
-        const success = await forgotPassword( {email: email} );
-        if( success ){
-            navigate("/admin/email-sent");
-        }
+        // const { email } = values;
+        // const success = await forgotPassword( {email: email} );
+        // if( success ){
+        //     navigate("/admin/email-sent");
+        // }
+        navigate('/admin/email-sent');
     }
 
     console.log("ok")
@@ -48,39 +47,39 @@ const ForgotPasswordPage = () => {
     return (
         <React.Fragment>
             {/* {user && <Navigate to='/' />} */}
-            <Wrapper className='row-between-start w-full'>
-                <section className='image-container'> 
-                    <img src={hockeyImg} alt='hockey-img' className='image' />                
-                </section>
-                
-                <section className='input-container col-start-start w-full'>
-                    <article className='col-start-start w-full'>                    
-                        <LogoStar/>
-                        <Spacing height="2.75rem" />   {/* 44px */}
-                        <h1 className='title'>Forgot Password</h1>
-                        <Spacing height="1rem" />   {/* 16px */}
-                        <p className='description'>Enter your email and we will send you the instructions to recover your password</p>
-                        <Spacing height="2.75rem" />   {/* 44px */}
-                        <form className='col-start-start w-full'>
-                            <InputTextWithPrompt
-                                type="email"
-                                prompt="Email"
-                                id="email"
-                                name="email"
-                                onChange={handleChange}
-                                errorMessage={errorDetail && generateErrorMessage(errorDetail.email) }
-                                className="w-full"/>
-                            <Spacing height="2rem" />   {/* 32px */}
-                            <div className='row-between-center w-full'>
-                                <ButtonOutlined className="w-full" label="Cancel" secondary onClick={actionCancelClick}/>
-                                <Spacing minWidth="1.25rem" />   {/* 20px */}
-                                <ButtonSolid 
-                                    className="w-full" 
-                                    label="Confirm" 
-                                    disabled={isLoading}
-                                    onClick={actionConfirmClick}/>
-                            </div>
-                        </form>
+            <Wrapper className='d-flex justify-content-center w-full'>
+                <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
+                    <span className='row-between-start'>
+                        <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' label="Kembali ke Login Page" onClick={actionCancelClick} />
+                    </span>
+                    <article className='col-center w-full'>
+                        <div className='col-start-center'>
+                            <Spacing height="7.525rem" />   {/* 34px */}
+                            <h1 className='text-center title' style={{ color: "var(--color-primary-dark)" }}>Lupa Password</h1>
+                            <Spacing height="5.25rem" />
+                            <form className='col-start-start' style={{ width: "80%" }}>
+                                <span className='text-center description'>Masukkan Email terdaftar untuk Reset Sandi</span>
+                                <InputTextSearch
+                                    type="email"
+                                    prompt="Masukkan email terdaftar untuk mereset Sandi"
+                                    id="email"
+                                    name="email"
+                                    placeholder='email'
+                                    icon={<FaAt />}
+                                    // errorMessage={errorDetail && generateErrorMessage(errorDetail.email) }
+                                    value={ values.email }
+                                    onChange={handleChange}
+                                    className="w-full"/>
+                                <Spacing height="2.75rem" />   {/* 44px */}
+                                <ButtonSolid className="w-full" 
+                                    label="Reset sandi" 
+                                    onClick={actionConfirmClick}
+                                    color={'white'}
+                                    hoverColor={'white'}
+                                    disabled={isLoading} />
+                                <Spacing height="10.525rem" />   {/* 20px */}
+                            </form>
+                        </div>
                     </article>
                 </section>
             </Wrapper>

@@ -1,36 +1,32 @@
 import styled from "styled-components";
 import {
-    LogoCrown,
-    IconCheck,
-    IconUnCheck,
     ContainerCardSection,
-    Spacing
+    Spacing,
+    ButtonSolid,
+    Hyperlink
 } from "../../../components";
+import { CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from "@coreui/react";
+import JobInfo from "../../../components/JobInfo";
+import { FaArrowsAltH, FaFontAwesome } from "react-icons/fa";
+import ArrowRotate from "../../../components/logo-icon/ArrowRotate";
 
 const MembershipTable = () => {
 
     const Wrapper = styled(ContainerCardSection)`
-        max-width: 80rem;
-
+        height: 30rem;
+        width: 100%; 
         th {
             font-family: var(--font-family-primary);
-            font-weight: var(--font-weight-bold);
+            font-weight: var(--font-weight-normal);
             font-size: var(--font-size-normal);
-            color: var(--color-primary);
-            min-width: 10rem;
-            height: 3.625rem;
-            min-height: 3.625rem;
             text-align: center;
         }
 
         td {
-            font-family: var(--font-family-secondary);
-            font-weight: var(--font-weight-semibold);
-            font-size: var(--font-size-normal);
+            font-family: var(--font-family-primary);
+            font-weight: var(--font-weight-normal);
+            font-size: var(--font-size-small);
             color: var(--color-black);
-            min-width: 10rem;
-            height: 3.625rem;
-            min-height: 3.625rem;
             text-align: center;
             vertical-align: top;
         }
@@ -43,61 +39,62 @@ const MembershipTable = () => {
 
     return (
         <Wrapper >
-            <table cellSpacing="100px">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Free</th>
-                        <th> <LogoCrown primary/> Premium 1</th>
-                        <th> <LogoCrown primary/> Premium 2</th>
-                        <th> <LogoCrown primary/> Premium 3</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td className="decription-cell"> Unlimited search</td>
-                        <td> <IconCheck/> </td>
-                        <td> <IconCheck/> </td>
-                        <td> <IconCheck/> </td>
-                        <td> <IconCheck/> </td>
-                    </tr>
-                    <tr>
-                        <td className="decription-cell"> Can see everyone who visited your profile</td>
-                        <td> <IconUnCheck/> </td>
-                        <td> <IconUnCheck/> </td>
-                        <td> <IconCheck/> </td>
-                        <td> <IconCheck/> </td>
-                    </tr>
-                    <tr>
-                        <td className="decription-cell">Can gain a verified badge</td>
-                        <td> <IconUnCheck/> </td>
-                        <td> <IconCheck/> </td>
-                        <td> <IconCheck/> </td>
-                        <td> <IconCheck/> </td>
-                    </tr>
-                    <tr>
-                        <td className="decription-cell">Can gain a verified badge</td>
-                        <td> <IconUnCheck/> </td>
-                        <td> <IconCheck/> </td>
-                        <td> <IconUnCheck/> </td>
-                        <td> <IconCheck/> </td>
-                    </tr>
-                    <tr>
-                        <td className="decription-cell">Can gain a verified badge</td>
-                        <td> <IconCheck/> </td>
-                        <td> <IconUnCheck/> </td>
-                        <td> <IconCheck/> </td>
-                        <td> <IconCheck/> </td>
-                    </tr>
-                    <tr>
-                        <td className="decription-cell">Example of how longer lines that may take up to two lines or more may look. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero lectus, tempus vel eleifend non, pretium ac sem.</td>
-                        <td> <IconUnCheck/> </td>
-                        <td> <IconUnCheck/> </td>
-                        <td> <IconUnCheck/> </td>
-                        <td> <IconCheck/> </td>
-                    </tr>                    
-                </tbody>
-            </table>
+            <CTable hover style={{ overflow: "hidden" }}>
+                <CTableHead>
+                    <CTableRow>
+                        <CTableHeaderCell>ID Kegiatan</CTableHeaderCell>
+                        <CTableHeaderCell>Jenis Kegiatan</CTableHeaderCell>
+                        <CTableHeaderCell>Progress</CTableHeaderCell>
+                        <CTableHeaderCell>Status</CTableHeaderCell>
+                        <CTableHeaderCell>Dana Diterima</CTableHeaderCell>
+                        <CTableHeaderCell>Budget</CTableHeaderCell>
+                        <CTableHeaderCell>Tanggal</CTableHeaderCell>
+                        <CTableHeaderCell>Durasi</CTableHeaderCell>
+                        <CTableHeaderCell></CTableHeaderCell>
+                    </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                    <CTableRow >
+                        <CTableDataCell width={"12%"}>
+                            {'130192847'}
+                        </CTableDataCell>
+                        <CTableDataCell width={'17%'}>
+                            {'Sosialisasi: 20 Orang'}
+                        </CTableDataCell>
+                        <CTableDataCell width={'4%'}>
+                            {'6%'}
+                        </CTableDataCell>
+                        <CTableDataCell width={'14%'}>
+                            <JobInfo icon={<ArrowRotate />} text={"Dalam Proses"}/>
+                        </CTableDataCell>
+                        <CTableDataCell width={'17%'}>
+                            {'Rp3.750.000'}
+                        </CTableDataCell>
+                        <CTableDataCell >
+                            {'Rp15.000.000'}
+                        </CTableDataCell>
+                        <CTableDataCell width={'14%'}>
+                            {'03 Jun 2024'}
+                        </CTableDataCell>
+                        <CTableDataCell width={'2%'}>
+                            {'3 Hari'}
+                        </CTableDataCell>
+                        <CTableDataCell width={'17%'}>
+                            <Hyperlink small label={'Lihat Detail'}/>
+                        </CTableDataCell>
+                    </CTableRow>
+                    {/* {isLoading?<CSpinner color="info" /> : users.map((n) => (
+                        <>
+                            <AdminMyHockeyUserListRowDetails 
+                                rowDetails={n} 
+                                activeTab={activeTab} 
+                                suspend={suspendUser} 
+                                unsuspend={unsuspendUser}
+                            />
+                        </>
+                    ))} */}
+                </CTableBody>
+            </CTable>
         </Wrapper>
     )
 }

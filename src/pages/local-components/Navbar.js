@@ -6,7 +6,8 @@ import {
     InputTextSearch, 
     Spacing, 
     ButtonSolid, 
-    ButtonProfile
+    ButtonProfile,
+    ButtonOutlined
 } from "../../components"
 import { useAppContext } from "../../context/appContext";
 import { useNavigate } from "react-router-dom";
@@ -42,14 +43,14 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
         <Wrapper className={`row-between-center ${className}`} >
             <div className="row-start-center">
                 <Logo />
-                { isLoggedIn && <Spacing width="0.4375rem" />}
+                {/* { isLoggedIn && <Spacing width="0.4375rem" />}
                 { isLoggedIn && <InputTextSearch placeholder="Search..." width="21.875rem" onKeyDown={(e) => 
                     {
                         if (e.key === "Enter") {
                             setSearch(e.target.value, "full_name", "contains")
                             navigate("/search", { replace: true })
                         }
-                    }}/> } 
+                    }}/> }  */}
             </div>
             {!isLoggedIn && 
                 <div className="row-start-center">
@@ -59,12 +60,6 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
             {
                 isLoggedIn &&
                 <div className="row-end-center">
-                    {/* <ButtonSolid 
-                        label={"Premium"} 
-                        height="2.25rem" 
-                        width="8.3125rem" 
-                        iconPre={ <LogoCrown />} 
-                        fontSize="1rem" /> */}
                     <Spacing width="1.25rem" />
                     <ButtonProfile 
                         // imageSource={user.avatar ? HOST_ASSET_URL + user.avatar : null}  
@@ -74,6 +69,14 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
                         width="12.375rem" 
                         style={{ fontSize: "1rem" }} onClick={toggleProfileModal}
                         />
+                    <ButtonOutlined
+                        color={"rgb(166, 166, 166);"}
+                        label={"Log Out"} 
+                        hoverColor={'var(--color-primary-dark)'}
+                        onClick={actionSignInClick}
+                        height="2.25rem" 
+                        width="8.3125rem" 
+                        fontSize="1rem" />
                 </div>
             }
         </Wrapper>

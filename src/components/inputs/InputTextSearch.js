@@ -16,14 +16,20 @@ const InputTextWrapper = styled(CFormInput)`
     backgroundColor: var(--color-error-light);
 `
 
-const InputTextSearch = ({ id, name, placeholder, className, onChange, width, height, onKeyDown }) => {
+const InputTextSearch = ({ icon, id, name, placeholder, className, onChange, width, height, onKeyDown }) => {
     const navigate = useNavigate();
 
     return (
         <Wrapper>
-            <CInputGroupText onClick={() => navigate("/search")} style={{ cursor: "pointer" }}> 
-                <FaSearch/> 
-            </CInputGroupText>
+            {icon ? (
+                <CInputGroupText>     
+                    {icon}
+                </CInputGroupText>
+            ) : (
+                <CInputGroupText onClick={() => navigate("/search")} style={{ cursor: "pointer" }}> 
+                    <FaSearch/> 
+                </CInputGroupText>
+            )}
             
             <InputTextWrapper id={id} 
                 name={name} 

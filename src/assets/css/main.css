@@ -7,8 +7,8 @@
     --color-secondary: #DB0024;
     --color-secondary-light: #F92F2F1A;
     --color-secondary-dark: #CE1126;
-    --color-disable: #A6A5A5;
-    --color-disable-light: #DEDEDE;
+    --color-disable: #D0D5DD;
+    --color-disable-light: #F9FAFB;
 
     --color-binary: #F2F2F2;
     --color-white: white;
@@ -22,7 +22,7 @@
     --font-size-semi-big: 2.5rem;  /* 40px */
     --font-size-normal: 1.125rem;  /* 18px */
     --font-size-normal-2: 1.25rem;  /* 20px */
-    --font-size-small: 0.5rem;  /* 8px */
+    --font-size-small: 0.95rem;  /* 8px */
     --font-size-small-2: 1rem;  /* 16px */
 
     --font-family-primary: "Inter", sans-serif;

@@ -1,44 +1,45 @@
 import Wrapper from '../../wrappers/admin-auth/AdminEmailSentPageWrapper';
-import { Navigate } from 'react-router-dom';
 import { useAppContext } from '../../context/appContext';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 
-import hockeyImg from '../../assets/images/auth/hockey.png'
-
 import {
-    LogoStar,
     ButtonSolid,
     Spacing
 } from '../../components'
 
 
 const AdminEmailSentPage = () => {
-    const { user } = useAppContext();
+    document.body.style = 'background-image: linear-gradient(145deg, var(--color-primary-dark), var(--color-primary-light));';
+    // const { user } = useAppContext();
     const navigate = useNavigate();
 
     const actionOkayClick = (e) => {
         e.preventDefault();
-        navigate("/admin/sign-in");        
+        navigate("/sign-in");        
     }
 
     return (
         <React.Fragment>
-            {user && <Navigate to='/admin' />}
-            <Wrapper className='row-between-start w-full'>
-                <section class='image-container'> 
-                    <img src={hockeyImg} alt='hockey-img' className='image' />                
-                </section>
-                
-                <section class='input-container col-start-start w-full'>
-                    <article class='col-start-start w-full'>                    
-                        <LogoStar/>
-                        <Spacing height="2.75rem" />   {/* 44px */}
-                        <h1 className='title'>E-mail Sent!</h1>
-                        <Spacing height="1rem" />   {/* 16px */}
-                        <p className='description'>An email has been sent to your e-mail with further instructions. kindly check your inbox.</p>
-                        <Spacing height="2.75rem" />   {/* 44px */}
-                        <ButtonSolid className="w-full" label="Confirm" onClick={actionOkayClick}/>
+            {/* {user && <Navigate to='/' />} */}
+            <Wrapper className='d-flex justify-content-center w-full'>
+                <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
+                    <article className='col-center w-full'>
+                        <div className='col-start-center'>
+                            <Spacing height="10.525rem" />   {/* 34px */}
+                            <h1 className='text-center title' style={{ color: "var(--color-primary-dark)" }}>Reset Password Berhasil</h1>
+                            <Spacing height="5.25rem" />
+                            <form className='col-start-start' style={{ width: "80%" }}>
+                                <span className='description'>Cek Email anda untuk yang sandi yang telah di reset <br/> Anda dapat mengubah sandi anda pada halaman akun</span>
+                                <Spacing height="2.75rem" />   {/* 44px */}
+                                <ButtonSolid className="w-full" 
+                                    label="Kembali ke halaman login" 
+                                    onClick={actionOkayClick}
+                                    color={'white'}
+                                    hoverColor={'white'} />
+                                <Spacing height="10.525rem" />   {/* 20px */}
+                            </form>
+                        </div>
                     </article>
                 </section>
             </Wrapper>

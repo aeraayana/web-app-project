@@ -12,8 +12,8 @@ const WrapperInputText = styled(CFormInput)`
 const Wrapper = styled.div`
     .label{
         color: var(--color-black)
-        font-family: var(--font-family-secondary);
-        font-weight: var(--font-weight-bold);
+        font-family: var(--font-family-primary);
+        font-weight: var(--font-weight-normal);
         font-size: var(--font-size-normal);
         padding-bottom: 0.5rem;
     }

@@ -44,12 +44,13 @@ const CreateAccountPage = () => {
 
     const actionCreateAccountClick = async (e) => {
         e.preventDefault();
-        const { userId, noTelp, email } = values;
+        // const { userId, noTelp, email } = values;
 
-        const success = await registerUser({ email: email, noTelp: noTelp, userId: userId });
-        if( success ){
-            navigate("/verify-email");        
-        }
+        // const success = await registerUser({ email: email, noTelp: noTelp, userId: userId });
+        // if( success ){
+        //     navigate("/verify-email");        
+        // }
+        navigate('/verify-email')
     }
 
     const actionChangeRole = (e) => {
@@ -131,7 +132,9 @@ const CreateAccountPage = () => {
                                 className="w-full"/>
                             <Spacing height="2.75rem" />   {/* 44px */}
                             <ButtonSolid className="w-full" 
-                                label="Login" 
+                                label="Register"
+                                hoverColor={'white'}
+                                color={'white'} 
                                 disabled={isLoading}
                                 onClick={actionCreateAccountClick} />
                         </form>
