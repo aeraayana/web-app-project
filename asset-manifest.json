@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.d91bb4d9.css",
-    "main.js": "/static/js/main.e416b227.js",
+    "main.js": "/static/js/main.fc27dd63.js",
     "static/media/hockey.png": "/static/media/hockey.6a55ebbfa228ec08391c.png",
     "static/media/placeholder_img.jpg": "/static/media/placeholder_img.5d5714667a5c533fe652.jpg",
     "static/media/Centre.svg": "/static/media/Centre.9ea37f1cb7998bba1e28dd17a8532187.svg",
@@ -67,10 +67,10 @@
     "static/media/logo-crown.svg": "/static/media/logo-crown.95314c3740c0753a9dd0377cdef2718c.svg",
     "static/media/logo-house.svg": "/static/media/logo-house.a478cb42e2b761b0254f294bf65a581f.svg",
     "main.d91bb4d9.css.map": "/static/css/main.d91bb4d9.css.map",
-    "main.e416b227.js.map": "/static/js/main.e416b227.js.map"
+    "main.fc27dd63.js.map": "/static/js/main.fc27dd63.js.map"
   },
   "entrypoints": [
     "static/css/main.d91bb4d9.css",
-    "static/js/main.e416b227.js"
+    "static/js/main.fc27dd63.js"
   ]
 }
