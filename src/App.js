@@ -57,6 +57,7 @@ import UserAssessmentTest from './pages/user-page/UserAssessmentTest'
 import AdminSendBlastEmailPage from './pages/admin-page/AdminSendBlastEmailPage'
 import AdminBlastEmailPreviewPage from './pages/admin-page/AdminBlastEmailPreviewPage'
 import ProtectedUserEditRoute from './pages/ProtectedUserEditRoute'
+import Ambatukam from './pages/user-page/Ambatukam'
 
 
 {/* <ProtectedRoute>
@@ -76,7 +77,7 @@ function App() {
                 }>
 
                 <Route index element={<UserMembershipPage/>}></Route>
-                <Route path='sign-up-mandatory-1' element={<UserSignUpMandatory1Page/>}/>
+                <Route path='ambatukam' element={<Ambatukam/>}/>
                 <Route path='sign-up-mandatory-2' element={<UserSignUpMandatory2Page/>}/>
                 <Route path='sign-up-mandatory-3' element={<UserSignUpMandatory3Page />}/>
                 <Route path='sign-up-mandatory-4' element={<UserSignUpMandatory4Page />}/>
