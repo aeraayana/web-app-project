@@ -77,7 +77,7 @@ function App() {
                 }>
 
                 <Route index element={<UserMembershipPage/>}></Route>
-                <Route path='ambatukam' element={<Ambatukam/>}/>
+                {/* <Route path='dashboard-admin' element={<Ambatukam/>}/> */}
                 <Route path='sign-up-mandatory-2' element={<UserSignUpMandatory2Page/>}/>
                 <Route path='sign-up-mandatory-3' element={<UserSignUpMandatory3Page />}/>
                 <Route path='sign-up-mandatory-4' element={<UserSignUpMandatory4Page />}/>
@@ -131,9 +131,9 @@ function App() {
 
             {/* <Route path='/home' element={<UserHomePage />} /> */}
 
-            <Route path='/admin' >
+            <Route path='/admin' element={<Ambatukam />}>
                 {/* <Route path='' element={<Navigate replace to="home" />} /> */}
-                <Route path='' element={
+                {/* <Route path='' element={
                     <ProtectedAdminRoute>
                         <AdminLayoutPage />
                     </ProtectedAdminRoute>
@@ -162,7 +162,7 @@ function App() {
                 <Route path='email-sent' element={<AdminEmailSentPage />} />
                 <Route path='forgot-password' element={<AdminForgotPasswordPage />} />
                 <Route path='sign-in' element={<AdminSignInPage />} />
-                <Route path='reset-password/:serial' element={<AdminResetPasswordPage />} />
+                <Route path='reset-password/:serial' element={<AdminResetPasswordPage />} /> */}
             </Route>
 
 
