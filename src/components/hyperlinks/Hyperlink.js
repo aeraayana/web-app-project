@@ -8,7 +8,7 @@ const Hyperlink = ({ label, iconPre, icon, iconPost, width, height, onClick, col
         text-decoration: none;
         font-weight: var(--font-weight-bold);
         font-family: var(--font-family-primary);
-        font-size: ${ small? `var(--font-size-small)` : `var(--font-size-small-2)` };
+        font-size: ${ small? small : `var(--font-size-small-2)` };
         &:hover,
         &:focus{
             color: ${colorHover? colorHover : ( secondary? `var(--color-secondary-dark)` : `var(--color-primary-dark)` )};

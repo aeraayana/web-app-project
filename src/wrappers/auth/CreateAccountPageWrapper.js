@@ -4,14 +4,14 @@ const Wrapper = styled.main`
     .title{
         font-family: var(--font-family-primary);
         font-weight: var(--font-weight-semibold);
-        font-size: var(--font-size-big);
+        font-size: 32px;
         color: var(--color-black);
     }
 
     .description{
-        font-family: var(--font-family-secondary);
+        font-family: var(--font-family-primary);
         font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-normal);
+        font-size: var(--font-size-normal-2);
         color: var(--color-black);
     }
 
@@ -23,9 +23,9 @@ const Wrapper = styled.main`
     }
 
     .description-subtitle{
-        font-family: var(--font-family-secondary);
+        font-family: var(--font-family-primary);
         font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-normal);
+        font-size: var(--font-size-normal-2);
         color: #4D4D4D;
     }
 

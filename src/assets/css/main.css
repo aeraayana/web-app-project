@@ -12,27 +12,31 @@
 
     --color-binary: #F2F2F2;
     --color-white: white;
-    --color-black: black;
+    --color-black: #344054;
+    --color-semiblack: #667085;
     --color-error: #CE1126;
     --color-error-light: #F92F2F1A;
     --color-light-gray: #DEDEDE;
 
-    --font-size-bigger: 3rem;  /* 48px */
-    --font-size-big: 2.75rem;  /* 44px */
-    --font-size-semi-big: 2.5rem;  /* 40px */
-    --font-size-normal: 1.125rem;  /* 18px */
-    --font-size-normal-2: 1.25rem;  /* 20px */
-    --font-size-small: 0.95rem;  /* 8px */
-    --font-size-small-2: 1rem;  /* 16px */
+    --font-size-bigger: 28px;  /* 48px */
+    --font-size-big: 24px;  /* 44px */
+    --font-size-semi-big: 20px; 
+    --font-size-normal: 14px;  
+    --font-size-normal-2: 16px;  
+    --font-size-small: 8px;  
+    --font-size-small-2: 12px;  
 
     --font-family-primary: "Inter", sans-serif;
     --font-family-secondary: "Open Sans";
 
     --font-weight-thin: 100;
+    --font-weight-extralight: 200;
     --font-weight-light: 300;
-    --font-weight-normal: 400;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
     --font-weight-semibold: 600;
-    --font-weight-bold: 800;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
 
 }
 

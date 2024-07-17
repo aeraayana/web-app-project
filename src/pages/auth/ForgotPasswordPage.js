@@ -50,7 +50,7 @@ const ForgotPasswordPage = () => {
             <Wrapper className='d-flex justify-content-center w-full'>
                 <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
                     <span className='row-between-start'>
-                        <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' label="Kembali ke Login Page" onClick={actionCancelClick} />
+                        <Hyperlink iconPre={<FaArrowLeft />} small={'14px'} className='description-subtitle' label="Kembali ke Login Page" onClick={actionCancelClick} />
                     </span>
                     <article className='col-center w-full'>
                         <div className='col-start-center'>

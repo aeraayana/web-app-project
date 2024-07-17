@@ -21,9 +21,9 @@ const MembershipSubscriptionCard = ({
 
     height: ${height ? height : `3.25rem`}; //52px
 
-    font-family: var(--font-family-secondary);
+    font-family: var(--font-family-primary);
     font-size: var(--font-size-small-2);
-    font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-normal);
     border: var(--color-disabled) h1, p, span {
       padding: 0;
       margin: 0;
@@ -31,21 +31,21 @@ const MembershipSubscriptionCard = ({
 
     .membership-tag {
       font-family: var(--font-family-primary);
-      font-size: var(--font-size-normal);
-      font-weight: var(--font-weight-light);
+      font-size: var(--font-size-normal-2);
+      font-weight: var(--font-weight-bold);
       color: grey;
     }
 
     .price-tag {
-      font-family: var(--font-family-secondary);
+      font-family: var(--font-family-primary);
       font-size: var(--font-size-semi-big);
-      font-weight: var(--font-weight-semibold);
+      font-weight: var(--font-weight-normal);
       color: grey;
     }
 
     .price-tag > span {
-      font-family: var(--font-family-secondary);
-      font-size: var(--font-size-small-2);
+      font-family: var(--font-family-primary);
+      font-size: var(--font-size-semi-big);
     }
 
     span {
@@ -71,7 +71,7 @@ const MembershipSubscriptionCard = ({
       {isBestValue && <Spacing height="0.5rem" />} {/* 8px */}
       <Spacing height="2.7rem" /> {/* 4px */}
       <div className="row-center-center price-tag w-full">
-        {isEmpty && <span>Tidak Ada {name}</span>}
+        {isEmpty && <span>Tidak ada {name.toLowerCase()}</span>}
       </div>
       <Spacing height="0.25rem" /> {/* 4px */}
       <Spacing height="1rem" /> {/* 16px */}

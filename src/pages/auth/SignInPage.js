@@ -73,7 +73,7 @@ const SignInPage = () => {
             <Wrapper className='d-flex justify-content-center w-full'>
                 <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
                     <span className='row-between-start'>
-                        <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' label="Kembali ke BPLDH.ID" onClick={actionLandingPageClick} />
+                        <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' small={'14px'} label="Kembali ke BPLDH.ID" onClick={actionLandingPageClick} />
                         <Logo />
                     </span>
                     <article className='col-center w-full'>
@@ -109,7 +109,7 @@ const SignInPage = () => {
                                     className="w-full"/>
                                 <Spacing height="2.75rem" />   {/* 44px */}
                                 <div className='row-end-center w-full'>
-                                    <Hyperlink label="Lupa Sandi" onClick={actionForgotPasswordClick} />
+                                    <Hyperlink label="Lupa Sandi" small={'14px'} onClick={actionForgotPasswordClick} />
                                 </div>
                                 <Spacing height="1.25rem" />
                                 <ButtonSolid className="w-full" 
@@ -126,7 +126,7 @@ const SignInPage = () => {
                     <article className='col-center-center w-full'>
                         <Spacing height="1rem" />   {/* 16px */}
                         <p className='description-subtitle' style={{ textAlign: "center" }}>
-                            Belum Punya Akun? <Hyperlink label="Daftar Sini" onClick={actionCreateAccountClick} />
+                            Belum Punya Akun? <Hyperlink label="Daftar Sini" small={'14px'} onClick={actionCreateAccountClick} />
                         </p>
                     </article>
                 </section>

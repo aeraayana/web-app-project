@@ -17,7 +17,7 @@ const MembershipTable = () => {
         width: 100%; 
         th {
             font-family: var(--font-family-primary);
-            font-weight: var(--font-weight-normal);
+            font-weight: var(--font-weight-bold);
             font-size: var(--font-size-normal);
             text-align: center;
         }
@@ -25,7 +25,7 @@ const MembershipTable = () => {
         td {
             font-family: var(--font-family-primary);
             font-weight: var(--font-weight-normal);
-            font-size: var(--font-size-small);
+            font-size: 14px;
             color: var(--color-black);
             text-align: center;
             vertical-align: top;
@@ -80,7 +80,7 @@ const MembershipTable = () => {
                             {'3 Hari'}
                         </CTableDataCell>
                         <CTableDataCell width={'17%'}>
-                            <Hyperlink small label={'Lihat Detail'}/>
+                            <Hyperlink small={'14px'} label={'Lihat Detail'}/>
                         </CTableDataCell>
                     </CTableRow>
                     {/* {isLoading?<CSpinner color="info" /> : users.map((n) => (

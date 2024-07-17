@@ -7,6 +7,12 @@ const Wrapper = styled(CFormInput)`
     font-size: var(--font-size-normal);
     font-weight: var(--font-weight-normal);
     border-radius: 0.3125rem;
+
+    &:focus{
+        outline: none !important;
+        border:1px solid var(--color-primary-dark);
+        box-shadow: 0 0 10px var(--color-primary);
+    }
 `
 
 const InputText = ({ id, name, type, isError, placeholder, className, onChange }) => {

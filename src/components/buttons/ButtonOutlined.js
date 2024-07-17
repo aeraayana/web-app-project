@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { CButton } from '@coreui/react';
 
-const ButtonOutlined = ({ hoverColor, label, iconPre, icon, disabled, iconPost, width, height, onClick, color, borderColor, coreUiColor, secondary, className }) => {
+const ButtonOutlined = ({ fontSize, hoverColor, label, iconPre, icon, disabled, iconPost, width, height, onClick, color, borderColor, coreUiColor, secondary, className }) => {
 
     if( !borderColor ){
         borderColor = color;
@@ -12,22 +12,44 @@ const ButtonOutlined = ({ hoverColor, label, iconPre, icon, disabled, iconPost, 
     }
 
     const Wrapper = styled(CButton)`
+        --cui-btn-bg: #fff;
+        --cui-btn-border-color: #fff;
+        --cui-btn-hover-bg: #fff;
+        --cui-btn-hover-border-color: #fff;
+        --cui-btn-active-bg: transparent;
+        --cui-btn-active-border-color: transparent;
+        --cui-btn-active-color: var(--color-primary-dark);
         padding: 0;
+        flex-direction: column;
         background-color: transparent;
-        border: solid 0.1rem ${borderColor? borderColor : ( secondary? `var(--color-secondary)` : `var(--color-primary)` )};
-        color: ${color? color : ( secondary? `var(--color-secondary)` : `var(--color-primary)` )};
+        color: ${color? color : `var(--color-primary-dark)`};
+        border-color: ${borderColor? borderColor : 'black'};
         border-radius: 0.3125rem;
-        font-weight: var(--font-weight-semibold);
+        font-weight: var(--font-weight-normal);
         &:hover {
             color: ${hoverColor? hoverColor : ( hoverColor? `var(--color-secondary)` : `var(--color-primary-dark)` )};
             background-color: transparent;
             border-color: var(--color-primary-dark);
         },
-        font-size: var(--font-size-normal);
+        font-size: ${ fontSize? fontSize : "var(--font-size-normal)"};
         ${ width &&
             `width: ` + width + `;` 
         }
-        height: ${ height? height : `3.25rem` };    // 52px
+        height: ${ height? height : `3.25rem` }; //52px
+
+        &:focus{
+            outline: none !important;
+            color: ${hoverColor? hoverColor : ( hoverColor? `var(--color-secondary)` : `var(--color-primary-dark)` )};
+            border:1px solid var(--color-primary-dark);
+            box-shadow: 0 0 10px var(--color-primary);
+            background-color: transparent;
+        }
+
+        &:active{
+            color: ${hoverColor? hoverColor : ( hoverColor? `var(--color-secondary)` : `var(--color-primary-dark)` )};
+            background-color: transparent;
+        }
+
     `;
 
     return (

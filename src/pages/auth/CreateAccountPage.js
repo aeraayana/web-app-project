@@ -142,7 +142,7 @@ const CreateAccountPage = () => {
                     <article className='col-center-center w-full'>
                         <Spacing height="1rem" />   {/* 16px */}
                         <p className='description-subtitle' style={{ textAlign: "center" }}>
-                            Sudah Punya Akun? <Hyperlink label="Login" onClick={actionSignInClick} />
+                            Sudah Punya Akun? <Hyperlink label="Login" small={'14px'} onClick={actionSignInClick} />
                         </p>
                     </article>
                 </section>

@@ -63,12 +63,19 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
                     <Spacing width="1.25rem" />
                     <ButtonProfile 
                         // imageSource={user.avatar ? HOST_ASSET_URL + user.avatar : null}  
-                        // label={getDisplayName()} 
-                        height="2.25rem" 
+                        // label={'Budi Hendrawan'} 
+                        height="2.4rem" 
                         fontSize="1rem"
-                        width="12.375rem" 
+                        width="2.4rem"
                         style={{ fontSize: "1rem" }} onClick={toggleProfileModal}
                         />
+                    <span style={{ 
+                            fontFamily: 'var(--font-family-primary)',
+                            fontWeight: 'var(--font-weight-semibold)',
+                            color: 'rgb(100, 100, 100)',
+                            paddingLeft: "0.5rem",
+                            paddingRight: '3.5rem', 
+                        }} > Budi Hendrawan </span>
                     <ButtonOutlined
                         color={"rgb(166, 166, 166);"}
                         label={"Log Out"} 

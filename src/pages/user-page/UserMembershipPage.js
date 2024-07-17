@@ -12,11 +12,15 @@ import {
 } from '../../components'
 import { useEffect, useState } from 'react';
 import circlePlusOutlineIcon from './../../assets/images/circle-plus-outline.svg'
+import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import CreateSubmissionModal from './local-components/CreateSubmissionModal';
 
 
 const UserMembershipPage = () => {
 
     const [time, setTime] = useState(new Date());
+    const [show, setShowModal] = useState(false);
+    const [index, setIndex] = useState(1);
 
     // useEffect(() => {
     //     setInterval(() => {
@@ -24,16 +28,23 @@ const UserMembershipPage = () => {
     //     }, 60000);
     // }, []);
 
+    const handleShowModal = () => {
+        setShowModal(!show);
+    }
 
     const actionOnClick = ({ membership }) => {
-        // console.log(`MEMBERSHIP => ${ membership }`);
+        console.log(`MEMBERSHIP => ${ membership }`);
     }
 
     return (
         <Wrapper>
+            <CreateSubmissionModal show={show} onClose={() => handleShowModal()} index={index} setIndex={setIndex} /> 
             <div className="row-start-end w-full">
                 <div className='col-start-start w-full'>
-                    <span className='title-description'>Halo, SDN 06 SAWAHLUNTO</span>
+                    <div>
+                        <span className='title-description'>Halo, </span>
+                        <span className='title' style={{ fontWeight: "bold" }}>SDN 06 SAWAHLUNTO</span>
+                    </div>
                     <span className='description'> 
                         {time.toLocaleString("id-ID", {
                             weekday:"long",
@@ -57,7 +68,11 @@ const UserMembershipPage = () => {
                         height={"200px"}
                         isBestValue={false}
                         onClick={ () => actionOnClick("Premium 1") } />
-                    <ButtonSolid hoverColor={'var(--color-primary-dark)'} thickness='0.0625rem' borderColor={'var(--color-disable)'} label={"Buat Pengajuan"} height={'200px'} width={'20%'} color="grey" icon={<img src={circlePlusOutlineIcon} />} bgColor={"var(--color-disable-light)"} />
+                    <ButtonSolid onClick={() => handleShowModal()} hoverColor={'var(--color-primary-dark)'} 
+                        thickness='0.0625rem' borderColor={'var(--color-disable)'} 
+                        label={"Buat Pengajuan"} height={'200px'} width={'20%'} color="grey" 
+                        icon={<img src={circlePlusOutlineIcon} />} bgColor={"var(--color-disable-light)"} />
+                    
                     <MembershipSubscriptionCard 
                         name={"DRAFT PENGAJUAN"}
                         width={"25%"}
@@ -70,9 +85,9 @@ const UserMembershipPage = () => {
             </div>
             <div className="row-start-end w-full">
                 <div className='col-start-start w-full'>
-                    <span className='subtitle'>Riwayat Kegiatan</span>
+                    <span className='subtitle'>RIWAYAT KEGIATAN</span>
                     <Spacing height="0.5rem"/>
-                    <InputTextSearch placeholder="Masukkan Kata Kunci" width="21.875rem" onKeyDown={(e) => 
+                    <InputTextSearch placeholder="Masukkan Kata Kunci..." width="21.875rem" onKeyDown={(e) => 
                     {
                         if (e.key === "Enter") {
                             console.log("ggmu")

@@ -8,12 +8,19 @@ const Wrapper = styled(CInputGroup)`
 
 const InputTextWrapper = styled(CFormInput)`
     padding: 0.5rem 1rem;
-    font-family: var(--font-family-secondary);
+    font-family: var(--font-family-primary);
     font-size: var(--font-size-small-2);
     font-weight: var(--font-weight-normal);
     border: 0.0625rem solid #CDCDCD;
     border-radius: 0.3125rem;
-    backgroundColor: var(--color-error-light);
+    //background-color: var(--color-error-light);
+    
+
+    &:focus{
+        outline: none !important;
+        border:1px solid var(--color-primary-dark);
+        box-shadow: 0 0 10px var(--color-primary);
+    }
 `
 
 const InputTextSearch = ({ icon, id, name, placeholder, className, onChange, width, height, onKeyDown }) => {
