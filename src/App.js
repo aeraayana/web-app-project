@@ -21,7 +21,7 @@ import {
 } from './pages'
 
 import ProtectedUserEditRoute from './pages/ProtectedUserEditRoute'
-import Ambatukam from './pages/user-page/Ambatukam'
+import UserAdminPage from './pages/user-page/UserAdminPage'
 
 
 {/* <ProtectedRoute>
@@ -40,9 +40,9 @@ function App() {
                     // </ProtectedRoute>
                 }>
 
-                <Route path='/admin' element={<Ambatukam />} />
+                <Route path='/admin' element={<UserAdminPage />} />
                 <Route index element={<UserMembershipPage/>}></Route>
-                {/* <Route path='dashboard-admin' element={<Ambatukam/>}/> */}
+                {/* <Route path='dashboard-admin' element={<UserAdminPage/>}/> */}
                 {/* <Route path='sign-up-mandatory-2' element={<UserSignUpMandatory2Page/>}/>
                 <Route path='sign-up-mandatory-3' element={<UserSignUpMandatory3Page />}/>
                 <Route path='sign-up-mandatory-4' element={<UserSignUpMandatory4Page />}/>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function AmbatunatContainerCard({Title, Description, ReportTime, DeadlineTime, BorderColor}) {
+export default function UserAdminContainerCard({Title, Description, ReportTime, DeadlineTime, BorderColor}) {
     return (
         <div className="card rounded" style={{
             borderLeft: 'solid 2px ' + BorderColor
