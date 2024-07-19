@@ -6,7 +6,7 @@ import {
   ContainerCardArticle,
   Spacing,
 } from "../../../components";
-import AmbatukamContainerCard from "./AmbatukamContainerCard";
+import AmbatukamContainerCard from "./RekapitulasiPengajuanCard";
 
 const MembershipSubscriptionCard = ({
   name,
@@ -14,6 +14,12 @@ const MembershipSubscriptionCard = ({
   isEmpty,
   onClick,
   width,
+  bgColor,
+  cardName,
+  month,
+  sdhi,
+  percent,
+  tipe,
   height,
 }) => {
   const Wrapper = styled(ContainerCardArticle)`
@@ -24,7 +30,8 @@ const MembershipSubscriptionCard = ({
     font-family: var(--font-family-primary);
     font-size: var(--font-size-small-2);
     font-weight: var(--font-weight-normal);
-    border: var(--color-disabled) h1, p, span {
+    border: var(--color-disabled); 
+    h1, p, span {
       padding: 0;
       margin: 0;
     }
@@ -61,13 +68,13 @@ const MembershipSubscriptionCard = ({
   return (
     <Wrapper
       border="var(--color-disable)"
-      bgColor={"var(--color-disable-light)"}
+      bgColor={bgColor}
       borderRadius="0.4rem"
       thickness={"0.05rem"}
       className={"col-start-start"}
     >
       <h1 className="membership-tag">{name}</h1>
-      {isBestValue && <AmbatukamContainerCard Judul={"Pengajuan Masuk"} Bulan={"7"} Persen={20} SDHI={100} Tipe={"var(--color-primary)"}/>}
+      {isBestValue && <AmbatukamContainerCard Judul={cardName} Bulan={month} Persen={percent} SDHI={sdhi} Tipe={tipe}/>}
       {isBestValue && <Spacing height="0.5rem" />} {/* 8px */}
       <Spacing height="2.7rem" /> {/* 4px */}
       <div className="row-center-center price-tag w-full">

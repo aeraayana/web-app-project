@@ -11,11 +11,15 @@
     --color-disable-light: #F9FAFB;
 
     --color-binary: #F2F2F2;
+    --color-green-light: #EFF5EB;
+    --color-green: #11A249;
+    --color-yellow-light: #FFFBF2;
+    --color-yellow: #FFA901;
     --color-white: white;
     --color-black: #344054;
     --color-semiblack: #667085;
-    --color-error: #CE1126;
-    --color-error-light: #F92F2F1A;
+    --color-error: #E70C0C;
+    --color-error-light: #FFEDED;
     --color-light-gray: #DEDEDE;
 
     --font-size-bigger: 28px;  /* 48px */

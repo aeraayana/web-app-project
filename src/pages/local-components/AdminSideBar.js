@@ -25,12 +25,12 @@ const AdminSideBar = () => {
                 <CSidebar style={sidebarStyle}>
                     <CSidebarNav>
                         <CNavItem className=' fs-2'> 
-                            <Link className='nav-link fs-2' to={'/admin/myhockey-user-list'}>
+                            <Link className='nav-link fs-2' to={'/'}>
                                 <LogoHouse />
                             </Link>
                         </CNavItem>
                         <CNavItem className='fs-6'> 
-                            <Link className='nav-link fs-6' to={'/admin/username-approval'}>
+                            <Link className='nav-link fs-6' to={'/admin'}>
                                 <LogoHouse /> 
                             </Link>
                         </CNavItem>

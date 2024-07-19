@@ -5,14 +5,14 @@ import {
   Spacing,
 } from "../../components";
 import { useEffect, useState } from "react";
-import RekapitulasiPengajuanCard from "./local-components/RekapitulasiPengajuanCard";
+import MembershipSubscriptionCard from "./local-components/MembershipSubscriptionCard";
 
 const UserAdminPage = () => {
   const [time, setTime] = useState(new Date());
 
   return (
     <Wrapper>
-      <div style={{height: '100vh'}}>
+      <div style={{ height: '100%' }}>
         <div className="row-start-end w-full">
           <div className="col-start-start w-full">
             <span className="title-description">Halo, PGLHK PK1</span>
@@ -30,15 +30,15 @@ const UserAdminPage = () => {
           </div>
         </div>
         <Spacing height="1rem" />
-        <div className="w-75">
-          <div className="d-flex flex-column justify-content-start border rounded p-2 overflow-auto" style={{ backgroundColor: 'rgba(248,251,251,255)' }}>
-            <p className="fs-3 justify-content-start" style={{ color: 'rgb(99,99,99)' }}>Rekapitulasi</p>
-            <div className="d-flex flex-row justify-content-between container-fluid">
-              <RekapitulasiPengajuanCard Judul={"Pengajuan Masuk"} Bulan={15} SDHI={0} Persen={100} Tipe={"masuk"} />
-              <RekapitulasiPengajuanCard Judul={"Pengajuan Selesai"} Bulan={15} SDHI={0} Persen={100} Tipe={"selesai"} />
-              <RekapitulasiPengajuanCard Judul={"Pengajuan Dibatalkan"} Bulan={15} SDHI={0} Persen={100} Tipe={"batal"} />
+        <div className="card-container w-full">
+            <span className="price-tag" style={{ marginLeft: "1rem" }}>REKAPITULASI</span>
+            <Spacing height={'0.565rem'} />
+            <div className="row-around-start">
+              <MembershipSubscriptionCard width={'30%'} bgColor="white" height={'140px'} isBestValue cardName={"PENYERAPAN DANA"} month={15} sdhi={0} percent={100} tipe={"var(--color-black)"} />
+              <MembershipSubscriptionCard width={'22%'} bgColor="white" height={'140px'} isBestValue cardName={"PENGAJUAN MASUK"} month={15} sdhi={0} percent={100} tipe={"var(--color-yellow)"} />
+              <MembershipSubscriptionCard width={'22%'} bgColor="white" height={'140px'} isBestValue cardName={"SELESAI"} month={15} sdhi={0} percent={100} tipe={"var(--color-green)"} />
+              <MembershipSubscriptionCard width={'22%'} bgColor="white" height={'140px'} isBestValue cardName={"DIBATALKAN"} month={15} sdhi={0} percent={100} tipe={"var(--color-error)"} />
             </div>
-          </div>
         </div>
         <Spacing height="2.5rem" />
         <div className="row-start-stretch">

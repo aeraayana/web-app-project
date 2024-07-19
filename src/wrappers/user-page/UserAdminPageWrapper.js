@@ -11,6 +11,13 @@ const Wrapper = styled.main`
     color: var(--color-black);
   }
 
+  .card-container {
+    border: 1px solid var(--color-disable);
+    border-radius: 10px;
+    background-color: var(--color-disable-light);
+    padding: 0.9rem 0.6rem;
+  }
+
   .title-description {
     font-family: var(--font-family-primary);
     font-weight: var(--font-weight-thin);
@@ -19,28 +26,28 @@ const Wrapper = styled.main`
   }
 
   .description {
-    font-family: var(--font-family-secondary);
-    font-weight: var(--font-weight-normal);
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-normal-2);
     font-size: var(--font-size-normal);
     color: var(--color-black);
   }
 
   .price-tag {
     font-family: var(--font-family-primary);
-    font-size: var(--font-size-normal);
+    font-size: var(--font-size-normal-2);
     font-weight: var(--font-weight-semibold);
-    color: black;
+    color: var(--color-semiblack);
   }
 
   .subtitle {
-    font-family: var(--font-family-secondary);
+    font-family: var(--font-family-primary);
     font-weight: var(--font-weight-normal);
     font-size: 1.5rem; /* 24px */
     color: var(--color-black);
   }
 
   .description-subtitle {
-    font-family: var(--font-family-secondary);
+    font-family: var(--font-family-primary);
     font-weight: var(--font-weight-normal);
     font-size: var(--font-size-normal);
     color: #4d4d4d;
