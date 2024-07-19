@@ -19,6 +19,11 @@ const ButtonOutlined = ({ fontSize, hoverColor, label, iconPre, icon, disabled, 
         --cui-btn-active-bg: transparent;
         --cui-btn-active-border-color: transparent;
         --cui-btn-active-color: var(--color-primary-dark);
+        img {
+            max-width: 100%;
+            height: auto;
+            width: auto; 
+        }
         padding: 0;
         flex-direction: column;
         background-color: transparent;

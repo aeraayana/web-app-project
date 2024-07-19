@@ -11,8 +11,13 @@ const ButtonProfile = ({ imageSource, label, disabled, width, height, onClick, b
         --cui-btn-hover-border-color: #fff;
         --cui-btn-active-bg: #fff;
         --cui-btn-active-border-color: #fff;
-        --cui-btn-active-color: rgba(0, 0, 0, 0.87);
-        --cui-btn-disabled-color: rgba(0, 0, 0, 0.87);
+        --cui-btn-active-color: var(--color-primary-dark);
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            width: auto; 
+        }
         padding: 0;
         background-color: ${bgColor? bgColor : `transparent`};
         color: ${color? color : `#2E2E2E`};

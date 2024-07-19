@@ -52,7 +52,7 @@ const MembershipSubscriptionCard = ({
 
     .price-tag > span {
       font-family: var(--font-family-primary);
-      font-size: var(--font-size-semi-big);
+      font-size: var(--font-size-normal);
     }
 
     span {
@@ -64,6 +64,8 @@ const MembershipSubscriptionCard = ({
       color: black;
     }
   `;
+
+  console.log(bgColor);
 
   return (
     <Wrapper

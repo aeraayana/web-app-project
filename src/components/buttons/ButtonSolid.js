@@ -15,6 +15,12 @@ const ButtonSolid = ({ hoverColor, thickness, label, iconPre, icon, borderColor,
         --cui-btn-active-bg: #fff;
         --cui-btn-active-border-color: #fff;
         --cui-btn-active-color: var(--color-primary-dark);
+        img {
+            max-width: 100%;
+            height: auto;
+            width: auto; 
+        }
+
         padding: 0;
         flex-direction: column;
         background-color: ${bgColor? bgColor : ( secondary? `var(--color-secondary)` : `var(--color-primary)` )};

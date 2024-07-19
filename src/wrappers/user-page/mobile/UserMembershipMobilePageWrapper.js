@@ -1,13 +1,19 @@
 import styled from 'styled-components'
 
-const Wrapper = styled.main`
-    padding: 2.5rem 5.5rem 2.5rem 5.5rem;
+const MobileWrapper = styled.main`
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
     background-color: var(--color-white);
+
+    img {
+        max-width: 100%;
+        height: auto;
+        width: auto; /* ie8 */
+    }
 
     .title{
         font-family: var(--font-family-primary);
         font-weight: var(--font-weight-bold);
-        font-size: var(--font-size-big);
+        font-size: var(--font-size-normal-2);
         color: var(--color-black);
     }
 
@@ -21,7 +27,7 @@ const Wrapper = styled.main`
     .description{
         font-family: var(--font-family-primary);
         font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-normal);
+        font-size: var(--font-size-small-2);
         color: var(--color-semiblack);
     }
 
@@ -35,7 +41,7 @@ const Wrapper = styled.main`
     .subtitle{
         font-family: var(--font-family-primary);
         font-weight: var(--font-weight-regular);
-        font-size: 1.5rem;   /* 24px */
+        font-size: var(--font-size-normal);   /* 24px */
         letter-spacing: 2px;
         color: #667085;
     }
@@ -48,4 +54,4 @@ const Wrapper = styled.main`
     }
 `
 
-export default Wrapper
+export default MobileWrapper
