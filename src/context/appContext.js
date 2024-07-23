@@ -26,6 +26,8 @@ import {
   VERIFY_REGISTER_ERROR,
   /////////////////////////////////////////////////////////////////////////////////////////
   TOGGLE_PROFILE_MODAL,
+  GET_TEMATIK_KEGIATAN,
+  GET_TEMATIK_KEGIATAN_ERROR,
 } from './actions';
 
 const user = localStorage.getItem('token');
@@ -37,12 +39,13 @@ const initialState = {
   isError: false,
   isSuccess: false,
   successMessage: '',
-/////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
   showAlert: false,
   showSidebar: false,
   isEditing: false,
   showProfileModal: false,
   showShareProfile: false,
+  
 };
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
@@ -61,7 +64,7 @@ const AppProvider = ({ children }) => {
       Authorization: `Bearer ${user}`,
     }
   });
-  
+
   const unAuthFetch = axios.create({
     baseURL: HOST_URL,
     headers: {
@@ -102,7 +105,7 @@ const AppProvider = ({ children }) => {
 
   const loginUser = async ({ email, password }) => {
     dispatch({ type: LOGIN_USER_BEGIN });
-    try{
+    try {
       const response = await unAuthFetch.post(
         `login`,
         { email_pic: email, password: password }
@@ -119,7 +122,7 @@ const AppProvider = ({ children }) => {
       addUserToLocalStorage({ token: token_access });
     } catch (error) {
       console.log(error);
-      const { message, data } = error.response; 
+      const { message, data } = error.response;
       dispatch({
         type: LOGIN_USER_ERROR,
         payload: { message: message, data: data },
@@ -130,17 +133,17 @@ const AppProvider = ({ children }) => {
   const addUserToLocalStorage = ({ token }) => {
     localStorage.setItem('token', token)
   };
-  
+
   const removeUserFromLocalStorage = () => {
     localStorage.removeItem('token')
   };
 
   const getCurrentUser = async () => {
-    if( !state.userLoading ){
+    if (!state.userLoading) {
       dispatch({ type: GET_CURRENT_USER_BEGIN });
       try {
         const oldUser = state.user;
-        if( oldUser ){
+        if (oldUser) {
           const { data } = await authFetch(`/users/${oldUser._id}`);
           const newUser = data.data;
 
@@ -151,25 +154,25 @@ const AppProvider = ({ children }) => {
         }
       } catch (error) {
         dispatch({ type: GET_CURRENT_USER_FAILED });
-        if (error.response.status === 401) 
+        if (error.response.status === 401)
           return;
         logoutUser();
-      }  
+      }
     }
   };
 
   const registerUser = async ({ category, email, name, identity_type, identity_number, phone_number }) => {
     dispatch({ type: REGISTER_USER_BEGIN });
-    try{
+    try {
       const response = await unAuthFetch.post(
-        `register`, { 
-          kelompok_masyarakat_id: category, 
-          email_pic: email, 
-          nama_pic: name, 
-          jenis_identitas_pic: identity_type,
-          nomor_identitas_pic: identity_number,
-          nohp_pic: phone_number
-        }
+        `register`, {
+        kelompok_masyarakat_id: category,
+        email_pic: email,
+        nama_pic: name,
+        jenis_identitas_pic: identity_type,
+        nomor_identitas_pic: identity_number,
+        nohp_pic: phone_number
+      }
       );
       const { message } = response.data;
 
@@ -179,7 +182,7 @@ const AppProvider = ({ children }) => {
       });
       return true;
     } catch (error) {
-      const { message, data } = error.response; 
+      const { message, data } = error.response;
       dispatch({
         type: REGISTER_USER_ERROR,
         payload: { message: message, data: data },
@@ -188,15 +191,38 @@ const AppProvider = ({ children }) => {
     return false;
   };
 
+  const getTematikKegiatan = async () => {
+    try {
+      const response = await authFetch.get('tematikKegiatan')
+      response.data.map((tematik_kegiatan) => {
+        dispatch({
+          type: GET_TEMATIK_KEGIATAN,
+          payload: {
+            id_tematik_kegiatan: tematik_kegiatan.id,
+            tematik_kegiatan: tematik_kegiatan.tematik_kegiatan,
+            deskripsi_tematik: tematik_kegiatan.deskripsi_tematik,
+            image: tematik_kegiatan.image
+          }
+        })
+      })
+    } catch (error) {
+      const { message, data } = error.response;
+      dispatch({
+        type: GET_TEMATIK_KEGIATAN_ERROR,
+        payload: { message: message, data: data }
+      });
+    }
+  }
+
   const forgotPassword = async ({ email }) => {
     dispatch({ type: FORGOT_PASSWORD_BEGIN });
-    try{
+    try {
       const response = await unAuthFetch.post(
-        `/auth/forgot-password`, { 
-          "email": email, 
-        }
+        `/auth/forgot-password`, {
+        "email": email,
+      }
       );
-      const { message} = response.data;
+      const { message } = response.data;
 
       dispatch({
         type: FORGOT_PASSWORD_SUCCESS,
@@ -204,7 +230,7 @@ const AppProvider = ({ children }) => {
       });
       return true;
     } catch (error) {
-      const { data } = error.response; 
+      const { data } = error.response;
       dispatch({
         type: FORGOT_PASSWORD_ERROR,
         payload: { message: data.message, data: data.data },
@@ -215,13 +241,13 @@ const AppProvider = ({ children }) => {
 
   const resetPassword = async ({ password, serial }) => {
     dispatch({ type: RESET_PASSWORD_BEGIN });
-    try{
+    try {
       const response = await unAuthFetch.post(
-        `/auth/reset-password/${serial}`, { 
-          "password": password, 
-        }
+        `/auth/reset-password/${serial}`, {
+        "password": password,
+      }
       );
-      const {message} = response.data;
+      const { message } = response.data;
 
       dispatch({
         type: RESET_PASSWORD_SUCCESS,
@@ -229,7 +255,7 @@ const AppProvider = ({ children }) => {
       });
       return true;
     } catch (error) {
-      const { data } = error.response; 
+      const { data } = error.response;
       dispatch({
         type: RESET_PASSWORD_ERROR,
         payload: { message: data.message, data: data.data },
@@ -239,13 +265,13 @@ const AppProvider = ({ children }) => {
   };
 
   const verifyRegister = async ({ serial }) => {
-    if( !state.isLoading ){
+    if (!state.isLoading) {
       dispatch({ type: VERIFY_REGISTER_BEGIN });
-      try{
+      try {
         const response = await unAuthFetch(
           `/auth/verify?token=${serial}`,
         );
-        const {message} = response.data;
+        const { message } = response.data;
 
         dispatch({
           type: VERIFY_REGISTER_SUCCESS,
@@ -253,7 +279,7 @@ const AppProvider = ({ children }) => {
         });
         return true;
       } catch (error) {
-        const { data } = error.response; 
+        const { data } = error.response;
         dispatch({
           type: VERIFY_REGISTER_ERROR,
           payload: { message: data.message, data: data.data },
@@ -265,12 +291,12 @@ const AppProvider = ({ children }) => {
 
 
   useEffect(() => {
-      getCurrentUser();
+    getCurrentUser();
   }, []);
 
-///////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////
 
-  
+
 
   const toggleProfileModal = () => {
     dispatch({ type: TOGGLE_PROFILE_MODAL });
@@ -286,9 +312,9 @@ const AppProvider = ({ children }) => {
         forgotPassword,
         resetPassword,
         verifyRegister,
-///////////////////////////////////////////////
+        ///////////////////////////////////////////////
         logoutUser,
-///////////////////////////////////////////////
+        ///////////////////////////////////////////////
         toggleProfileModal,
       }}
     >

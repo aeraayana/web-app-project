@@ -21,7 +21,7 @@ import {
   VERIFY_REGISTER_BEGIN,
   VERIFY_REGISTER_SUCCESS,
   VERIFY_REGISTER_ERROR,
-/////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
@@ -74,215 +74,236 @@ import {
   UPDATE_PROFILE_ERROR,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_BEGIN,
+  GET_TEMATIK_KEGIATAN,
+  GET_TEMATIK_KEGIATAN_ERROR,
 } from './actions';
 
 import { initialState } from './appContext';
 
 const reducer = (state, action) => {
-    if (action.type === DISPLAY_ALERT) {
-        return {
-            ...state,
-            showAlert: true,
-            alertType: 'danger',
-            alertText: 'Please provide all values!',
-        };
+  if (action.type === GET_TEMATIK_KEGIATAN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
+  if (action.type === GET_TEMATIK_KEGIATAN) {
+    return {
+      ...state,
+      isSuccess: true,
+      id_tematik_kegiatan: action.payload.id_tematik_kegiatan,
+      tematik_kegiatan: action.payload.tematik_kegiatan,
+      deskripsi_tematik: action.payload.deskripsi_tematik,
+      image: action.payload.image
     }
-    if (action.type === CLEAR_ALERT) {
-        return {
-            ...state,
-            isSuccess: false,
-            successMessage: '',
-            isError: false,
-            errorMessage: '',
-            showAlert: false,
-            alertType: '',
-            alertText: '',
-        };
-    }
+  }
+  if (action.type === DISPLAY_ALERT) {
+    return {
+      ...state,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: 'Please provide all values!',
+    };
+  }
+  if (action.type === CLEAR_ALERT) {
+    return {
+      ...state,
+      isSuccess: false,
+      successMessage: '',
+      isError: false,
+      errorMessage: '',
+      showAlert: false,
+      alertType: '',
+      alertText: '',
+    };
+  }
 
-    if (action.type === GET_CURRENT_USER_BEGIN) {
-        return { 
-            ...state, 
-            userLoading: true, 
-            showAlert: false 
-        };
-    }
-    if (action.type === GET_CURRENT_USER_SUCCESS) {
-        return {
-            ...state,
-            userLoading: false,
-            user: action.payload.user,
-        };
-    }
-    if (action.type === GET_CURRENT_USER_FAILED) {
-        return {
-            ...state,
-            userLoading: false,
-            user: null,
-        };
-    }
+  if (action.type === GET_CURRENT_USER_BEGIN) {
+    return {
+      ...state,
+      userLoading: true,
+      showAlert: false
+    };
+  }
+  if (action.type === GET_CURRENT_USER_SUCCESS) {
+    return {
+      ...state,
+      userLoading: false,
+      user: action.payload.user,
+    };
+  }
+  if (action.type === GET_CURRENT_USER_FAILED) {
+    return {
+      ...state,
+      userLoading: false,
+      user: null,
+    };
+  }
 
-    //Login State
-    if( action.type === LOGIN_USER_BEGIN ){
-        return { 
-            ...state, 
-            isLoading: true,
-            isSuccess: false,
-            successMessage: '',
-            isError: false,
-            errorMessage: '',
-            errorDetail: {},
-        };
-    }
-    if( action.type === LOGIN_USER_SUCCESS ){
-        return {
-            ...state, 
-            isLoading: false,
-            user: action.payload.user,
-            isSuccess: true,
-            successMessage: action.payload.message,
-            token: action.payload.token,
-        };
-    }
-    if( action.type === LOGIN_USER_ERROR ){
-        return {
-            ...state, 
-            isLoading: false,
-            isError: true,
-            errorMessage: action.payload.message,
-            errorDetail: action.payload.data,
-        };
-    }
+  //Login State
+  if (action.type === LOGIN_USER_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      isSuccess: false,
+      successMessage: '',
+      isError: false,
+      errorMessage: '',
+      errorDetail: {},
+    };
+  }
+  if (action.type === LOGIN_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      user: action.payload.user,
+      isSuccess: true,
+      successMessage: action.payload.message,
+      token: action.payload.token,
+    };
+  }
+  if (action.type === LOGIN_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
 
-    if (action.type === LOGOUT_USER) {
-        return {
-            ...initialState,
-            userLoading: false,
-        };
-    }
+  if (action.type === LOGOUT_USER) {
+    return {
+      ...initialState,
+      userLoading: false,
+    };
+  }
 
-    //Register State
-    if( action.type === REGISTER_USER_BEGIN ){
-        return { 
-            ...state, 
-            isLoading: true,
-            isSuccess: false,
-            successMessage: '',
-            isError: false,
-            errorMessage: '',
-            errorDetail: {},
-        };
-    }
-    if( action.type === REGISTER_USER_SUCCESS ){
-        return {
-            ...state, 
-            isLoading: false,
-            isSuccess: true,
-            successMessage: action.payload.message,
-        };
-    }
-    if( action.type === REGISTER_USER_ERROR ){
-        return {
-            ...state, 
-            isLoading: false,
-            isError: true,
-            errorMessage: action.payload.message,
-            errorDetail: action.payload.data,
-        };
-    }
+  //Register State
+  if (action.type === REGISTER_USER_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      isSuccess: false,
+      successMessage: '',
+      isError: false,
+      errorMessage: '',
+      errorDetail: {},
+    };
+  }
+  if (action.type === REGISTER_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      isSuccess: true,
+      successMessage: action.payload.message,
+    };
+  }
+  if (action.type === REGISTER_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
 
-    //Forgot Password State
-    if( action.type === FORGOT_PASSWORD_BEGIN ){
-        return { 
-            ...state, 
-            isLoading: true,
-            isSuccess: false,
-            successMessage: '',
-            isError: false,
-            errorMessage: '',
-            errorDetail: {},
-        };
-    }
-    if( action.type === FORGOT_PASSWORD_SUCCESS ){
-        return {
-            ...state, 
-            isLoading: false,
-            isSuccess: true,
-            successMessage: action.payload.message,
-        };
-    }
-    if( action.type === FORGOT_PASSWORD_ERROR ){
-        return {
-            ...state, 
-            isLoading: false,
-            isError: true,
-            errorMessage: action.payload.message,
-            errorDetail: action.payload.data,
-        };
-    }
+  //Forgot Password State
+  if (action.type === FORGOT_PASSWORD_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      isSuccess: false,
+      successMessage: '',
+      isError: false,
+      errorMessage: '',
+      errorDetail: {},
+    };
+  }
+  if (action.type === FORGOT_PASSWORD_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      isSuccess: true,
+      successMessage: action.payload.message,
+    };
+  }
+  if (action.type === FORGOT_PASSWORD_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
 
-    //Reset Password State
-    if( action.type === RESET_PASSWORD_BEGIN ){
-        return { 
-            ...state, 
-            isLoading: true,
-            isSuccess: false,
-            successMessage: '',
-            isError: false,
-            errorMessage: '',
-            errorDetail: {},
-        };
-    }
-    if( action.type === RESET_PASSWORD_SUCCESS ){
-        return {
-            ...state, 
-            isLoading: false,
-            isSuccess: true,
-            successMessage: action.payload.message,
-        };
-    }
-    if( action.type === RESET_PASSWORD_ERROR ){
-        return {
-            ...state, 
-            isLoading: false,
-            isError: true,
-            errorMessage: action.payload.message,
-            errorDetail: action.payload.data,
-        };
-    }
+  //Reset Password State
+  if (action.type === RESET_PASSWORD_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      isSuccess: false,
+      successMessage: '',
+      isError: false,
+      errorMessage: '',
+      errorDetail: {},
+    };
+  }
+  if (action.type === RESET_PASSWORD_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      isSuccess: true,
+      successMessage: action.payload.message,
+    };
+  }
+  if (action.type === RESET_PASSWORD_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
 
-    //Verify Register State
-    if( action.type === VERIFY_REGISTER_BEGIN ){
-        return { 
-            ...state, 
-            isLoading: true,
-            isSuccess: false,
-            successMessage: '',
-            isError: false,
-            errorMessage: '',
-            errorDetail: {},
-        };
-    }
-    if( action.type === VERIFY_REGISTER_SUCCESS ){
-        return {
-            ...state, 
-            isLoading: false,
-            isSuccess: true,
-            successMessage: action.payload.message,
-        };
-    }
-    if( action.type === VERIFY_REGISTER_ERROR ){
-        return {
-            ...state, 
-            isLoading: false,
-            isError: true,
-            errorMessage: action.payload.message,
-            errorDetail: action.payload.data,
-        };
-    }
+  //Verify Register State
+  if (action.type === VERIFY_REGISTER_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      isSuccess: false,
+      successMessage: '',
+      isError: false,
+      errorMessage: '',
+      errorDetail: {},
+    };
+  }
+  if (action.type === VERIFY_REGISTER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      isSuccess: true,
+      successMessage: action.payload.message,
+    };
+  }
+  if (action.type === VERIFY_REGISTER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
   if (action.type === SETUP_USER_BEGIN) {
     return { ...state, isLoading: true };
   }
@@ -471,37 +492,37 @@ const reducer = (state, action) => {
   if (action.type === CHANGE_PAGE) {
     return { ...state, page: action.payload.page };
   }
-/////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
 
-  if( action.type === GET_LIST_USER_BEGIN ){
-    return { 
-        ...state, 
-        isLoading: true,
-        isSuccess: false,
-        successMessage: '',
-        isError: false,
-        errorMessage: '',
-        errorDetail: {},
-    };
-  }
-  if( action.type === GET_LIST_USER_SUCCESS ){
+  if (action.type === GET_LIST_USER_BEGIN) {
     return {
-        ...state, 
-        isLoading: false,
-        users: action.payload.data,
-        totalUsers: action.payload.total,
-        numOfPages: action.payload.totalPage,
+      ...state,
+      isLoading: true,
+      isSuccess: false,
+      successMessage: '',
+      isError: false,
+      errorMessage: '',
+      errorDetail: {},
     };
   }
-  if(action.type === SORT_COLUMN){
-    return{
+  if (action.type === GET_LIST_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      users: action.payload.data,
+      totalUsers: action.payload.total,
+      numOfPages: action.payload.totalPage,
+    };
+  }
+  if (action.type === SORT_COLUMN) {
+    return {
       ...state,
       sortBy: action.payload.sortBy,
       sortMethod: action.payload.sortMethod,
     }
   }
-  if(action.type === SET_ITEM_PER_PAGE){
-    return{
+  if (action.type === SET_ITEM_PER_PAGE) {
+    return {
       ...state,
       itemPerPage: action.payload.itemPerPage
     }
@@ -527,32 +548,32 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
-  if(action.type === SET_SEARCH){
-    return{
+  if (action.type === SET_SEARCH) {
+    return {
       ...state,
       search: action.payload.search,
       searchColumn: action.payload.searchColumn,
       searchType: action.payload.searchType
     }
   }
-  if( action.type === GET_LIST_DATA_BEGIN ){
-    return { 
-        ...state, 
-        isLoading: true,
-        isSuccess: false,
-        successMessage: '',
-        isError: false,
-        errorMessage: '',
-        errorDetail: {},
+  if (action.type === GET_LIST_DATA_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      isSuccess: false,
+      successMessage: '',
+      isError: false,
+      errorMessage: '',
+      errorDetail: {},
     };
   }
-  if( action.type === GET_LIST_DATA_SUCCESS ){
+  if (action.type === GET_LIST_DATA_SUCCESS) {
     return {
-        ...state, 
-        isLoading: false,
-        data: action.payload.data,
-        totalData: action.payload.total,
-        numOfPages: action.payload.totalPage,
+      ...state,
+      isLoading: false,
+      data: action.payload.data,
+      totalData: action.payload.total,
+      numOfPages: action.payload.totalPage,
     };
   }
 
@@ -570,7 +591,7 @@ const reducer = (state, action) => {
       data: action.payload.data
     };
   }
-  
+
   if (action.type === CREATE_DATA_ERROR) {
     return {
       ...state,
@@ -581,13 +602,13 @@ const reducer = (state, action) => {
     };
   }
 
-  if( action.type === GET_LIST_DATA_SUCCESS ){
+  if (action.type === GET_LIST_DATA_SUCCESS) {
     return {
-        ...state, 
-        isLoading: false,
-        data: action.payload.data,
-        totalData: action.payload.total,
-        numOfPages: action.payload.totalPage,
+      ...state,
+      isLoading: false,
+      data: action.payload.data,
+      totalData: action.payload.total,
+      numOfPages: action.payload.totalPage,
     };
   }
 
@@ -613,7 +634,7 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
-  
+
   if (action.type === DELETE_DATA_BEGIN) {
     return { ...state, isLoading: true };
   }
@@ -640,24 +661,24 @@ const reducer = (state, action) => {
     };
   }
 
-  if( action.type === GET_NOTIFICATIONS_USERNAME_BEGIN ){
-    return { 
-        ...state, 
-        isLoading: true,
-        isSuccess: false,
-        successMessage: '',
-        isError: false,
-        errorMessage: '',
-        errorDetail: {},
+  if (action.type === GET_NOTIFICATIONS_USERNAME_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      isSuccess: false,
+      successMessage: '',
+      isError: false,
+      errorMessage: '',
+      errorDetail: {},
     };
   }
-  if( action.type === GET_NOTIFICATIONS_USERNAME_SUCCESS ){
+  if (action.type === GET_NOTIFICATIONS_USERNAME_SUCCESS) {
     return {
-        ...state, 
-        isLoading: false,
-        data: action.payload.data,
-        totalData: action.payload.total,
-        numOfPages: action.payload.totalPage,
+      ...state,
+      isLoading: false,
+      data: action.payload.data,
+      totalData: action.payload.total,
+      numOfPages: action.payload.totalPage,
     };
   }
   if (action.type === EDIT_USER_VIEW_RULE_BEGIN) {

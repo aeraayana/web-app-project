@@ -28,7 +28,8 @@ export const VERIFY_REGISTER_SUCCESS = 'VERIFY_REGISTER_SUCCESS';
 export const VERIFY_REGISTER_ERROR = 'VERIFY_REGISTER_ERROR';
 
 /////////////////////////////////////////////////////////////////////////////////////////
-
+export const GET_TEMATIK_KEGIATAN_ERROR = 'GET_TEMATIK_KEGIATAN_ERROR';
+export const GET_TEMATIK_KEGIATAN = 'GET_TEMATIK_KEGIATAN';
 export const SETUP_USER_BEGIN = 'SETUP_USER_BEGIN';
 export const SETUP_USER_SUCCESS = 'SETUP_USER_SUCCESS';
 export const SETUP_USER_ERROR = 'SETUP_USER_ERROR';
