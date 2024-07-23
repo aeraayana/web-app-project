@@ -1,4 +1,5 @@
-const HOST_URL = 'http://localhost:3100/api/v1';
-const HOST_ASSET_URL = 'http://localhost:3100/';
+const HOST_URL = 'https://uat.bpdlh.id/aksesdanalh/public/api/';
+const CLIENT_ID = '6684d93e8cb88';
+const CLIENT_ID_SECRET = 'vc8U5EaZ3bUKV9ka4PsNLrpVGWZVVpyZsAhmnRWO'
 
-export {  HOST_URL, HOST_ASSET_URL };
+export {  HOST_URL, CLIENT_ID, CLIENT_ID_SECRET };

@@ -22,13 +22,14 @@ const initialState = {
 const SignInPage = () => {
     document.body.style = 'background-image: linear-gradient(145deg, var(--color-primary-dark), var(--color-primary-light));';
 
-    const { isLoading } = useAppContext();
-    // const { user, loginUser, isLoading, errorDetail } = useAppContext();
+    // const { isLoading } = useAppContext();
+    const { user, loginUser, isLoading, errorDetail } = useAppContext();
     const navigate = useNavigate();
     const [values, setValues] = useState( initialState );
 
     const handleChange = (e) => {
-        setValues({ ...values, [e.target.name]: e.target.value});        
+        setValues({ ...values, [e.target.name]: e.target.value});
+        console.log(values);
     } 
 
     const actionCreateAccountClick = () => {
@@ -43,7 +44,8 @@ const SignInPage = () => {
 
     const actionSignInClick = async (e) => {
         e.preventDefault();
-        navigate('/')
+        await loginUser({ email: values.email, password: values.password });
+        // navigate('/')
     }
 
     const actionLandingPageClick = () => {
@@ -92,7 +94,7 @@ const SignInPage = () => {
                                     prompt="Email"
                                     id="email"
                                     name="email"
-                                    placeholder='olivia@email.com'
+                                    placeholder='masukkan email'
                                     // errorMessage={errorDetail && generateErrorMessage(errorDetail.email) }
                                     value={ values.email }
                                     onChange={handleChange}
@@ -103,6 +105,7 @@ const SignInPage = () => {
                                     prompt="Sandi"
                                     id="password"
                                     name="password"
+                                    placeholder='masukkan password'
                                     // errorMessage={errorDetail && generateErrorMessage(errorDetail.password) }
                                     value={ values.password }
                                     onChange={handleChange}

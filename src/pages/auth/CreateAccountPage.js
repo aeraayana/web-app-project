@@ -44,13 +44,13 @@ const CreateAccountPage = () => {
 
     const actionCreateAccountClick = async (e) => {
         e.preventDefault();
-        // const { userId, noTelp, email } = values;
+        const { userId, noTelp, email } = values;
 
-        // const success = await registerUser({ email: email, noTelp: noTelp, userId: userId });
-        // if( success ){
-        //     navigate("/verify-email");        
-        // }
-        navigate('/verify-email')
+        const success = await registerUser({ email: email, noTelp: noTelp, userId: userId });
+        if( success ){
+            navigate("/sign-in");        
+        }
+        // navigate('/verify-email')
     }
 
     const actionChangeRole = (e) => {

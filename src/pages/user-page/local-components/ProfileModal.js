@@ -6,7 +6,7 @@ import {
 import { CAvatar } from '@coreui/react';
 import { useAppContext } from "../../../context/appContext";
 import { useNavigate } from "react-router-dom";
-import { HOST_ASSET_URL } from "../../../configs/constants";
+// import { HOST_ASSET_URL } from "../../../configs/constants";
 
 const Wrapper = styled.section`
     border-radius: 1rem;    // 16px 
@@ -85,7 +85,7 @@ const ProfileModal = ({ show, imageSource }) => {
     return (
         <Wrapper style={{ display: show? "block" : "none" }} >
             <article className="row-center-center">
-                <CAvatar src={user.avatar ? HOST_ASSET_URL + user.avatar : null} 
+                <CAvatar src={null} 
                     size='xl'
                     style={{ 
                         backgroundColor: 'rgb(179, 190, 204)', 
