@@ -26,6 +26,8 @@ import {
   VERIFY_REGISTER_ERROR,
   /////////////////////////////////////////////////////////////////////////////////////////
   TOGGLE_PROFILE_MODAL,
+  GET_JOBS_BEGIN,
+  GET_JOBS_SUCCESS,
 } from './actions';
 
 const user = localStorage.getItem('token');
@@ -41,6 +43,7 @@ const initialState = {
   showAlert: false,
   showSidebar: false,
   isEditing: false,
+  kelompokMasyarakat: [],
   showProfileModal: false,
   showShareProfile: false,
 };
@@ -245,7 +248,7 @@ const AppProvider = ({ children }) => {
         const response = await unAuthFetch(
           `/auth/verify?token=${serial}`,
         );
-        const {message} = response.data;
+        const { message } = response.data;
 
         dispatch({
           type: VERIFY_REGISTER_SUCCESS,
@@ -270,7 +273,21 @@ const AppProvider = ({ children }) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-  
+  const getKelompokMasyarakat = async () => {
+
+    dispatch({ type: GET_JOBS_BEGIN });
+    try {
+      const { data } = await authFetch.get(`jenisKelompokMasyarakat`);
+      
+      dispatch({
+        type: GET_JOBS_SUCCESS,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  };
 
   const toggleProfileModal = () => {
     dispatch({ type: TOGGLE_PROFILE_MODAL });
@@ -285,6 +302,7 @@ const AppProvider = ({ children }) => {
         registerUser,
         forgotPassword,
         resetPassword,
+        getKelompokMasyarakat,
         verifyRegister,
 ///////////////////////////////////////////////
         logoutUser,

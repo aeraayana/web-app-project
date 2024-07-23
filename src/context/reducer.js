@@ -138,7 +138,6 @@ const reducer = (state, action) => {
         return {
             ...state, 
             isLoading: false,
-            user: action.payload.user,
             isSuccess: true,
             successMessage: action.payload.message,
             token: action.payload.token,
@@ -389,9 +388,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      jobs: action.payload.jobs,
-      totalJobs: action.payload.totalJobs,
-      numOfPages: action.payload.numOfPages,
+      kelompokMasyarakat: action.payload.data,
     };
   }
   if (action.type === SET_EDIT_JOB) {

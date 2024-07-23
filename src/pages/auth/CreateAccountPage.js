@@ -17,19 +17,18 @@ const roleOptions = ['Pilih Jenis Kelompok', '','','',''];
 const idOptions = ['KTP', 'SIM', 'Kartu Mahasiswa']
 
 const initialState = {
-    namaPenanggungJawab: '',
-    namaKelompokMasyarakat: roleOptions[0],
     jenisKelompokMasyarakat: roleOptions[0],
+    nama: '',
+    jenisId: idOptions[0],
+    userId: '',
     noTelp: '',
     email: '',
-    userId: '',
-    jenisId: idOptions[0],
 }
 
 const CreateAccountPage = () => {
     document.body.style = 'background-image: linear-gradient(145deg, var(--color-primary-dark), var(--color-primary-light));';
 
-    const { user, registerUser, isLoading } = useAppContext();
+    const { user, registerUser, isLoading, kelompokMasyarakat, getKelompokMasyarakat } = useAppContext();
     const navigate = useNavigate();
     const [values, setValues] = useState( initialState );
 
@@ -37,25 +36,28 @@ const CreateAccountPage = () => {
         navigate("/sign-in");        
     }
 
+    console.log(kelompokMasyarakat)
+
     const handleChange = (e) => {
-        console.log(values);
         setValues({ ...values, [e.target.name]: e.target.value});        
     } 
 
     const actionCreateAccountClick = async (e) => {
         e.preventDefault();
-        const { userId, noTelp, email } = values;
+        const { userId, noTelp, email, jenisKelompokMasyarakat, jenisId, nama } = values;
+        // navigate('/verify-email')
 
-        const success = await registerUser({ email: email, noTelp: noTelp, userId: userId });
+        const success = await registerUser({ 
+            category: jenisKelompokMasyarakat, email: email, name: nama, identity_type: jenisId, identity_number: userId, phone_number: noTelp });
         if( success ){
             navigate("/sign-in");        
         }
-        // navigate('/verify-email')
     }
 
-    const actionChangeRole = (e) => {
-        setValues({ ...values, jenisId: e.target.value});
-    };
+    React.useEffect(() => {
+        // eslint-disable-next-line
+        getKelompokMasyarakat();
+    }, []);
 
     return (
         <React.Fragment>
@@ -71,20 +73,12 @@ const CreateAccountPage = () => {
                         <form className='col-start-start' style={{ width: "80%" }}>
                             <ChoiceBoxStringWithPrompt
                                 className="w-full"
-                                id="jenisKelompokMasyarakat"
+                                id="jenis_kelompok_masyarakat"
                                 name="jenisKelompokMasyarakat"
                                 prompt="Jenis Kelompok Masyarakat"
-                                options={roleOptions}
-                                onChange={actionChangeRole} />
+                                options={kelompokMasyarakat.data}
+                                onChange={handleChange} />
                             <Spacing height="1.25rem" />   {/* 20px */}
-                            <ChoiceBoxStringWithPrompt
-                                className="w-full"
-                                id="namaKelompokMasyarakat"
-                                name="namaKelompokMasyarakat"
-                                prompt="Nama Kelompok Masyarakat"
-                                options={roleOptions}
-                                onChange={actionChangeRole} />
-                            <Spacing height="1.25rem" />
                             <InputTextWithPrompt 
                                 type="nama"
                                 prompt="Nama Penanggung Jawab"

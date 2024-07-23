@@ -9,8 +9,8 @@ const Wrapper = styled.div`
 
   .icon {
     font-size: 0.6rem;
-    margin-left: 0.3rem;
-    margin-right: 0.7rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
     display: flex;
     align-items: center;
     svg {
@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   }
   .text {
     text-transform: capitalize;
+    margin-right: 0.5rem;
     letter-spacing: var(--letterSpacing);
   }
 `
