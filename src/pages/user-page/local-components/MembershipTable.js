@@ -34,6 +34,11 @@ const MembershipTable = () => {
             left: 0;
         }
 
+        tr {
+            width: 1%;
+            white-space: nowrap;
+        }
+
         th {
             font-family: var(--font-family-primary);
             font-weight: var(--font-weight-bold);
@@ -78,7 +83,7 @@ const MembershipTable = () => {
                             <CTableDataCell width={'5%'}>
                                 {'6%'}
                             </CTableDataCell>
-                            <CTableDataCell width={'20%'}>
+                            <CTableDataCell>
                                 <JobInfo icon={<ArrowRotate />} text={"Dalam Proses"}/>
                             </CTableDataCell>
                             <CTableDataCell width={'20%'}>
@@ -130,7 +135,7 @@ const MembershipTable = () => {
                             <CTableDataCell width={'4%'}>
                                 {'6%'}
                             </CTableDataCell>
-                            <CTableDataCell width={'14%'}>
+                            <CTableDataCell>
                                 <JobInfo icon={<ArrowRotate />} text={"Dalam Proses"}/>
                             </CTableDataCell>
                             <CTableDataCell width={'17%'}>

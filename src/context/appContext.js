@@ -26,6 +26,8 @@ import {
   VERIFY_REGISTER_ERROR,
   /////////////////////////////////////////////////////////////////////////////////////////
   TOGGLE_PROFILE_MODAL,
+  GET_JOBS_BEGIN,
+  GET_JOBS_SUCCESS,
   GET_TEMATIK_KEGIATAN,
   GET_TEMATIK_KEGIATAN_ERROR,
 } from './actions';
@@ -43,6 +45,7 @@ const initialState = {
   showAlert: false,
   showSidebar: false,
   isEditing: false,
+  kelompokMasyarakat: [],
   showProfileModal: false,
   showShareProfile: false,
   
@@ -296,7 +299,21 @@ const AppProvider = ({ children }) => {
 
   ///////////////////////////////////////////////////////////////////////////////////////////
 
+  const getKelompokMasyarakat = async () => {
 
+    dispatch({ type: GET_JOBS_BEGIN });
+    try {
+      const { data } = await authFetch.get(`jenisKelompokMasyarakat`);
+      
+      dispatch({
+        type: GET_JOBS_SUCCESS,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  };
 
   const toggleProfileModal = () => {
     dispatch({ type: TOGGLE_PROFILE_MODAL });
@@ -311,6 +328,7 @@ const AppProvider = ({ children }) => {
         registerUser,
         forgotPassword,
         resetPassword,
+        getKelompokMasyarakat,
         verifyRegister,
         ///////////////////////////////////////////////
         logoutUser,

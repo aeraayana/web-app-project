@@ -143,37 +143,36 @@ const reducer = (state, action) => {
     };
   }
 
-  //Login State
-  if (action.type === LOGIN_USER_BEGIN) {
-    return {
-      ...state,
-      isLoading: true,
-      isSuccess: false,
-      successMessage: '',
-      isError: false,
-      errorMessage: '',
-      errorDetail: {},
-    };
-  }
-  if (action.type === LOGIN_USER_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
-      user: action.payload.user,
-      isSuccess: true,
-      successMessage: action.payload.message,
-      token: action.payload.token,
-    };
-  }
-  if (action.type === LOGIN_USER_ERROR) {
-    return {
-      ...state,
-      isLoading: false,
-      isError: true,
-      errorMessage: action.payload.message,
-      errorDetail: action.payload.data,
-    };
-  }
+    //Login State
+    if( action.type === LOGIN_USER_BEGIN ){
+        return { 
+            ...state, 
+            isLoading: true,
+            isSuccess: false,
+            successMessage: '',
+            isError: false,
+            errorMessage: '',
+            errorDetail: {},
+        };
+    }
+    if( action.type === LOGIN_USER_SUCCESS ){
+        return {
+            ...state, 
+            isLoading: false,
+            isSuccess: true,
+            successMessage: action.payload.message,
+            token: action.payload.token,
+        };
+    }
+    if( action.type === LOGIN_USER_ERROR ){
+        return {
+            ...state, 
+            isLoading: false,
+            isError: true,
+            errorMessage: action.payload.message,
+            errorDetail: action.payload.data,
+        };
+    }
 
   if (action.type === LOGOUT_USER) {
     return {
@@ -410,9 +409,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      jobs: action.payload.jobs,
-      totalJobs: action.payload.totalJobs,
-      numOfPages: action.payload.numOfPages,
+      kelompokMasyarakat: action.payload.data,
     };
   }
   if (action.type === SET_EDIT_JOB) {

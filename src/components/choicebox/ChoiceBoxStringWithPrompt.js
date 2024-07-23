@@ -41,9 +41,9 @@ const ChoiceBoxStringWithPrompt = ({ prompt,  options, id, name, onChange, heigh
                     height: `${ height? height : '3.85rem' }`,
                     border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : 'var(--color-black)'}`,
                 }}>
-                {options.map((option) => (
-                    <option key={option} selected={value === option.toLowerCase()} value={option.toLowerCase()}>
-                        {option}
+                {options?.map((option) => (
+                    <option key={option} selected={value === option[`id`].toLowerCase()} value={option[`id`].toLowerCase()}>
+                        {option[id]}
                     </option>
                 ))}
             </WrapperChoiceBox>

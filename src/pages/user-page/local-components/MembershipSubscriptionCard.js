@@ -40,6 +40,7 @@ const MembershipSubscriptionCard = ({
       font-family: var(--font-family-primary);
       font-size: var(--font-size-normal-2);
       font-weight: var(--font-weight-bold);
+      letter-spacing: 2px;
       color: grey;
     }
 

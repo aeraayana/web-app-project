@@ -56,9 +56,7 @@ const ButtonSolid = ({ hoverColor, thickness, label, iconPre, icon, borderColor,
 
     return (
         <Wrapper onClick={ onClick } className={className} disabled={disabled} >
-            <div>
-                {icon && icon}
-            </div>
+            {icon && <div style={{ marginBottom: '1.5rem' }}> {icon} </div>}
             <div>
                 {iconPre && iconPre}
                 { label && <span style={{ 

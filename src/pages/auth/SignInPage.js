@@ -22,7 +22,6 @@ const initialState = {
 const SignInPage = () => {
     document.body.style = 'background-image: linear-gradient(145deg, var(--color-primary-dark), var(--color-primary-light));';
 
-    // const { isLoading } = useAppContext();
     const { user, loginUser, isLoading, errorDetail } = useAppContext();
     const navigate = useNavigate();
     const [values, setValues] = useState( initialState );
@@ -35,17 +34,11 @@ const SignInPage = () => {
     const actionCreateAccountClick = () => {
         navigate("/create-account");        
     }
-    
-    // const actionSignInClick = async (e) => {
-    //     e.preventDefault();
-    //     const { email, password } = values;
-    //     await loginUser( { email: email, password: password} );
-    // };
 
     const actionSignInClick = async (e) => {
         e.preventDefault();
-        await loginUser({ email: values.email, password: values.password });
-        // navigate('/')
+        // await loginUser({ email: values.email, password: values.password });
+        navigate('/')
     }
 
     const actionLandingPageClick = () => {
@@ -55,19 +48,6 @@ const SignInPage = () => {
     const actionForgotPasswordClick = () => {
         navigate("/forgot-password");
     }
-
-    // useEffect(() => {
-    //     console.log(user);
-    //     if (user) {
-    //         setTimeout(() => {
-    //             if(user?.username){
-    //                 navigate('/');
-    //             } else {
-    //                 navigate('/sign-up-mandatory-1')
-    //             }
-    //         }, 1000);
-    //     }
-    // }, [user, navigate]);
 
     return (
         <React.Fragment>
