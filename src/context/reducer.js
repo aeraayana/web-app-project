@@ -76,6 +76,7 @@ import {
   UPDATE_PROFILE_BEGIN,
   GET_TEMATIK_KEGIATAN,
   GET_TEMATIK_KEGIATAN_ERROR,
+  GET_TEMATIK_KEGIATAN_BEGIN,
 } from './actions';
 
 import { initialState } from './appContext';
@@ -94,11 +95,12 @@ const reducer = (state, action) => {
     return {
       ...state,
       isSuccess: true,
-      id_tematik_kegiatan: action.payload.id_tematik_kegiatan,
-      tematik_kegiatan: action.payload.tematik_kegiatan,
-      deskripsi_tematik: action.payload.deskripsi_tematik,
-      image: action.payload.image
+      isLoading: false,
+      tematikKegiatan: action.payload.data,
     }
+  }
+  if (action.type === GET_TEMATIK_KEGIATAN_BEGIN){
+    return { ...state, isLoading: true };
   }
   if (action.type === DISPLAY_ALERT) {
     return {

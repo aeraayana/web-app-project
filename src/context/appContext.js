@@ -30,6 +30,7 @@ import {
   GET_JOBS_SUCCESS,
   GET_TEMATIK_KEGIATAN,
   GET_TEMATIK_KEGIATAN_ERROR,
+  GET_TEMATIK_KEGIATAN_BEGIN,
 } from './actions';
 
 const user = localStorage.getItem('token');
@@ -48,7 +49,7 @@ const initialState = {
   kelompokMasyarakat: [],
   showProfileModal: false,
   showShareProfile: false,
-  
+  tematikKegiatan: [],
 };
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
@@ -195,26 +196,18 @@ const AppProvider = ({ children }) => {
   };
 
   const getTematikKegiatan = async () => {
+    dispatch({ type: GET_TEMATIK_KEGIATAN_BEGIN });
     try {
-      const response = await authFetch.get('tematikKegiatan')
-      response.data.map((tematik_kegiatan) => {
-        dispatch({
-          type: GET_TEMATIK_KEGIATAN,
-          payload: {
-            id_tematik_kegiatan: tematik_kegiatan.id,
-            tematik_kegiatan: tematik_kegiatan.tematik_kegiatan,
-            deskripsi_tematik: tematik_kegiatan.deskripsi_tematik,
-            image: tematik_kegiatan.image
-          }
-        })
-      })
-    } catch (error) {
-      const { message, data } = error.response;
+      const { data } = await authFetch.get(`tematikKegiatan`);
+      
       dispatch({
-        type: GET_TEMATIK_KEGIATAN_ERROR,
-        payload: { message: message, data: data }
+        type: GET_TEMATIK_KEGIATAN,
+        payload: { data: data },
       });
+    } catch (error) {
+      logoutUser();
     }
+    clearAlert();
   }
 
   const forgotPassword = async ({ email }) => {
@@ -329,6 +322,7 @@ const AppProvider = ({ children }) => {
         forgotPassword,
         resetPassword,
         getKelompokMasyarakat,
+        getTematikKegiatan,
         verifyRegister,
         ///////////////////////////////////////////////
         logoutUser,

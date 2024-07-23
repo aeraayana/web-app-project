@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { CModal, CModalBody, CModalHeader, CModalTitle } from '@coreui/react';
 import { Spacing } from "../../../components";
-import React from "react";
+import React, { useEffect } from "react";
 import Pana from "../../../assets/images/landing/pana.png";
 import { FaArrowLeft } from "react-icons/fa";
 import { BrowserView, MobileView } from "react-device-detect";
+import { useAppContext } from "../../../context/appContext";
 
 const dummyData = [
     {
@@ -191,7 +192,10 @@ const MobileWrapper = styled(CModal)`
 
 const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
     // const [index, setIndex] = React.useState(i);
-    console.log(show);
+    const { tematikKegiatan, getTematikKegiatan } = useAppContext();
+
+    React.useEffect(() => {getTematikKegiatan()},[])
+    console.log(tematikKegiatan);
 
     return (
         <>
