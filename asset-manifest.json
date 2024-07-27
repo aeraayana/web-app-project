@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/web-app-project/static/css/main.2e1f173f.css",
-    "main.js": "/web-app-project/static/js/main.3f635fa3.js",
+    "main.js": "/web-app-project/static/js/main.d7e1f097.js",
     "static/media/hockey.png": "/web-app-project/static/media/hockey.6a55ebbfa228ec08391c.png",
     "static/media/placeholder_img.jpg": "/web-app-project/static/media/placeholder_img.5d5714667a5c533fe652.jpg",
     "static/media/Montserrat-BlackItalic.ttf": "/web-app-project/static/media/Montserrat-BlackItalic.fd62a10743bd89a3d97c.ttf",
@@ -64,10 +64,10 @@
     "static/media/logo-crown.svg": "/web-app-project/static/media/logo-crown.95314c3740c0753a9dd0377cdef2718c.svg",
     "static/media/logo-house.svg": "/web-app-project/static/media/logo-house.a478cb42e2b761b0254f294bf65a581f.svg",
     "main.2e1f173f.css.map": "/web-app-project/static/css/main.2e1f173f.css.map",
-    "main.3f635fa3.js.map": "/web-app-project/static/js/main.3f635fa3.js.map"
+    "main.d7e1f097.js.map": "/web-app-project/static/js/main.d7e1f097.js.map"
   },
   "entrypoints": [
     "static/css/main.2e1f173f.css",
-    "static/js/main.3f635fa3.js"
+    "static/js/main.d7e1f097.js"
   ]
 }
