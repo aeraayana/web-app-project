@@ -4,7 +4,7 @@ import Spacing from "../others/Spacing";
 
 const WrapperInputText = styled(CFormInput)`
     padding: 1rem;
-    font-family: var(--font-family-secondary);
+    font-family: var(--font-family-primary);
     font-size: var(--font-size-normal);
     font-weight: var(--font-weight-normal);
     border-radius: 0.3125rem;
@@ -19,7 +19,7 @@ const WrapperInputText = styled(CFormInput)`
 const Wrapper = styled.div`
     .label{
         color: var(--color-black)
-        font-family: var(--font-family-secondary);
+        font-family: var(--font-family-primary);
         font-weight: var(--font-weight-bold);
         font-size: var(--font-size-normal);
         padding-bottom: 0.5rem;
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
 
     .post-label{
         color: var(--color-black)
-        font-family: var(--font-family-secondary);
+        font-family: var(--font-family-primary);
         font-weight: var(--font-weight-semibold);
         font-size: var(--font-size-normal-2);
         padding-bottom: 0.5rem;
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
 
     .label-error{
         color: var(--color-error);
-        font-family: var(--font-family-secondary);
+        font-family: var(--font-family-primary);
         font-weight: var(--font-weight-normal);
         font-size: var(--font-size-normal);
         padding-top: 0.5rem;

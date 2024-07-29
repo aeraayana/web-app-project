@@ -3,9 +3,15 @@ import { CFormSelect } from '@coreui/react';
 
 const Wrapper = styled(CFormSelect)`
     border-radius: 0.3125rem;
-    font-family: var(--font-family-secondary);
+    font-family: var(--font-family-primary);
     font-size: var(--font-size-normal);
     font-weight: var(--font-weight-normal);
+
+    &:focus{
+        outline: none !important;
+        border:1px solid var(--color-primary-dark);
+        background-color: var(--color-primary);
+    }
 `;
 
 const ChoiceBoxString = ({ options, id, name, onChange, isError, width, height, className }) => {

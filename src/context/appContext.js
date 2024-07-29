@@ -21,22 +21,28 @@ import {
   RESET_PASSWORD_BEGIN,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_ERROR,
-  VERIFY_REGISTER_BEGIN,
-  VERIFY_REGISTER_SUCCESS,
-  VERIFY_REGISTER_ERROR,
   /////////////////////////////////////////////////////////////////////////////////////////
   TOGGLE_PROFILE_MODAL,
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
+  GET_PAKET_KATEGORI_DATA,
+  GET_PAKET_KATEGORI_DATA_BEGIN,
   GET_TEMATIK_KEGIATAN,
-  GET_TEMATIK_KEGIATAN_ERROR,
   GET_TEMATIK_KEGIATAN_BEGIN,
+  GET_SUB_TEMATIK_KEGIATAN,
+  GET_SUB_TEMATIK_KEGIATAN_BEGIN,
+  GET_KECAMATAN_BEGIN,
+  GET_KECAMATAN,
+  GET_KELURAHAN,
+  GET_KELURAHAN_BEGIN,
+  GET_KOTA_BEGIN,
+  GET_KOTA,
 } from './actions';
 
 const user = localStorage.getItem('token');
 
 const initialState = {
-  user: user,
+  token: user,
   userLoading: false,
   isLoading: false,
   isError: false,
@@ -50,6 +56,12 @@ const initialState = {
   showProfileModal: false,
   showShareProfile: false,
   tematikKegiatan: [],
+  paketKategoriData: [],
+  subTematikKegiatan: [],
+  provinsi: [],
+  kota: [],
+  kelurahan: [],
+  kecamatan: [],
 };
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
@@ -65,7 +77,7 @@ const AppProvider = ({ children }) => {
       "Content-Type": "application/json",
       id: CLIENT_ID,
       secret: CLIENT_ID_SECRET,
-      Authorization: `Bearer ${user}`,
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     }
   });
 
@@ -114,10 +126,10 @@ const AppProvider = ({ children }) => {
         `login`,
         { email_pic: email, password: password }
       );
-      console.log(response);
-      const { token, message } = response.data;
+      const { data, message } = response.data;
       // const user = data;
-      const token_access = token;
+      const token_access = data.token;
+      // console.log(token_access);
 
       dispatch({
         type: LOGIN_USER_SUCCESS,
@@ -195,21 +207,6 @@ const AppProvider = ({ children }) => {
     return false;
   };
 
-  const getTematikKegiatan = async () => {
-    dispatch({ type: GET_TEMATIK_KEGIATAN_BEGIN });
-    try {
-      const { data } = await authFetch.get(`tematikKegiatan`);
-      
-      dispatch({
-        type: GET_TEMATIK_KEGIATAN,
-        payload: { data: data },
-      });
-    } catch (error) {
-      logoutUser();
-    }
-    clearAlert();
-  }
-
   const forgotPassword = async ({ email }) => {
     dispatch({ type: FORGOT_PASSWORD_BEGIN });
     try {
@@ -260,32 +257,6 @@ const AppProvider = ({ children }) => {
     return false;
   };
 
-  const verifyRegister = async ({ serial }) => {
-    if (!state.isLoading) {
-      dispatch({ type: VERIFY_REGISTER_BEGIN });
-      try {
-        const response = await unAuthFetch(
-          `/auth/verify?token=${serial}`,
-        );
-        const { message } = response.data;
-
-        dispatch({
-          type: VERIFY_REGISTER_SUCCESS,
-          payload: { message: message },
-        });
-        return true;
-      } catch (error) {
-        const { data } = error.response;
-        dispatch({
-          type: VERIFY_REGISTER_ERROR,
-          payload: { message: data.message, data: data.data },
-        });
-      }
-    }
-    return false;
-  };
-
-
   useEffect(() => {
     getCurrentUser();
   }, []);
@@ -308,6 +279,119 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  
+  const getTematikKegiatan = async () => {
+    dispatch({ type: GET_TEMATIK_KEGIATAN_BEGIN });
+    try {
+      const { data } = await authFetch.get(`tematikKegiatan`);
+      
+      dispatch({
+        type: GET_TEMATIK_KEGIATAN,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
+  const getSubTematikKegiatan = async ({ categoryId }) => {
+    dispatch({ type: GET_SUB_TEMATIK_KEGIATAN_BEGIN });
+    try {
+      const { data } = await authFetch.post(
+        `subTematikKegiatan`,
+        { tematik_kegiatan_id: categoryId }
+      );
+      
+      dispatch({
+        type: GET_SUB_TEMATIK_KEGIATAN,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
+  const getPaketKategoriData = async ({ subId, categoryId }) => {
+    dispatch({ type: GET_PAKET_KATEGORI_DATA_BEGIN });
+    try {
+      const { data } = await authFetch.get(
+        `paketKegiatan/${categoryId}/${subId}`,
+      );
+      
+      dispatch({
+        type: GET_PAKET_KATEGORI_DATA,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const getProvinsi = async () => {
+    dispatch({ type: GET_KECAMATAN_BEGIN });
+    try {
+      const { data } = await authFetch.get(`provinsi`);
+      
+      dispatch({
+        type: GET_KECAMATAN,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
+  const getKelurahan = async () => {
+    dispatch({ type: GET_KELURAHAN_BEGIN });
+    try {
+      const { data } = await authFetch.get(`kelurahan`);
+      
+      dispatch({
+        type: GET_KELURAHAN,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
+  const getKota = async () => {
+    dispatch({ type: GET_KOTA_BEGIN });
+    try {
+      const { data } = await authFetch.get(`kota`);
+      
+      dispatch({
+        type: GET_KOTA,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
+  const getKecamatan = async () => {
+    dispatch({ type: GET_KECAMATAN_BEGIN });
+    try {
+      const { data } = await authFetch.get(`kecamatan`);
+      
+      dispatch({
+        type: GET_KECAMATAN,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
   const toggleProfileModal = () => {
     dispatch({ type: TOGGLE_PROFILE_MODAL });
   };
@@ -323,10 +407,15 @@ const AppProvider = ({ children }) => {
         resetPassword,
         getKelompokMasyarakat,
         getTematikKegiatan,
-        verifyRegister,
+        getSubTematikKegiatan,
+        getPaketKategoriData,
+        ///////////////////////////////////////////////
+        getKelurahan,
+        getKecamatan,
+        getKota,
+        getProvinsi,
         ///////////////////////////////////////////////
         logoutUser,
-        ///////////////////////////////////////////////
         toggleProfileModal,
       }}
     >

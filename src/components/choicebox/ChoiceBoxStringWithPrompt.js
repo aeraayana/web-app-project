@@ -3,9 +3,8 @@ import ChoiceBoxString from "./ChoiceBoxString";
 import { CFormSelect } from '@coreui/react';
 
 const WrapperChoiceBox = styled(CFormSelect)`
-    padding: 1rem;
     border-radius: 0.3125rem;
-    font-family: var(--font-family-secondary);
+    font-family: var(--font-family-primary);
     font-size: var(--font-size-normal);
     font-weight: var(--font-weight-normal);
 `
@@ -13,7 +12,7 @@ const WrapperChoiceBox = styled(CFormSelect)`
 const Wrapper = styled.div`
     .label{
         color: var(--color-black)
-        font-family: var(--font-family-secondary);
+        font-family: var(--font-family-primary);
         font-weight: var(--font-weight-bold);
         font-size: var(--font-size-normal);
         padding-bottom: 0.5rem;
@@ -21,10 +20,16 @@ const Wrapper = styled.div`
 
     .label-error{
         color: var(--color-error);
-        font-family: var(--font-family-secondary);
+        font-family: var(--font-family-primary);
         font-weight: var(--font-weight-normal);
         font-size: var(--font-size-normal);
         padding-top: 0.5rem;
+    }
+
+    &:focus{
+        outline: none !important;
+        border:1px solid var(--color-primary-dark);
+        background-color: var(--color-primary);
     }
 `;
 

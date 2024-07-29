@@ -17,10 +17,11 @@ import { BrowserView, MobileView } from 'react-device-detect';
 const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
     
     const navigate = useNavigate();
-    const { user, toggleProfileModal, setSearch } = useAppContext();
+    const { token, toggleProfileModal, setSearch, logoutUser } = useAppContext();
 
     const actionSignInClick = () => {
-        navigate("/sign-in");        
+        navigate("/sign-in");    
+        logoutUser();
     }
 
     // const getDisplayName = () => {

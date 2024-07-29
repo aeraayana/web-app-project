@@ -18,9 +18,6 @@ import {
   RESET_PASSWORD_BEGIN,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_ERROR,
-  VERIFY_REGISTER_BEGIN,
-  VERIFY_REGISTER_SUCCESS,
-  VERIFY_REGISTER_ERROR,
   /////////////////////////////////////////////////////////////////////////////////////////
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
@@ -77,11 +74,35 @@ import {
   GET_TEMATIK_KEGIATAN,
   GET_TEMATIK_KEGIATAN_ERROR,
   GET_TEMATIK_KEGIATAN_BEGIN,
+  GET_SUB_TEMATIK_KEGIATAN_ERROR,
+  GET_SUB_TEMATIK_KEGIATAN,
+  GET_SUB_TEMATIK_KEGIATAN_BEGIN,
+  GET_PAKET_KATEGORI_DATA,
+  GET_PAKET_KATEGORI_DATA_BEGIN,
+  GET_PAKET_KATEGORI_DATA_ERROR,
+  //////////////////////////////////////////////////////////////////////
+  GET_KECAMATAN,
+  GET_KECAMATAN_BEGIN,
+  GET_KECAMATAN_ERROR,
+  
+  GET_KELURAHAN,
+  GET_KELURAHAN_BEGIN,
+  GET_KELURAHAN_ERROR,
+
+  GET_KOTA,
+  GET_KOTA_BEGIN,
+  GET_KOTA_ERROR,
+  
+  GET_PROVINSI,
+  GET_PROVINSI_BEGIN,
+  GET_PROVINSI_ERROR,
 } from './actions';
 
 import { initialState } from './appContext';
 
 const reducer = (state, action) => {
+  
+  //////////////////////////////////////////////////////////////////////
   if (action.type === GET_TEMATIK_KEGIATAN_ERROR) {
     return {
       ...state,
@@ -102,6 +123,137 @@ const reducer = (state, action) => {
   if (action.type === GET_TEMATIK_KEGIATAN_BEGIN){
     return { ...state, isLoading: true };
   }
+
+  if (action.type === GET_PAKET_KATEGORI_DATA_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
+  if (action.type === GET_PAKET_KATEGORI_DATA) {
+    return {
+      ...state,
+      isSuccess: true,
+      isLoading: false,
+      paketKategoriData: action.payload.data,
+    }
+  }
+  if (action.type === GET_PAKET_KATEGORI_DATA_BEGIN){
+    return { ...state, isLoading: true };
+  }
+  
+  if (action.type === GET_SUB_TEMATIK_KEGIATAN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
+  if (action.type === GET_SUB_TEMATIK_KEGIATAN) {
+    return {
+      ...state,
+      isSuccess: true,
+      isLoading: false,
+      subTematikKegiatan: action.payload.data,
+    }
+  }
+  if (action.type === GET_SUB_TEMATIK_KEGIATAN_BEGIN){
+    return { ...state, isLoading: true };
+  }
+  
+  //////////////////////////////////////////////////////////////////////
+
+  if (action.type === GET_KOTA_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
+  if (action.type === GET_KOTA) {
+    return {
+      ...state,
+      isSuccess: true,
+      isLoading: false,
+      kota: action.payload.data,
+    }
+  }
+  if (action.type === GET_KOTA_BEGIN){
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === GET_KECAMATAN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
+  if (action.type === GET_KECAMATAN) {
+    return {
+      ...state,
+      isSuccess: true,
+      isLoading: false,
+      kecamatan: action.payload.data,
+    }
+  }
+  if (action.type === GET_KECAMATAN_BEGIN){
+    return { ...state, isLoading: true };
+  }
+  
+  if (action.type === GET_KELURAHAN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
+  if (action.type === GET_KELURAHAN) {
+    return {
+      ...state,
+      isSuccess: true,
+      isLoading: false,
+      kelurahan: action.payload.data,
+    }
+  }
+  if (action.type === GET_KELURAHAN_BEGIN){
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === GET_PROVINSI_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
+  if (action.type === GET_PROVINSI) {
+    return {
+      ...state,
+      isSuccess: true,
+      isLoading: false,
+      provinsi: action.payload.data,
+    }
+  }
+  if (action.type === GET_PROVINSI_BEGIN){
+    return { ...state, isLoading: true };
+  }
+
+  //////////////////////////////////////////////////////////////////////
+
   if (action.type === DISPLAY_ALERT) {
     return {
       ...state,
@@ -264,36 +416,6 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === RESET_PASSWORD_ERROR) {
-    return {
-      ...state,
-      isLoading: false,
-      isError: true,
-      errorMessage: action.payload.message,
-      errorDetail: action.payload.data,
-    };
-  }
-
-  //Verify Register State
-  if (action.type === VERIFY_REGISTER_BEGIN) {
-    return {
-      ...state,
-      isLoading: true,
-      isSuccess: false,
-      successMessage: '',
-      isError: false,
-      errorMessage: '',
-      errorDetail: {},
-    };
-  }
-  if (action.type === VERIFY_REGISTER_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
-      isSuccess: true,
-      successMessage: action.payload.message,
-    };
-  }
-  if (action.type === VERIFY_REGISTER_ERROR) {
     return {
       ...state,
       isLoading: false,

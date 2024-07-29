@@ -66,7 +66,7 @@ const MembershipSubscriptionCard = ({
     }
   `;
 
-  console.log(bgColor);
+  // console.log(bgColor);
 
   return (
     <Wrapper
