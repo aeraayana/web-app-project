@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/web-app-project/static/css/main.2e1f173f.css",
-    "main.js": "/web-app-project/static/js/main.fa816103.js",
+    "main.js": "/web-app-project/static/js/main.109af17e.js",
     "static/media/hockey.png": "/web-app-project/static/media/hockey.6a55ebbfa228ec08391c.png",
     "static/media/placeholder_img.jpg": "/web-app-project/static/media/placeholder_img.5d5714667a5c533fe652.jpg",
     "static/media/Montserrat-BlackItalic.ttf": "/web-app-project/static/media/Montserrat-BlackItalic.fd62a10743bd89a3d97c.ttf",
@@ -54,7 +54,13 @@
     "static/media/not-found.svg": "/web-app-project/static/media/not-found.5eb3e64476624b8a49d7d75cc64a0d40.svg",
     "static/media/readMoreImg.svg": "/web-app-project/static/media/readMoreImg.bc7472aa9a5f8d4dd3b6ec55d62416fb.svg",
     "static/media/main.svg": "/web-app-project/static/media/main.f1624efcba3ac7e36d1e54d5606200bb.svg",
+    "static/media/water.png": "/web-app-project/static/media/water.f6a8290c9a7adc73bd33.png",
+    "static/media/amico.png": "/web-app-project/static/media/amico.8784bcbc47a1686c4799.png",
+    "static/media/sun.png": "/web-app-project/static/media/sun.221027793e1ddeb4eb81.png",
+    "static/media/papa.png": "/web-app-project/static/media/papa.2007a5faf5409308ae06.png",
+    "static/media/planting.png": "/web-app-project/static/media/planting.02b80f03d6c87e81c9c8.png",
     "static/media/pana.png": "/web-app-project/static/media/pana.3ec551ced74148e024b6.png",
+    "static/media/protect.png": "/web-app-project/static/media/protect.3c8d4895d364d85ad867.png",
     "static/media/arrow-rotate.svg": "/web-app-project/static/media/arrow-rotate.8c5680159c4fa5c1a4ffb035d041d6a5.svg",
     "index.html": "/web-app-project/index.html",
     "static/media/icon-uncheck.svg": "/web-app-project/static/media/icon-uncheck.1a7fb2ffc3fbee6fdb0777c168cd2c80.svg",
@@ -64,10 +70,10 @@
     "static/media/logo-crown.svg": "/web-app-project/static/media/logo-crown.95314c3740c0753a9dd0377cdef2718c.svg",
     "static/media/logo-house.svg": "/web-app-project/static/media/logo-house.a478cb42e2b761b0254f294bf65a581f.svg",
     "main.2e1f173f.css.map": "/web-app-project/static/css/main.2e1f173f.css.map",
-    "main.fa816103.js.map": "/web-app-project/static/js/main.fa816103.js.map"
+    "main.109af17e.js.map": "/web-app-project/static/js/main.109af17e.js.map"
   },
   "entrypoints": [
     "static/css/main.2e1f173f.css",
-    "static/js/main.fa816103.js"
+    "static/js/main.109af17e.js"
   ]
 }
