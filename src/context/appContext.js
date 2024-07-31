@@ -31,12 +31,21 @@ import {
   GET_TEMATIK_KEGIATAN_BEGIN,
   GET_SUB_TEMATIK_KEGIATAN,
   GET_SUB_TEMATIK_KEGIATAN_BEGIN,
-  GET_KECAMATAN_BEGIN,
   GET_KECAMATAN,
+  GET_KECAMATAN_BEGIN,
   GET_KELURAHAN,
   GET_KELURAHAN_BEGIN,
-  GET_KOTA_BEGIN,
   GET_KOTA,
+  GET_KOTA_BEGIN,
+  GET_KELOMPOK_MASYARAKAT,
+  GET_KELOMPOK_MASYARAKAT_BEGIN,
+  GET_BIDANG_FOLU,
+  GET_BIDANG_FOLU_BEGIN,
+  POST_FORM_PENGAJUAN_BEGIN,
+  POST_FORM_PENGAJUAN,
+  POST_FORM_PENGAJUAN_ERROR,
+  GET_PROVINSI_BEGIN,
+  GET_PROVINSI,
 } from './actions';
 
 const user = localStorage.getItem('token');
@@ -53,6 +62,7 @@ const initialState = {
   showSidebar: false,
   isEditing: false,
   kelompokMasyarakat: [],
+  namaKelompokMasyarakat: [],
   showProfileModal: false,
   showShareProfile: false,
   tematikKegiatan: [],
@@ -60,6 +70,7 @@ const initialState = {
   subTematikKegiatan: [],
   provinsi: [],
   kota: [],
+  bidangFolu: [],
   kelurahan: [],
   kecamatan: [],
 };
@@ -137,7 +148,7 @@ const AppProvider = ({ children }) => {
       });
       addUserToLocalStorage({ token: token_access });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       const { message, data } = error.response;
       dispatch({
         type: LOGIN_USER_ERROR,
@@ -267,7 +278,7 @@ const AppProvider = ({ children }) => {
 
     dispatch({ type: GET_JOBS_BEGIN });
     try {
-      const { data } = await authFetch.get(`jenisKelompokMasyarakat`);
+      const { data } = await unAuthFetch.get(`jenisKelompokMasyarakat`);
       
       dispatch({
         type: GET_JOBS_SUCCESS,
@@ -279,6 +290,23 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const getNamaKelompokMasyarakat = async ({ id }) => {
+
+    dispatch({ type: GET_KELOMPOK_MASYARAKAT_BEGIN });
+    try {
+      const { data } = await unAuthFetch.get(`kelompokMasyarakat/${id}/byIdJenisKelompokMasyarakat`);
+      // console.log(data);
+      dispatch({
+        type: GET_KELOMPOK_MASYARAKAT,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////////////
   
   const getTematikKegiatan = async () => {
     dispatch({ type: GET_TEMATIK_KEGIATAN_BEGIN });
@@ -333,12 +361,12 @@ const AppProvider = ({ children }) => {
   /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const getProvinsi = async () => {
-    dispatch({ type: GET_KECAMATAN_BEGIN });
+    dispatch({ type: GET_PROVINSI_BEGIN });
     try {
       const { data } = await authFetch.get(`provinsi`);
       
       dispatch({
-        type: GET_KECAMATAN,
+        type: GET_PROVINSI,
         payload: { data: data },
       });
     } catch (error) {
@@ -392,8 +420,65 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
+  const getLokasiBidangFolu = async () => {
+    dispatch({ type: GET_BIDANG_FOLU_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getLokasiBidangFolu`);
+      
+      dispatch({
+        type: GET_BIDANG_FOLU,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
   const toggleProfileModal = () => {
     dispatch({ type: TOGGLE_PROFILE_MODAL });
+  };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  const postFormProposal = async ({ title, provinsi_code, kabupaten_code, 
+    kecamatan_code, kelurahan_code, alamat_kegiatan, tanggal_kegiatan, waktu_kegiatan, proposal_kegiatan,
+    tujuan_kegiatan, ruang_lingkup_kegiatan, paket_kegiatan_id, folu_location, fileDocument }) => {
+    dispatch({ type: POST_FORM_PENGAJUAN_BEGIN });
+    try {
+      const response = await unAuthFetch.post(
+        `register`, {
+          judul_pengajuan_kegiatan: title,
+          provinsi_kegiatan: provinsi_code,
+          kabupaten_kegiatan: kabupaten_code,
+          kecamatan_kegiatan: kecamatan_code,
+          kelurahan_kegiatan: kelurahan_code,
+          alamat_kegiatan: alamat_kegiatan,
+          tanggal_kegiatan: tanggal_kegiatan,
+          waktu_kegiatan: waktu_kegiatan,
+          proposal_kegiatan: proposal_kegiatan,
+          tujuan_kegiatan: tujuan_kegiatan,
+          ruang_lingkup_kegiatan: ruang_lingkup_kegiatan,
+          paket_kegiatan_id: paket_kegiatan_id,
+          lokasi_bidang_folu_id: folu_location,
+          fileDocument: fileDocument,
+      }
+      );
+      const { message } = response.data;
+
+      dispatch({
+        type: POST_FORM_PENGAJUAN,
+        payload: { message: message },
+      });
+      return true;
+    } catch (error) {
+      const { message, data } = error.response;
+      dispatch({
+        type: POST_FORM_PENGAJUAN_ERROR,
+        payload: { message: message, data: data },
+      });
+    }
+    return false;
   };
 
   return (
@@ -405,7 +490,9 @@ const AppProvider = ({ children }) => {
         registerUser,
         forgotPassword,
         resetPassword,
+        getNamaKelompokMasyarakat,
         getKelompokMasyarakat,
+        ///////////////////////////////////////////////
         getTematikKegiatan,
         getSubTematikKegiatan,
         getPaketKategoriData,
@@ -414,9 +501,12 @@ const AppProvider = ({ children }) => {
         getKecamatan,
         getKota,
         getProvinsi,
+        getLokasiBidangFolu,
         ///////////////////////////////////////////////
         logoutUser,
         toggleProfileModal,
+        ///////////////////////////////////////////////
+        postFormProposal,
       }}
     >
       {children}

@@ -96,6 +96,14 @@ import {
   GET_PROVINSI,
   GET_PROVINSI_BEGIN,
   GET_PROVINSI_ERROR,
+  GET_KELOMPOK_MASYARAKAT,
+  GET_KELOMPOK_MASYARAKAT_BEGIN,
+  GET_BIDANG_FOLU_ERROR,
+  GET_BIDANG_FOLU_BEGIN,
+  GET_BIDANG_FOLU,
+  POST_FORM_PENGAJUAN,
+  POST_FORM_PENGAJUAN_BEGIN,
+  POST_FORM_PENGAJUAN_ERROR,
 } from './actions';
 
 import { initialState } from './appContext';
@@ -228,6 +236,27 @@ const reducer = (state, action) => {
     }
   }
   if (action.type === GET_KELURAHAN_BEGIN){
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === GET_BIDANG_FOLU_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
+  if (action.type === GET_BIDANG_FOLU) {
+    return {
+      ...state,
+      isSuccess: true,
+      isLoading: false,
+      bidangFolu: action.payload.data,
+    }
+  }
+  if (action.type === GET_BIDANG_FOLU_BEGIN){
     return { ...state, isLoading: true };
   }
 
@@ -526,6 +555,30 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
+
+  if (action.type === POST_FORM_PENGAJUAN_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === POST_FORM_PENGAJUAN) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New Job Created!',
+    };
+  }
+  if (action.type === POST_FORM_PENGAJUAN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    };
+  }
+
   if (action.type === GET_JOBS_BEGIN) {
     return { ...state, isLoading: true, showAlert: false };
   }
@@ -536,6 +589,18 @@ const reducer = (state, action) => {
       kelompokMasyarakat: action.payload.data,
     };
   }
+
+  if (action.type === GET_KELOMPOK_MASYARAKAT_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_KELOMPOK_MASYARAKAT) {
+    return {
+      ...state,
+      isLoading: false,
+      namaKelompokMasyarakat: action.payload.data,
+    };
+  }
+
   if (action.type === SET_EDIT_JOB) {
     const job = state.jobs.find((job) => job._id === action.payload.id);
     const { _id, position, company, jobLocation, jobType, status } = job;

@@ -30,7 +30,7 @@ const SignInPage = () => {
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value});
-        console.log(values);
+        //console.log(values);
     } 
 
     const actionCreateAccountClick = () => {
@@ -65,7 +65,7 @@ const SignInPage = () => {
                                 <Spacing height="3.25rem" />
                                 <div className='col-start-start'>    
                                     <p className='col-start-start title-sub'>Selamat Datang di</p>
-                                    <h1 className='title'>Layanan Data Masyarakat</h1>
+                                    <h1 className='title'>Layanan Dana Masyarakat</h1>
                                 </div> 
                                 <Spacing height="5.525rem" />   {/* 34px */}
                                 <h1 className='text-center title' style={{ color: "var(--color-primary-dark)" }}>Log In</h1>
@@ -129,7 +129,7 @@ const SignInPage = () => {
                                 <Spacing height="3.25rem" />
                                 <div className='col-start-start'>    
                                     <p className='col-start-start title-sub'>Selamat Datang di</p>
-                                    <h1 className='title'>Layanan Data Masyarakat</h1>
+                                    <h1 className='title'>Layanan Dana Masyarakat</h1>
                                 </div> 
                                 <Spacing height="5.525rem" />   {/* 34px */}
                                 <h1 className='text-center title' style={{ color: "var(--color-primary-dark)" }}>Log In</h1>

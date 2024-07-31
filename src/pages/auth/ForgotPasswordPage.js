@@ -42,8 +42,6 @@ const ForgotPasswordPage = () => {
         navigate('/admin/email-sent');
     }
 
-    console.log("ok")
-
     return (
         <React.Fragment>
             {/* {user && <Navigate to='/' />} */}

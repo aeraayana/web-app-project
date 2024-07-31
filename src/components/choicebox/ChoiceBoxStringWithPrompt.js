@@ -46,11 +46,14 @@ const ChoiceBoxStringWithPrompt = ({ prompt,  options, id, name, onChange, heigh
                     height: `${ height? height : '3.85rem' }`,
                     border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : 'var(--color-black)'}`,
                 }}>
-                {options?.map((option) => (
-                    <option key={option} selected={value === option[`id`].toLowerCase()} value={option[`id`].toLowerCase()}>
-                        {option[id]}
-                    </option>
-                ))}
+                    <option  selected={value === ''} value={''}>
+                        {`Pilih ${prompt}`}
+                    </option>     
+                    {options?.map((option) => (
+                        <option key={option} selected={value === option[`id`]} value={option[`id`]}>
+                            {option[id]}
+                        </option>
+                    ))}
             </WrapperChoiceBox>
             {errorMessage && <label className="label-error">{errorMessage}</label> }
         </Wrapper>

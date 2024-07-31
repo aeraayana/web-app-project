@@ -30,27 +30,38 @@ const initialState = {
 const CreateAccountPage = () => {
     document.body.style = 'background-image: linear-gradient(145deg, var(--color-primary-dark), var(--color-primary-light));';
 
-    const { token, registerUser, isLoading, kelompokMasyarakat, getKelompokMasyarakat } = useAppContext();
+    const { 
+        registerUser, 
+        isLoading, 
+        kelompokMasyarakat, 
+        getKelompokMasyarakat,
+        namaKelompokMasyarakat,
+        getNamaKelompokMasyarakat 
+    } = useAppContext();
+
     const navigate = useNavigate();
     const [values, setValues] = useState( initialState );
+    
+    // console.log(values)
 
     const actionSignInClick = () => {
         navigate("/sign-in");        
     }
 
-    // console.log(kelompokMasyarakat)
-
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value});        
     } 
 
+    const handleJenisChange = async (e) => {
+        await getNamaKelompokMasyarakat({ id: e.target.value })
+    }
+
     const actionCreateAccountClick = async (e) => {
         e.preventDefault();
-        const { userId, noTelp, email, jenisKelompokMasyarakat, jenisId, nama } = values;
-        // navigate('/verify-email')
+        const { userId, noTelp, email, namaKelompokMasyarakat, jenisId, nama } = values;
 
         const success = await registerUser({ 
-            category: jenisKelompokMasyarakat, email: email, name: nama, identity_type: jenisId, identity_number: userId, phone_number: noTelp });
+            category: namaKelompokMasyarakat, email: email, name: nama, identity_type: jenisId, identity_number: userId, phone_number: noTelp });
         if( success ){
             navigate("/sign-in");        
         }
@@ -64,7 +75,7 @@ const CreateAccountPage = () => {
     return (
         <React.Fragment>
             <MobileView>
-            {token && <Navigate to='/' />}
+            {/* {token && <Navigate to='/' />} */}
                 <MobileWrapper className='d-flex justify-content-center w-full'> 
                     <section className='input-container rounded col-center w-1/4' style={{ backgroundColor:"white", margin:"2.025rem" }}>
                         <div className='col-center-center'>
@@ -80,16 +91,15 @@ const CreateAccountPage = () => {
                                     name="jenisKelompokMasyarakat"
                                     prompt="Jenis Kelompok Masyarakat"
                                     options={kelompokMasyarakat.data}
-                                    onChange={handleChange} />
+                                    onChange={handleJenisChange} />
                                 <Spacing height="1.25rem" />   {/* 20px */}
-                                <InputTextWithPrompt 
-                                    type="nama"
-                                    prompt="Nama Kelompok Masyarakat"
-                                    id="nama_kelompok_masyarakat"
-                                    placeholder='Nama Kelompok Masyarakat'
-                                    name="namaKelompokMasyarakat"
-                                    onChange={handleChange}
-                                    className="w-full"/>
+                                <ChoiceBoxStringWithPrompt
+                                    className="w-full"
+                                    id="jenis_kelompok_masyarakat"
+                                    name="jenisKelompokMasyarakat"
+                                    prompt="Jenis Kelompok Masyarakat"
+                                    options={namaKelompokMasyarakat.data}
+                                    onChange={handleChange} />
                                 <Spacing height="1.25rem" />   {/* 20px */}
                                 <InputTextWithPrompt 
                                     type="nama"
@@ -155,7 +165,7 @@ const CreateAccountPage = () => {
                 </MobileWrapper>
             </MobileView>
             <BrowserView>
-                {token && <Navigate to='/' />}
+                {/* {token && <Navigate to='/' />} */}
                 <Wrapper className='d-flex justify-content-center w-full'> 
                     <section className='input-container rounded col-center w-1/4' style={{ backgroundColor:"white", margin:"2.025rem" }}>
                         <div className='col-center-center'>
@@ -171,16 +181,15 @@ const CreateAccountPage = () => {
                                     name="jenisKelompokMasyarakat"
                                     prompt="Jenis Kelompok Masyarakat"
                                     options={kelompokMasyarakat.data}
-                                    onChange={handleChange} />
+                                    onChange={handleJenisChange} />
                                 <Spacing height="1.25rem" />   {/* 20px */}
-                                <InputTextWithPrompt 
-                                    type="nama"
-                                    prompt="Nama Kelompok Masyarakat"
-                                    id="nama_kelompok_masyarakat"
-                                    placeholder='Nama Kelompok Masyarakat'
+                                <ChoiceBoxStringWithPrompt
+                                    className="w-full"
+                                    id="kelompok_masyarakat"
                                     name="namaKelompokMasyarakat"
-                                    onChange={handleChange}
-                                    className="w-full"/>
+                                    prompt="Nama Kelompok Masyarakat"
+                                    options={namaKelompokMasyarakat.data}
+                                    onChange={handleChange} />
                                 <Spacing height="1.25rem" />   {/* 20px */}
                                 <InputTextWithPrompt 
                                     type="nama"

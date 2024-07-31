@@ -6,7 +6,7 @@ import React from 'react';
 const UserHomePage = () => {
     const { user } = useAppContext();
 
-    console.log("USER HOME PAGE", user);
+    //console.log("USER HOME PAGE", user);
 
     return (
         <React.Fragment>
