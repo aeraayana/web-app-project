@@ -173,6 +173,11 @@ const MobileWrapper = styled(CModal)`
         font-weight: var(--font-weight-normal);
         font-size: var(--font-size-normal);
         color: var(--color-semiblack);
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
     }
 
     .subtitle{
@@ -180,6 +185,11 @@ const MobileWrapper = styled(CModal)`
         font-weight: var(--font-weight-semibold);
         font-size: var(--font-size-normal-2);   /* 24px */
         color: #667085;
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
         &:focus{
             outline: none !important;
             border:1px solid var(--color-primary-dark);
@@ -224,7 +234,7 @@ const MobileWrapper = styled(CModal)`
     .break {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        width: 85%;
+        width: 100%;
     }
 
     .price-tag{
@@ -235,7 +245,7 @@ const MobileWrapper = styled(CModal)`
         border-radius: 25px;
         border: 1px solid var(--color-disable);
         padding: 20px;
-        margin: 1rem;
+        margin: 0.25rem;
         height: 200px; 
         &:hover {
             color: var(--color-primary-dark);
@@ -245,22 +255,21 @@ const MobileWrapper = styled(CModal)`
     }
 
     input[type="checkbox"] {
-        appearance: none;
-        background-color: #fff;
         font: inherit;
-        color: currentColor;
         width: 1.75em;
         height: 1.75em;
-        border: 0.1rem solid currentColor;
+        border: 0.1rem solid var(--color-disable);
         border-radius: 0.15em;
         transform: translateY(-0.075em);
+        display: grid;
+        place-content: center;
     }
-    
-    .center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 3px solid green;
+
+    input[type="checkbox"]:checked {
+        transform: scale(1);
+        border: 0.1rem solid var(--color-disable);
+        border-radius: 0.15em;
+        background-color: var(--color-primary);
     }
 `
 
@@ -290,6 +299,8 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
         nama_paket_kegiatan: '',
     });
 
+    console.log(initialState);
+
     React.useEffect(() => { 
         Promise.all([
             getProvinsi(),
@@ -313,16 +324,18 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
     }
     
     const handleGetPaketKategoriData = async (e, index) => {
-        setData({ subId: e.id, id: e.tematik_kegiatan_id });
+        if(!data){
+            setData({ id: e.id, tematik_kegiatan_id: e.tematik_kegiatan_id });
+        }
         await getPaketKategoriData({ categoryId: e.tematik_kegiatan_id, subId: e.id })
         setIndex(index);
     }
-
+    
     const handleChange = (e) => {
         const list = initialState;
         setInitialState({ ...list, [e.target.name]: e.target.value });
     }
-
+    
     const handleCheck = (e) => {
         if(kategori.nama_paket_kegiatan === e.nama_paket_kegiatan){
             setKategori({ nama_paket_kegiatan: '' });
@@ -388,24 +401,268 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                 <div>
                                     <span className='title-description'>PILIH SUB TEMA</span>
                                 </div>
-                                <div className="col-start-center">
+                                <div className="col-start-start w-full">
                                     <Spacing height="1.25rem" />
                                     <span className='description' style={{ textAlign: "center", fontSize: "16px" }}>Pilih subtema kegiatan yang anda ingin ajukan</span>
                                     <Spacing height="1.75rem" />
-                                    <div className="break">
-                                        {tematikKegiatan.data ? tematikKegiatan.data.map((n, idx) => (
-                                            <>
-                                                <div className="col-center-center price-tag" style={{ cursor: "pointer" }} onClick={() => handleGetPaketKategoriData(n, index + 1)}>
-                                                    <img src={imgUrlPage2[idx]}></img>
-                                                    <span style={{ marginTop: "10px" }} className="subtitle">{n.sub_tematik_kegiatan}</span>
+                                    
+                                    {tematikKegiatan.data ? tematikKegiatan.data.map((n, idx) => (
+                                        <>
+                                            <div className="col-center-center price-tag w-full" style={{ cursor: "pointer" }} onClick={() => handleGetPaketKategoriData(n, index + 1)}>
+                                                <img src={imgUrlPage2[idx]}></img>
+                                                <span style={{ marginTop: "10px" }} className="subtitle">{n.sub_tematik_kegiatan}</span>
+                                            </div>
+                                        </>
+                                    )) : (
+                                        <></>
+                                    )}
+                                    
+                                </div>
+                                <Spacing height="2.7rem" /> 
+                            </CModalBody>
+                        </>
+                    }
+
+                    {index === 3 && 
+                        <>
+                            <CModalHeader>
+                                <CModalTitle className="title-description">
+                                    <FaArrowLeft style={{ cursor: "pointer" }} onClick={() => handleGetSubTematikData(data, index - 1)}/>     
+                                </CModalTitle>
+                            </CModalHeader>
+                            <CModalBody>
+                                <div>
+                                    <span className='title-description'>PILIH KEGIATAN</span>
+                                </div>
+                                <div className="col-start-start w-full">
+                                    <Spacing height="1.25rem" />
+                                    <span className='description' style={{ textAlign: "center", fontSize: "16px" }}>Pilih salah satu paket kegiatan yang ingin anda ajukan </span>
+                                    <Spacing height="1.75rem" />
+                                    {paketKategoriData.data ? paketKategoriData.data.map((n, i) => (
+                                        <>
+                                            <div className="row-start-start description-subtitle" style={{ width:'100%' }}>
+                                            
+                                            <WrapperChoiceBox 
+                                                className='center' 
+                                                style={{ marginTop:'1.25rem', marginRight: '1rem', cursor: 'pointer' }} 
+                                                id={`${n.nama_paket_kegiatan}-${i}`} 
+                                                label="" 
+                                                onClick={() => handleCheck(n)} 
+                                                checked={kategori.nama_paket_kegiatan === n.nama_paket_kegiatan}/>
+
+                                            <div className="col-center-center">
+                                                <div className='row-start-start'>
+                                                    <div style={{ marginTop:'0.75rem' }}>
+                                                        <img height='38.33px' src={kategori.nama_paket_kegiatan ? Vector : VectorBlack}></img>
+                                                    </div>
+                                                    <div style={{ marginLeft:'2.5rem', marginTop:'0.75rem' }}>
+                                                        <span style={{ fontSize:'var(--font-size-normal)', fontWeight:'var(--font-weight-semibold)'}}>{n.nama_paket_kegiatan}</span>
+                                                    </div>
                                                 </div>
-                                            </>
-                                        )) : (
-                                            <></>
-                                        )}
+                                                <Spacing height="1.25rem" />
+                                                <ChoiceBoxStringWithPrompt 
+                                                    prompt={'Jumlah Peserta'} 
+                                                    options={n.peserta} 
+                                                    id={'jumlah_peserta'}
+                                                    height={'2.25rem'} 
+                                                    // value={initialState?.}
+                                                    name={'paket_kegiatan_id'} 
+                                                    onChange={handleChange}/>
+                                            </div>
+
+                                        </div>
+                                        </>
+                                    )) : (
+                                        <></>
+                                    )}
+                                    <Spacing height="2.7rem" /> 
+                                    <span className='subtitle-description'>PAKET KEGIATAN</span>
+                                    <div className="col-start-start w-full">
+                                        <Spacing height="1.25rem" />
+                                        <div className="row-between-center description-subtitle w-full" style={{ width:'100%' }}>
+                                            <div className="col-start-start">
+                                                    <span className="description" style={{ color: "var(--color-primary-dark)" }}>Rehabilitasi:</span>
+                                                    <Spacing height="0.45rem" />
+                                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.nama_paket_kegiatan} ${kategori.peserta?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                            </div>
+                                            
+                                            <div className="col-end-end w-full">
+                                                <ButtonSolid 
+                                                    onClick={() => setIndex(index + 1)} 
+                                                    disabled={!initialState?.paket_kegiatan_id}
+                                                    label={'Mulai Pengajuan'} 
+                                                    width={"6.75rem"} 
+                                                    height={"4.75rem"} 
+                                                    bgColor={"var(--color-primary-dark)"} />
+                                            </div>
+                                                
+                                        </div>
                                     </div>
                                 </div>
                                 <Spacing height="2.7rem" /> 
+                            </CModalBody>
+                        </>
+                    }
+
+                    {index === 4 && 
+                        <>
+                            <CModalHeader>
+                                <CModalTitle className="title-description">
+                                    <FaArrowLeft style={{ cursor: "pointer" }} onClick={() => handleGetPaketKategoriData(data, index - 1)}/> ISI FORM PROPOSAL 
+                                </CModalTitle>
+                            </CModalHeader>
+                            <CModalBody>
+
+                                <div className='col-start-start w-full'>
+                                    <span className='subtitle-description'>PAKET KEGIATAN</span>
+
+                                    <Spacing height="0.25rem" />   
+                                    
+                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.nama_paket_kegiatan} ${kategori.peserta?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                </div>
+
+                                <Spacing height="1.25rem" /> 
+                                
+                                <ContainerCardSection 
+                                    style={{ width:"100%" }} 
+                                    padding={'2.55rem'} 
+                                    className="col-start-start w-full">    
+
+                                    <span className='subtitle'>Detail Rencana Kegiatan</span>
+                                    
+                                    <Spacing height="1rem" />   
+                                    
+                                    <div className="w-full">
+                                        <InputTextWithPrompt 
+                                            width={"100%"} 
+                                            prompt={"Judul Kegiatan"} 
+                                            type={"text"} 
+                                            id={"title"} 
+                                            inputHeight={'2.25rem'} 
+                                            name={"title"} 
+                                            placeholder={initialState?.title} 
+                                            onBlur={(e) => handleChange(e)} />    {/* 415px */}
+                                        <Spacing height="2.85rem" />   
+                                    
+                                        <span className='subtitle'>Lokasi Kegiatan</span>
+                                        
+                                        <Spacing height="1rem" />    
+
+                                        <ChoiceBoxStringWithPrompt 
+                                            className={'w-full'}
+                                            prompt={"Provinsi"} 
+                                            options={provinsi?.data} 
+                                            id={"name"} 
+                                            height={'2.25rem'} 
+                                            name={"province_code"} 
+                                            value={parseInt(initialState?.province_code)} 
+                                            onBlur={(e) => handleChange(e)} />  
+                                            
+                                        <Spacing height="0.75rem" /> 
+                                        
+                                        <ChoiceBoxStringWithPrompt 
+                                            className={'w-full'}
+                                            prompt={"Kota/Kabupaten"} 
+                                            options={kota?.data} 
+                                            id={"name"} 
+                                            height={'2.25rem'} 
+                                            name={"kota_code"} 
+                                            value={parseInt(initialState?.kota_code)} 
+                                            onChange={(e) => handleChange(e)}  /> 
+                                        
+                                        <Spacing height="0.75rem" />
+                                    
+                                    
+                                        <ChoiceBoxStringWithPrompt 
+                                            className={'w-full'}
+                                            prompt={"Kecamatan"} 
+                                            options={kecamatan?.data} 
+                                            id={"name"} 
+                                            height={'2.25rem'} 
+                                            name={"kecamatan_code"} 
+                                            value={parseInt(initialState?.kecamatan_code)} 
+                                            onChange={(e) => handleChange(e)} /> 
+                                        
+                                        <Spacing height="0.75rem" /> 
+
+                                        <ChoiceBoxStringWithPrompt 
+                                            className={'w-full'}
+                                            prompt={"Kelurahan"} 
+                                            options={kelurahan?.data} 
+                                            id={"name"} 
+                                            height={'2.25rem'} 
+                                            name={"kelurahan_code"} 
+                                            value={parseInt(initialState?.kelurahan_code)} 
+                                            onChange={(e) => handleChange(e)} />
+                                    
+                                    
+                                        <Spacing height="0.75rem" /> 
+                                    
+                                        <ChoiceBoxStringWithPrompt 
+                                            className={'w-full'}
+                                            prompt={"Lokasi Bidang FOLU"} 
+                                            options={bidangFolu?.data} 
+                                            id={"lokasi_bidang_folu"} 
+                                            name={"folu_location"} 
+                                            height={'2.25rem'} 
+                                            value={initialState?.folu_location} 
+                                            onBlur={(e) => handleChange(e)} />  
+                                        
+                                        <Spacing height="2.15rem" />
+
+                                        <InputTextWithPrompt 
+                                            width={"100%"}
+                                            prompt={"Alamat Kegiatan"} 
+                                            type={"text"} 
+                                            inputHeight={'2.25rem'} 
+                                            id={"alamat_kegiatan"} 
+                                            name={"alamat_kegiatan"} 
+                                            placeholder={initialState?.alamat_kegiatan} 
+                                            onBlur={(e) => handleChange(e)} />   
+                                        
+                                        <Spacing height="0.75rem" />  
+                                        
+                                        <InputTextWithPrompt 
+                                            width={"100%"}
+                                            prompt={""} 
+                                            type={"text"} 
+                                            inputHeight={'2.25rem'} 
+                                            id={"alamat_kegiatan"} 
+                                            name={"alamat_kegiatan"} 
+                                            onBlur={(e) => handleChange(e)} />  
+                                
+                                        <Spacing height="1.95rem" />   
+
+                                        <InputTextWithPrompt 
+                                            className={'w-full'}
+                                            prompt={"Tanggal Kegiatan"} 
+                                            type={"date"} 
+                                            id={"tanggal_kegiatan"} 
+                                            name={"tanggal_kegiatan"} 
+                                            value={initialState?.tanggal_kegiatan} 
+                                            onChange={handleChange} />   
+
+                                        <Spacing height="0.75rem" /> 
+
+                                        <InputTextWithPrompt 
+                                            className={'w-full'}
+                                            prompt={"Waktu Kegiatan"} 
+                                            type={"date"} 
+                                            id={"waktu_kegiatan"} 
+                                            name={"waktu_kegiatan"} 
+                                            value={initialState?.waktu_kegiatan} 
+                                            onChange={handleChange} />
+
+                                        <Spacing height="3.5rem" />
+                                    
+                                        <ButtonSolid 
+                                            label="Berikutnya" 
+                                            iconPost={<FaArrowRight/>} 
+                                            className={'w-full'} />  
+                                    </div>
+
+                                </ContainerCardSection>
+                                <Spacing height="2.7rem" />
                             </CModalBody>
                         </>
                     }
@@ -545,7 +802,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             <div className="col-start-start">
                                                 <span className="description" style={{ color: "var(--color-primary-dark)" }}>Rehabilitasi:</span>
                                                 <Spacing height="0.45rem" />
-                                                <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.nama_paket_kegiatan} ${kategori.peserta?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                                <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.nama_paket_kegiatan} ${kategori.peserta?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id ? 'Orang' : ''}`}</span>
                                             </div>
                                             
                                             <ButtonSolid 
@@ -592,8 +849,15 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                     <Spacing height="1rem" />   
                                     
                                     <div className="w-full">
-                                        <InputTextWithPrompt width={"100%"} 
-                                            prompt={"Judul Kegiatan"} type={"text"} id={"title"} name={"title"} placeholder={initialState?.title} onBlur={(e) => handleChange(e)} />    {/* 415px */}
+                                        <InputTextWithPrompt 
+                                            width={"100%"} 
+                                            prompt={"Judul Kegiatan"} 
+                                            type={"text"} 
+                                            id={"title"} 
+                                            name={"title"} 
+                                            inputHeight={'2.25rem'} 
+                                            placeholder={initialState?.title} 
+                                            onBlur={(e) => handleChange(e)} />    {/* 415px */}
                                         <Spacing height="2.85rem" />   
                                     </div>
                                     
@@ -607,6 +871,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             prompt={"Provinsi"} 
                                             options={provinsi?.data} 
                                             id={"name"} 
+                                            height={'2.25rem'} 
                                             name={"province_code"} 
                                             value={parseInt(initialState?.province_code)} 
                                             onBlur={(e) => handleChange(e)} />  
@@ -618,6 +883,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             prompt={"Kota/Kabupaten"} 
                                             options={kota?.data} 
                                             id={"name"} 
+                                            height={'2.25rem'} 
                                             name={"kota_code"} 
                                             value={parseInt(initialState?.kota_code)} 
                                             onChange={(e) => handleChange(e)}  /> 
@@ -631,6 +897,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             prompt={"Kecamatan"} 
                                             options={kecamatan?.data} 
                                             id={"name"} 
+                                            height={'2.25rem'} 
                                             name={"kecamatan_code"} 
                                             value={parseInt(initialState?.kecamatan_code)} 
                                             onChange={(e) => handleChange(e)} /> 
@@ -642,6 +909,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             prompt={"Kelurahan"} 
                                             options={kelurahan?.data} 
                                             id={"name"} 
+                                            height={'2.25rem'} 
                                             name={"kelurahan_code"} 
                                             value={parseInt(initialState?.kelurahan_code)} 
                                             onChange={(e) => handleChange(e)} />
@@ -649,10 +917,13 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                     
                                     <Spacing height="0.75rem" /> 
                                 
-                                    <ChoiceBoxStringWithPrompt className={'w-full'} width={'47%'}
+                                    <ChoiceBoxStringWithPrompt 
+                                        className={'w-full'} 
+                                        width={'47%'}
                                         prompt={"Lokasi Bidang FOLU"} 
                                         options={bidangFolu?.data} 
                                         id={"lokasi_bidang_folu"} 
+                                        height={'2.25rem'} 
                                         name={"folu_location"} 
                                         value={initialState?.folu_location} 
                                         onBlur={(e) => handleChange(e)} />  
@@ -664,6 +935,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             width={"100%"}
                                             prompt={"Alamat Kegiatan"} 
                                             type={"text"} 
+                                            inputHeight={'2.25rem'} 
                                             id={"alamat_kegiatan"} 
                                             name={"alamat_kegiatan"} 
                                             placeholder={initialState?.alamat_kegiatan} 
@@ -675,6 +947,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             width={"100%"}
                                             prompt={""} 
                                             type={"text"} 
+                                            inputHeight={'2.25rem'} 
                                             id={"alamat_kegiatan"} 
                                             name={"alamat_kegiatan"} 
                                             onBlur={(e) => handleChange(e)} />  
