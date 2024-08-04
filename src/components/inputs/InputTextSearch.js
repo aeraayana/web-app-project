@@ -13,7 +13,6 @@ const InputTextWrapper = styled(CFormInput)`
     font-weight: var(--font-weight-normal);
     border: 0.0625rem solid #CDCDCD;
     border-radius: 0.3125rem;
-    //background-color: var(--color-error-light);
     
 
     &:focus{

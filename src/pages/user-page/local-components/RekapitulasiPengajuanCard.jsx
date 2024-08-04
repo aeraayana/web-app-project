@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 
-export default function AmbatukamContainerCard({ Judul, Bulan, SDHI, Persen, Tipe }) {
+export default function RekapitulasiPengajuanCard({ Judul, Bulan, SDHI, Persen, Tipe }) {
 
   const green = Tipe !== 'var(--color-error)' ? 'var(--color-green)' : Tipe;
   
@@ -21,9 +21,7 @@ export default function AmbatukamContainerCard({ Judul, Bulan, SDHI, Persen, Tip
       background-color: ${green ? green.replace(')', '-light)') : 'black'};
       font-size: var(--font-size-small-2);
       border-radius: 5px;
-      padding: 0.15rem 0.35rem;
-      width: 72%;
-      display: inline;
+      width: 75%;
     }
 
     .card-title {

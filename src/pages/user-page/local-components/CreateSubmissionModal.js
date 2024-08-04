@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { CFormCheck, CModal, CModalBody, CModalHeader, CModalTitle } from '@coreui/react';
-import { ButtonOutlined, ButtonSolid, ChoiceBoxStringWithPrompt, ContainerCardSection, InputTextWithPrompt, InputTextWithPromptPostLabel, Spacing } from "../../../components";
+import { CFormCheck, CModalBody, CModalHeader, CModalTitle, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from '@coreui/react';
+import { ButtonOutlined, ButtonSolid, ChoiceBoxStringWithPrompt, ContainerCardSection, InputText, InputTextWithPrompt, InputTextWithPromptPostLabel, Spacing } from "../../../components";
 import React, { useEffect } from "react";
 import Pana from "../../../assets/images/landing/pana.png";
 import Papa from "../../../assets/images/landing/papa.png";
@@ -14,6 +14,11 @@ import Water from "../../../assets/images/landing/water.png";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { BrowserView, MobileView } from "react-device-detect";
 import { useAppContext } from "../../../context/appContext";
+import Wrapper from "../../../wrappers/user-page/UserCreateFormWrapper";
+import MobileWrapper from "../../../wrappers/user-page/mobile/UserCreateFormMobileWrapper";
+import InputTextArea from "../../../components/inputs/InputTextArea";
+import axios from "axios";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const WrapperChoiceBox = styled(CFormCheck)`
     font-family: var(--font-family-secondary);
@@ -35,246 +40,34 @@ const imgUrlPage2 = [
     Water,
 ]
 
-const dummyData = [
-    {
-        "tematik_description": "Kegiatan Folu Goes to School diperuntukkan sekolah Adiwiyata setara SMA dan dibawahnya bertujuan untuk peningkatan pengetahuan, kesadaran, dan partisipasi terhadap perubahan iklim dan mitigasi berbasis lahan. Lingkup mencakup sosialisasi, pelatihan, aksi.",
-    },
-    {
-        "tematik_description": "Folu Terra (Kesejahteraan Rakyat) dapat diikuti penerima Kalpataru, Pemuda, dan komunitas lainnya. Kegiatan yang dicakup seperti sampah, energi, dan DAS/ekoriparian. Jenis kegiatan dapat berupa aksi bersih lingkungan.",
-    },
-    {
-        "tematik_description": "Kegiatan ini menyasar kelompok penerima Kalpataru, pemuda, dan kelompok masyarakat lainnya.  Kegiatan-kegiatan ini mencakup tema seperti sampah, pariwisata, kesehatan, energi, dan penghijauan dengan lingkup jenis kegiatan diantaranya sosialisasi dan aksi.",
-    },
-]
-
-const Wrapper = styled(CModal)`
-    padding: 2.5rem 5.5rem 2.5rem 5.5rem;
-    
-    .title{
-        font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-bold);
-        font-size: var(--font-size-big);
-        color: var(--color-semiblack);
-    }
-
-    .title-description{
-        font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-semibold);
-        font-size: var(--font-size-normal-2);
-        color: var(--color-semiblack);
-        letter-spacing: 2px;
-    }
-
-    .subtitle-description{
-        font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-semibold);
-        font-size: var(--font-size-normal);
-        color: var(--color-semiblack);
-        letter-spacing: 2px;
-    }
-
-    .description{
-        font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-normal);
-        color: var(--color-semiblack);
-    }
-
-    .subtitle{
-        font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-semibold);
-        font-size: var(--font-size-normal-2);   /* 24px */
-        color: #667085;
-    }
-
-    .description-subtitle{
-        font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-normal);
-        color: #4D4D4D;
-        border-radius: 25px;
-        border: 1px solid var(--color-black);
-        padding: 20px;
-        width: 85%;
-        height: 100%; 
-        &:hover {
-            color: var(--color-primary-dark);
-            background-color: transparent;
-            border-color: var(--color-primary-dark);
-        },
-    }
-
-    .break {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        width: 85%;
-    }
-
-    .price-tag{
-        font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-normal);
-        color: #4D4D4D;
-        border-radius: 25px;
-        border: 1px solid var(--color-disable);
-        padding: 20px;
-        margin: 1rem;
-        height: 200px; 
-        &:hover {
-            color: var(--color-primary-dark);
-            background-color: transparent;
-            border-color: var(--color-primary-dark);
-        },
-    }
-
-    .modal-body {
-        padding: 2rem 3.55rem;
-    }
-
-    input[type="checkbox"] {
-        font: inherit;
-        width: 1.75em;
-        height: 1.75em;
-        border: 0.1rem solid var(--color-disable);
-        border-radius: 0.15em;
-        transform: translateY(-0.075em);
-        display: grid;
-        place-content: center;
-    }
-
-    input[type="checkbox"]:checked {
-        transform: scale(1);
-        border: 0.1rem solid var(--color-disable);
-        border-radius: 0.15em;
-        background-color: var(--color-primary);
-    }
-`
-
-const MobileWrapper = styled(CModal)`
-    padding: 0rem;
-
-    .title{
-        font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-bold);
-        font-size: var(--font-size-big);
-        color: var(--color-semiblack);
-    }
-
-    .title-description{
-        font-family: var(--font-family-primary);
-        letter-spacing: 2px;
-        font-weight: var(--font-weight-semibold);
-        font-size: var(--font-size-normal-2);
-        color: var(--color-semiblack);
-    }
-
-    .description{
-        font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-normal);
-        color: var(--color-semiblack);
-        white-space: pre-wrap;
-        white-space: -moz-pre-wrap;
-        white-space: -pre-wrap;
-        white-space: -o-pre-wrap;
-        word-wrap: break-word;
-    }
-
-    .subtitle{
-        font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-semibold);
-        font-size: var(--font-size-normal-2);   /* 24px */
-        color: #667085;
-        white-space: pre-wrap;
-        white-space: -moz-pre-wrap;
-        white-space: -pre-wrap;
-        white-space: -o-pre-wrap;
-        word-wrap: break-word;
-        &:focus{
-            outline: none !important;
-            border:1px solid var(--color-primary-dark);
-            box-shadow: 0 0 10px var(--color-primary);
-        }
-    }
-
-    .description-subtitle{
-        font-family: var(--font-family-primary);
-        font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-normal);
-        color: #4D4D4D;
-        border-radius: 25px;
-        border: 1px solid var(--color-black);
-        padding: 20px;
-        width: 85%;
-        height: 100%; 
-        &:hover {
-            color: var(--color-primary-dark);
-            background-color: transparent;
-            border-color: var(--color-primary-dark);
-        },
-    }
-
-    .description-checkbox{
-        font-family: var(--font-family-secondary);
-        font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-normal);
-        color: #4D4D4D;
-        border-radius: 25px;
-        border: 1px solid var(--color-disable);
-        padding: 20px;
-        width: 100%;
-        height: 100%; 
-        &:hover {
-            color: var(--color-primary-dark);
-            background-color: transparent;
-            border-color: var(--color-primary-dark);
-        },
-    }
-
-    .break {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        width: 100%;
-    }
-
-    .price-tag{
-        font-family: var(--font-family-secondary);
-        font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-normal);
-        color: #4D4D4D;
-        border-radius: 25px;
-        border: 1px solid var(--color-disable);
-        padding: 20px;
-        margin: 0.25rem;
-        height: 200px; 
-        &:hover {
-            color: var(--color-primary-dark);
-            background-color: transparent;
-            border-color: var(--color-primary-dark);
-        },
-    }
-
-    input[type="checkbox"] {
-        font: inherit;
-        width: 1.75em;
-        height: 1.75em;
-        border: 0.1rem solid var(--color-disable);
-        border-radius: 0.15em;
-        transform: translateY(-0.075em);
-        display: grid;
-        place-content: center;
-    }
-
-    input[type="checkbox"]:checked {
-        transform: scale(1);
-        border: 0.1rem solid var(--color-disable);
-        border-radius: 0.15em;
-        background-color: var(--color-primary);
-    }
-`
+const numFormat = (number) => {
+	return new Intl.NumberFormat("id-ID", { style: "decimal" }).format(number);
+};
 
 const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
-    const [initialState, setInitialState] = React.useState(null)
+    const [initialState, setInitialState] = React.useState({
+        nama_paket_kegiatan: '',
+        proposal_kegiatan: '',
+        ruang_lingkup_kegiatan: '',
+        tujuan_kegiatan: '',
+    })
+
+    const getTotal = (item, elementName, itemName) => {
+		let sum = 0;
+        for(const [key, value] of Object.entries(item)){
+            for(let i = 0; i < value.length; i += 1){
+                sum += (value[i]?.[`${elementName}`] * value[i]?.[`${itemName}`]);
+            }
+        }
+
+		return numFormat(sum);
+	};
+
+    const [dataForm, setDataForm] = React.useState([])
+    const [confirm, setConfirm] = React.useState(false);
+    const [postData, setPostData] = React.useState([]);
+
+    const formData = new FormData();
 
     const { 
         tematikKegiatan, 
@@ -290,55 +83,108 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
         getKota,
         kelurahan,
         getKelurahan,
-        bidangFolu,
-        getLokasiBidangFolu,
+        toggleFormModal,
+        showFormModal,
     } = useAppContext();
 
     const [data, setData] = React.useState(null);
-    const [kategori, setKategori] = React.useState({
-        nama_paket_kegiatan: '',
-    });
-
-    console.log(initialState);
+    const [kategori, setKategori] = React.useState({ jenis_kegiatan: '' });
 
     React.useEffect(() => { 
-        Promise.all([
-            getProvinsi(),
-            getTematikKegiatan(),
-            getKecamatan(),
-            getKota(),
-            getLokasiBidangFolu(),
-            getKelurahan(),
-        ])
+        getTematikKegiatan();
     }, []);
-
-    const handleGetSubTematikData = async (e, index) => {
-        // console.log(e);
-        await getSubTematikKegiatan({ categoryId: e.id });
+    
+    const handleGetTematikData = async(index) => {
+        getTematikKegiatan();
         setIndex(index);
     }
     
-    const handleGetTematikData = async(index) => {
-        getTematikKegiatan()
+    const handleGetSubTematikData = async (e, index) => {
+        await getSubTematikKegiatan({ categoryId: e.id });
         setIndex(index);
     }
     
     const handleGetPaketKategoriData = async (e, index) => {
         if(!data){
             setData({ id: e.id, tematik_kegiatan_id: e.tematik_kegiatan_id });
+            Promise.all([
+                getProvinsi(),
+                getKecamatan(),
+                getKota(),
+                getKelurahan(),
+            ]);
         }
-        await getPaketKategoriData({ categoryId: e.tematik_kegiatan_id, subId: e.id })
+        await getPaketKategoriData({ id: e.tematik_kegiatan_id, subId: e.id });
+        setKategori({ jenis_kegiatan: '' })
         setIndex(index);
     }
     
     const handleChange = (e) => {
         const list = initialState;
-        setInitialState({ ...list, [e.target.name]: e.target.value });
+        if(e.target.name === 'fileDocument'){
+            formData.append('fileDocument', e.target.files[0]);
+        } else {
+            setInitialState({ ...list, [e.target.name]: e.target.value });
+        }
+    }
+
+    const handleChangeQty = async (n, e, idx) => {
+        let list = dataForm;
+        list.komponen_rab[n][idx][e.target.name] = e.target.value;
+        setPostData({ ...list.komponen_rab })
+    }
+
+    const handleCloseForm = async (e) => {
+        axios.put(
+            `https://uat.bpdlh.id/aksesdanalh/public/api/pengajuanKegiatan/${dataForm.id_pengajuan}`,
+            { "komponen_rab": Object.values(postData).flat() },
+            {
+                headers: {
+                    Accept: 'application/json',
+                    id: '6684d93e8cb88',
+                    secret: 'vc8U5EaZ3bUKV9ka4PsNLrpVGWZVVpyZsAhmnRWO',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                }
+            }
+        ).then(() => toggleFormModal)
+    }
+
+    const handlePostForm = (e, index) => {
+        try {
+            formData.append('paket_kegiatan_id', e.paket_kegiatan_id);
+            formData.append('ruang_lingkup_kegiatan', e.ruang_lingkup_kegiatan);
+            formData.append('tujuan_kegiatan', e.tujuan_kegiatan);
+            formData.append('proposal_kegiatan', e.proposal_kegiatan);
+            formData.append('waktu_kegiatan', e.start_time.concat(` - ${e.end_time}`));
+            formData.append('tanggal_kegiatan', `${e.tanggal_kegiatan} - ${e.tanggal_kegiatan}`);
+            formData.append('alamat_kegiatan', e.alamat_kegiatan.concat(` ${e.alamat_kegiatan_ext}`));
+            formData.append('kabupaten_kegiatan', e.kota_code);
+            formData.append('kelurahan_kegiatan', e.kelurahan_code);
+            formData.append('kecamatan_kegiatan', e.kecamatan_code);
+            formData.append('provinsi_kegiatan', e.province_code);
+            formData.append('judul_pengajuan_kegiatan', e.title);
+
+            axios.post(
+                'https://uat.bpdlh.id/aksesdanalh/public/api/pengajuanKegiatan',
+                formData,
+                {
+                    headers: {
+                        Accept: 'multipart/form-data',
+                        id: '6684d93e8cb88',
+                        secret: 'vc8U5EaZ3bUKV9ka4PsNLrpVGWZVVpyZsAhmnRWO',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    }
+                }
+            ).then((res) => {setDataForm(res.data.data)})
+        } catch (error) {
+            setIndex(1);
+        }
+        setIndex(index);
     }
     
     const handleCheck = (e) => {
-        if(kategori.nama_paket_kegiatan === e.nama_paket_kegiatan){
-            setKategori({ nama_paket_kegiatan: '' });
+        if(kategori.jenis_kegiatan === e.jenis_kegiatan){
+            setKategori({ jenis_kegiatan: '' });
         }else{
             setKategori(e);
         }
@@ -351,8 +197,8 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                     fullscreen
                     scrollable
                     alignment="center"
-                    visible={show}
-                    onClose={onClose}
+                    visible={showFormModal}
+                    onClose={toggleFormModal}
                 >
                     {index === 1 && 
                         <>
@@ -376,7 +222,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                 <div>
                                                     <span className="subtitle">{n.tematik_kegiatan}</span>
                                                     <Spacing height="0.7rem" />
-                                                    <span className="description">{dummyData[idx]?.tematik_description}</span>
+                                                    <span className="description">{n.deskripsi_tematik}</span>
                                                 </div>
                                             </div>
                                             <Spacing height="0.7rem" />
@@ -445,24 +291,24 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             <WrapperChoiceBox 
                                                 className='center' 
                                                 style={{ marginTop:'1.25rem', marginRight: '1rem', cursor: 'pointer' }} 
-                                                id={`${n.nama_paket_kegiatan}-${i}`} 
+                                                id={`${n.jenis_kegiatan}-${i}`} 
                                                 label="" 
                                                 onClick={() => handleCheck(n)} 
-                                                checked={kategori.nama_paket_kegiatan === n.nama_paket_kegiatan}/>
+                                                checked={kategori.jenis_kegiatan === n.jenis_kegiatan}/>
 
                                             <div className="col-center-center">
                                                 <div className='row-start-start'>
                                                     <div style={{ marginTop:'0.75rem' }}>
-                                                        <img height='38.33px' src={kategori.nama_paket_kegiatan ? Vector : VectorBlack}></img>
+                                                        <img height='38.33px' src={kategori.jenis_kegiatan ? Vector : VectorBlack}></img>
                                                     </div>
                                                     <div style={{ marginLeft:'2.5rem', marginTop:'0.75rem' }}>
-                                                        <span style={{ fontSize:'var(--font-size-normal)', fontWeight:'var(--font-weight-semibold)'}}>{n.nama_paket_kegiatan}</span>
+                                                        <span style={{ fontSize:'var(--font-size-normal)', fontWeight:'var(--font-weight-semibold)'}}>{n.jenis_kegiatan}</span>
                                                     </div>
                                                 </div>
                                                 <Spacing height="1.25rem" />
                                                 <ChoiceBoxStringWithPrompt 
                                                     prompt={'Jumlah Peserta'} 
-                                                    options={n.peserta} 
+                                                    options={n.paket_kegiatan} 
                                                     id={'jumlah_peserta'}
                                                     height={'2.25rem'} 
                                                     // value={initialState?.}
@@ -483,13 +329,13 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             <div className="col-start-start">
                                                     <span className="description" style={{ color: "var(--color-primary-dark)" }}>Rehabilitasi:</span>
                                                     <Spacing height="0.45rem" />
-                                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.nama_paket_kegiatan} ${kategori.peserta?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
                                             </div>
                                             
                                             <div className="col-end-end w-full">
                                                 <ButtonSolid 
                                                     onClick={() => setIndex(index + 1)} 
-                                                    disabled={!initialState?.paket_kegiatan_id}
+                                                    disabled={!kategori?.jenis_kegiatan}
                                                     label={'Mulai Pengajuan'} 
                                                     width={"6.75rem"} 
                                                     height={"4.75rem"} 
@@ -518,7 +364,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
                                     <Spacing height="0.25rem" />   
                                     
-                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.nama_paket_kegiatan} ${kategori.peserta?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
                                 </div>
 
                                 <Spacing height="1.25rem" /> 
@@ -540,7 +386,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             id={"title"} 
                                             inputHeight={'2.25rem'} 
                                             name={"title"} 
-                                            placeholder={initialState?.title} 
+                                            defaultValue={initialState?.title} 
                                             onBlur={(e) => handleChange(e)} />    {/* 415px */}
                                         <Spacing height="2.85rem" />   
                                     
@@ -595,19 +441,6 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             value={parseInt(initialState?.kelurahan_code)} 
                                             onChange={(e) => handleChange(e)} />
                                     
-                                    
-                                        <Spacing height="0.75rem" /> 
-                                    
-                                        <ChoiceBoxStringWithPrompt 
-                                            className={'w-full'}
-                                            prompt={"Lokasi Bidang FOLU"} 
-                                            options={bidangFolu?.data} 
-                                            id={"lokasi_bidang_folu"} 
-                                            name={"folu_location"} 
-                                            height={'2.25rem'} 
-                                            value={initialState?.folu_location} 
-                                            onBlur={(e) => handleChange(e)} />  
-                                        
                                         <Spacing height="2.15rem" />
 
                                         <InputTextWithPrompt 
@@ -617,7 +450,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             inputHeight={'2.25rem'} 
                                             id={"alamat_kegiatan"} 
                                             name={"alamat_kegiatan"} 
-                                            placeholder={initialState?.alamat_kegiatan} 
+                                            defaultValue={initialState?.alamat_kegiatan} 
                                             onBlur={(e) => handleChange(e)} />   
                                         
                                         <Spacing height="0.75rem" />  
@@ -627,8 +460,9 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             prompt={""} 
                                             type={"text"} 
                                             inputHeight={'2.25rem'} 
-                                            id={"alamat_kegiatan"} 
-                                            name={"alamat_kegiatan"} 
+                                            id={"alamat_kegiatan_ext"} 
+                                            name={"alamat_kegiatan_ext"} 
+                                            defaultValue={initialState?.alamat_kegiatan_ext} 
                                             onBlur={(e) => handleChange(e)} />  
                                 
                                         <Spacing height="1.95rem" />   
@@ -653,6 +487,15 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             value={initialState?.waktu_kegiatan} 
                                             onChange={handleChange} />
 
+                                        <div className="col-start-start w-full">
+                                            <label className="label" htmlFor='time-range'> Waktu Kegiatan </label>
+                                            <div class="time-range" style={{ width:"100%" }}>
+                                                <input type="time" id="start-time" name="start_time" onBlur={(e) => handleChange(e)} defaultValue={initialState?.start_time}/>
+                                                <span>-</span>
+                                                <input type="time" id="end-time" name="end_time" onBlur={(e) => handleChange(e)} defaultValue={initialState?.end_time}/>
+                                            </div>
+                                        </div>
+
                                         <Spacing height="3.5rem" />
                                     
                                         <ButtonSolid 
@@ -666,6 +509,93 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                             </CModalBody>
                         </>
                     }
+
+                    {index === 5 && (
+                        <>
+                            <CModalHeader>
+                                <CModalTitle className="title-description">
+                                    <FaArrowLeft style={{ cursor: "pointer" }} onClick={() => setIndex(index - 1)}/> ISI FORM PROPOSAL 
+                                </CModalTitle>
+                            </CModalHeader>
+                            <CModalBody>
+
+                                <div className='col-start-start w-full'>
+                                    <span className='subtitle-description'>PAKET KEGIATAN</span>
+
+                                    <Spacing height="0.25rem" />   
+                                    
+                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.jenis_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                </div>
+
+                                <Spacing height="1.25rem" /> 
+                                
+                                <ContainerCardSection 
+                                    style={{ width:"100%" }} 
+                                    padding={'2.55rem'} 
+                                    className="col-start-start w-full">    
+                                    <span className='page-number'>HALAMAN 2 DARI 3</span>
+                                    <span className='subtitle'>Proposal Kegiatan</span>
+                                    
+                                    <Spacing height="2.25rem" />   
+                                    
+                                    <div className="w-full">
+                                        <InputTextArea
+                                            prompt={"Latar belakang kegiatan"}
+                                            id="proposal_kegiatan"
+                                            name={"proposal_kegiatan"}
+                                            subLabel={"Project Background"}
+                                            rows={4}
+                                            textLimit={"(40 - 250 kata)"} />
+                                        <Spacing height="1.85rem" />
+                                    </div>                                    
+
+                                    <div className='w-full'>                                    
+                                        <InputTextArea
+                                            prompt={"Tujuan kegiatan"}
+                                            id="tujuan_kegiatan"
+                                            name={"tujuan_kegiatan"}
+                                            subLabel={"Objectives"}
+                                            rows={4}
+                                            textLimit={"(40 - 250 kata)"} />
+                                        <Spacing height="1.85rem" />
+                                    </div>
+                                    
+                                    <div className='w-full'>                                    
+                                        <InputTextArea
+                                            prompt={"Ruang lingkup kegiatan"}
+                                            id="ruang_lingkup_kegiatan"
+                                            name={"ruang_lingkup_kegiatan"}
+                                            rows={4}
+                                            subLabel={"Scope of Work"}
+                                            textLimit={"(40 - 250 kata)"} />
+                                        <Spacing height="1.85rem" />
+                                    </div>
+
+                                    <div className='row-start-start w-full'>
+                                        <Spacing height="2.85rem" />
+                                    </div>
+
+                                    <Spacing height="3.5rem" />
+                                    
+                                    <section className='row-between-start w-full'>
+                                        <ButtonOutlined
+                                            onClick={() => setIndex(index - 1)} 
+                                            label="Previous"
+                                            width={"47%"}
+                                            iconPre={<FaArrowLeft/>} />
+
+                                        <ButtonSolid 
+                                            label="Berikutnya" 
+                                            iconPost={<FaArrowRight/>} 
+                                            onClick={() => handlePostForm(initialState, index + 1)}
+                                            width={'47%'} />  
+                                    </section>
+
+                                </ContainerCardSection>
+                                <Spacing height="2.7rem" />
+                            </CModalBody>
+                        </>
+                    )}
                 </MobileWrapper>
             </MobileView>
 
@@ -674,8 +604,8 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                     size="lg"
                     scrollable
                     alignment="center"
-                    visible={show}
-                    onClose={onClose}
+                    visible={showFormModal}
+                    onClose={toggleFormModal}
                 >
                     {index === 1 && 
                         <>
@@ -699,7 +629,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                 <div>
                                                     <span className="subtitle">{n.tematik_kegiatan}</span>
                                                     <Spacing height="0.7rem" />
-                                                    <span className="description">{dummyData[idx]?.tematik_description}</span>
+                                                    <span className="description">{n?.deskripsi_tematik}</span>
                                                 </div>
                                             </div>
                                             <Spacing height="0.7rem" />
@@ -765,31 +695,35 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                         <>
                                             <div className="row-between-start description-subtitle" style={{ width:'100%' }}>
                                             
-                                            <WrapperChoiceBox 
-                                                className='center' 
-                                                style={{ marginTop:'1.25rem', marginRight: '1rem', cursor: 'pointer' }} 
-                                                id={`${n.nama_paket_kegiatan}-${i}`} 
-                                                label="" 
-                                                onClick={() => handleCheck(n)} 
-                                                checked={kategori.nama_paket_kegiatan === n.nama_paket_kegiatan}/>
+                                                <div className="row-start-center">
+                                                    <WrapperChoiceBox 
+                                                        style={{ marginTop:'1.25rem', marginRight: '1.5rem', cursor: 'pointer' }} 
+                                                        id={`${n.jenis_kegiatan}-${i}`} 
+                                                        label=""
+                                                        onClick={() => handleCheck(n)} 
+                                                        checked={kategori.jenis_kegiatan === n.jenis_kegiatan}/>
 
-                                            <div className="row-start-center">
-                                                <div style={{ marginRight: "1.5rem", marginTop:'0.75rem' }}>
-                                                    <img height='38.33px' src={kategori.nama_paket_kegiatan ? Vector : VectorBlack}></img>
+                                                    <div className="row-start-center">
+                                                        <div style={{ marginRight: "1.5rem", marginTop:'0.75rem' }}>
+                                                            <img height='38.33px' src={kategori.jenis_kegiatan === n.jenis_kegiatan ? Vector : VectorBlack}></img>
+                                                        </div>
+                                                        <div style={{ marginTop:'0.75rem' }}>
+                                                            <span style={{ fontSize:'var(--font-size-normal)', fontWeight:'var(--font-weight-semibold)'}}>{n.jenis_kegiatan}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div style={{ marginRight: "9.25rem", marginTop:'0.75rem' }}>
-                                                    <span style={{ fontSize:'var(--font-size-normal)', fontWeight:'var(--font-weight-semibold)'}}>{n.nama_paket_kegiatan}</span>
-                                                </div>
+
+                                                <ChoiceBoxStringWithPrompt 
+                                                    disabled={kategori.jenis_kegiatan !== n.jenis_kegiatan}
+                                                    className={'row-end-end'}
+                                                    prompt={'Jumlah Peserta'} 
+                                                    options={n.paket_kegiatan} 
+                                                    id={'jumlah_peserta'}
+                                                    height={'2.25rem'} 
+                                                    name={'paket_kegiatan_id'} 
+                                                    onChange={handleChange}/>
                                             </div>
-
-                                            <ChoiceBoxStringWithPrompt 
-                                                prompt={'Jumlah Peserta'} 
-                                                options={n.peserta} 
-                                                id={'jumlah_peserta'}
-                                                height={'2.25rem'} 
-                                                name={'paket_kegiatan_id'} 
-                                                onChange={handleChange}/>
-                                        </div>
+                                            <Spacing height="1.25rem" />
                                         </>
                                     )) : (
                                         <></>
@@ -802,11 +736,12 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             <div className="col-start-start">
                                                 <span className="description" style={{ color: "var(--color-primary-dark)" }}>Rehabilitasi:</span>
                                                 <Spacing height="0.45rem" />
-                                                <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.nama_paket_kegiatan} ${kategori.peserta?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id ? 'Orang' : ''}`}</span>
+                                                <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id ? 'Orang' : ''}`}</span>
                                             </div>
                                             
                                             <ButtonSolid 
                                                 onClick={() => setIndex(index + 1)} 
+                                                disabled={!kategori?.jenis_kegiatan}
                                                 label={'Mulai Pengajuan'} 
                                                 width={"9.5rem"} 
                                                 height={"2.75rem"} 
@@ -834,7 +769,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
                                     <Spacing height="0.25rem" />   
                                     
-                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.nama_paket_kegiatan} ${kategori.peserta?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
                                 </div>
 
                                 <Spacing height="1.25rem" /> 
@@ -843,7 +778,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                     style={{ width:"100%" }} 
                                     padding={'2.55rem'} 
                                     className="col-start-start w-full">    
-
+                                    <span className='page-number'>HALAMAN 1 DARI 3</span>
                                     <span className='subtitle'>Detail Rencana Kegiatan</span>
                                     
                                     <Spacing height="1rem" />   
@@ -856,7 +791,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             id={"title"} 
                                             name={"title"} 
                                             inputHeight={'2.25rem'} 
-                                            placeholder={initialState?.title} 
+                                            defaultValue={initialState?.title} 
                                             onBlur={(e) => handleChange(e)} />    {/* 415px */}
                                         <Spacing height="2.85rem" />   
                                     </div>
@@ -914,20 +849,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             value={parseInt(initialState?.kelurahan_code)} 
                                             onChange={(e) => handleChange(e)} />
                                     </div>
-                                    
-                                    <Spacing height="0.75rem" /> 
-                                
-                                    <ChoiceBoxStringWithPrompt 
-                                        className={'w-full'} 
-                                        width={'47%'}
-                                        prompt={"Lokasi Bidang FOLU"} 
-                                        options={bidangFolu?.data} 
-                                        id={"lokasi_bidang_folu"} 
-                                        height={'2.25rem'} 
-                                        name={"folu_location"} 
-                                        value={initialState?.folu_location} 
-                                        onBlur={(e) => handleChange(e)} />  
-                                    
+
                                     <Spacing height="2.15rem" />
 
                                     <div className="w-full">
@@ -938,7 +860,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             inputHeight={'2.25rem'} 
                                             id={"alamat_kegiatan"} 
                                             name={"alamat_kegiatan"} 
-                                            placeholder={initialState?.alamat_kegiatan} 
+                                            defaultValue={initialState?.alamat_kegiatan} 
                                             onBlur={(e) => handleChange(e)} />   
                                         
                                         <Spacing height="0.75rem" />  
@@ -948,8 +870,9 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             prompt={""} 
                                             type={"text"} 
                                             inputHeight={'2.25rem'} 
-                                            id={"alamat_kegiatan"} 
-                                            name={"alamat_kegiatan"} 
+                                            id={"alamat_kegiatan_ext"} 
+                                            name={"alamat_kegiatan_ext"}
+                                            defaultValue={initialState?.alamat_kegiatan_ext} 
                                             onBlur={(e) => handleChange(e)} />  
                                     </div>
                                     
@@ -965,16 +888,16 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             value={initialState?.tanggal_kegiatan} 
                                             onChange={handleChange} />   
 
-                                        <Spacing width="4.75rem" />    
+                                        <Spacing width="4.75rem" />
 
-                                        <InputTextWithPrompt 
-                                            className={'w-full'}
-                                            prompt={"Waktu Kegiatan"} 
-                                            type={"date"} 
-                                            id={"waktu_kegiatan"} 
-                                            name={"waktu_kegiatan"} 
-                                            value={initialState?.waktu_kegiatan} 
-                                            onChange={handleChange} />    {/* 415px */}
+                                        <div className="col-start-start w-full">
+                                            <label className="label" htmlFor='time-range'> Waktu Kegiatan </label>
+                                            <div class="time-range" style={{ width:"100%" }}>
+                                                <input type="time" id="start-time" name="start_time" onBlur={(e) => handleChange(e)} defaultValue={initialState?.start_time}/>
+                                                <span>-</span>
+                                                <input type="time" id="end-time" name="end_time" onBlur={(e) => handleChange(e)} defaultValue={initialState?.end_time}/>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <Spacing height="3.5rem" />
@@ -983,6 +906,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                         <ButtonSolid 
                                             label="Berikutnya" 
                                             iconPost={<FaArrowRight/>} 
+                                            onClick={() => setIndex(index + 1)}
                                             width={'47%'} />  
                                     </section>
 
@@ -991,6 +915,234 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                             </CModalBody>
                         </>
                     }
+
+                    {index === 5 && (
+                        <>
+                            <CModalHeader>
+                                <CModalTitle className="title-description">
+                                    <FaArrowLeft style={{ cursor: "pointer" }} onClick={() => setIndex(index - 1)}/> ISI FORM PROPOSAL 
+                                </CModalTitle>
+                            </CModalHeader>
+                            <CModalBody>
+
+                                <div className='col-start-start w-full'>
+                                    <span className='subtitle-description'>PAKET KEGIATAN</span>
+
+                                    <Spacing height="0.25rem" />   
+                                    
+                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                </div>
+
+                                <Spacing height="1.25rem" /> 
+                                
+                                <ContainerCardSection 
+                                    style={{ width:"100%" }} 
+                                    padding={'2.55rem'} 
+                                    className="col-start-start w-full">    
+                                    <span className='page-number'>HALAMAN 2 DARI 3</span>
+                                    <span className='subtitle'>Proposal Kegiatan</span>
+                                    
+                                    <Spacing height="2.25rem" />   
+                                    
+                                    <div className="w-full">
+                                        <InputTextArea
+                                            prompt={"Latar belakang kegiatan"}
+                                            id="proposal_kegiatan"
+                                            name={"proposal_kegiatan"}
+                                            subLabel={"Project Background"}
+                                            rows={4}
+                                            onBlur={(e) => handleChange(e)}
+                                            defaultValue={initialState.proposal_kegiatan}
+                                            textLimit={"(40 - 250 kata)"} />
+                                        <Spacing height="1.85rem" />
+                                    </div>                                    
+
+                                    <div className='w-full'>                                    
+                                        <InputTextArea
+                                            prompt={"Tujuan kegiatan"}
+                                            id="tujuan_kegiatan"
+                                            name={"tujuan_kegiatan"}
+                                            subLabel={"Objectives"}
+                                            rows={4}
+                                            onBlur={(e) => handleChange(e)}
+                                            defaultValue={initialState.tujuan_kegiatan}
+                                            textLimit={"(40 - 250 kata)"} />
+                                        <Spacing height="1.85rem" />
+                                    </div>
+                                    
+                                    <div className='w-full'>                                    
+                                        <InputTextArea
+                                            prompt={"Ruang lingkup kegiatan"}
+                                            id="ruang_lingkup_kegiatan"
+                                            name={"ruang_lingkup_kegiatan"}
+                                            subLabel={"Scope of Work"}
+                                            rows={4}
+                                            onBlur={(e) => handleChange(e)}
+                                            defaultValue={initialState.ruang_lingkup_kegiatan}
+                                            textLimit={"(40 - 250 kata)"} />
+                                        <Spacing height="1.85rem" />
+                                    </div>
+
+                                    <div className='col-start-start w-full'>
+                                        {/* <input type="file" onInput={(e) => handleChange(e)} /> */}
+                                        <InputTextWithPrompt 
+                                            className={'w-full'}
+                                            name={"fileDocument"}
+                                            width={"100%"}
+                                            inputHeight={"3.125rem"}
+                                            id={'fileDocument'}
+                                            type={'file'}
+                                            prompt={"Lampiran"}
+                                            onChange={handleChange}
+                                        />
+                                        <input type="hidden" onChange={(e) => console.log(e)}/>
+                                        <span className="description-label">pdf/jpg/jpeg/png maksimum 10 MB per file</span>
+                                    </div>
+
+                                    <Spacing height="3.5rem" />
+                                    
+                                    <section className='row-between-start w-full'>
+                                        <ButtonOutlined
+                                            onClick={() => setIndex(index - 1)} 
+                                            label="Kembali"
+                                            width={"47%"}
+                                            iconPre={<FaArrowLeft/>} />
+
+                                        <ButtonSolid 
+                                            label="Berikutnya" 
+                                            iconPost={<FaArrowRight/>} 
+                                            onClick={() => handlePostForm(initialState, index + 1)}
+                                            width={'47%'} />  
+                                    </section>
+
+                                </ContainerCardSection>
+                                <Spacing height="2.7rem" />
+                            </CModalBody>
+                        </>
+                    )}
+
+                    {index === 6 && (
+                        <>
+                            <CModalHeader>
+                                <CModalTitle className="title-description">
+                                    <FaArrowLeft style={{ cursor: "pointer" }} onClick={() => setIndex(index - 1)}/> ISI FORM PROPOSAL 
+                                </CModalTitle>
+                            </CModalHeader>
+                            <CModalBody>
+                                <div className="col-start-start">
+                                    <span className='page-number'>HALAMAN 3 DARI 3</span>
+                                    <span className='subtitle'>Rencana Anggaran Biaya</span>
+                                    <span className="description">{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                </div>
+                                
+                                <Spacing height="2.25rem" />   
+                                
+                                <CTable borderless>
+                                    <CTableHead>
+                                        <CTableRow className="table-head">
+                                            <CTableHeaderCell>No.</CTableHeaderCell>
+                                            <CTableHeaderCell>Deskripsi</CTableHeaderCell>
+                                            <CTableHeaderCell>Satuan</CTableHeaderCell>
+                                            <CTableHeaderCell>Harga Unit</CTableHeaderCell>
+                                            <CTableHeaderCell>Jumlah</CTableHeaderCell>
+                                            {kategori.jenis_kegiatan === 'Pelatihan' && <CTableHeaderCell>Membership</CTableHeaderCell>}
+                                            <CTableHeaderCell>Harga Total</CTableHeaderCell>
+                                        </CTableRow>
+                                    </CTableHead>
+                                    <CTableBody className='position-relative px-5'>
+                                        {dataForm.komponen_rab ? Object.keys(dataForm.komponen_rab).map((n, i) => (
+                                            <>
+                                                <CTableRow className="outer-row">
+                                                    <CTableDataCell>
+                                                        {String.fromCharCode((i + 65))}
+                                                    </CTableDataCell>
+                                                    <CTableDataCell>
+                                                        {n}
+                                                    </CTableDataCell>
+                                                    <CTableDataCell />
+                                                    <CTableDataCell />
+                                                    <CTableDataCell />
+                                                    <CTableDataCell />
+                                                </CTableRow>
+                                                
+                                                {dataForm.komponen_rab[`${n}`].map((rowDetails, idx) => (
+                                                    <>
+                                                        <CTableRow className="inner-row w-full">
+                                                            <CTableDataCell align="right">{idx + 1}</CTableDataCell>
+                                                            <CTableDataCell>
+                                                                {rowDetails.jenis_komponen_rab?? '-'}
+                                                            </CTableDataCell>
+                                                            <CTableDataCell>
+                                                                {rowDetails.satuan?? '-'}
+                                                            </CTableDataCell>
+                                                            <CTableDataCell>
+                                                                <InputTextWithPrompt
+                                                                    inputHeight={'1.75rem'}
+                                                                    width={'6.65rem'}
+                                                                    name={`harga_unit`}
+                                                                    defaultValue={new Intl.NumberFormat('id-ID').format(
+                                                                        rowDetails.harga_unit,
+                                                                    )?? '-'}
+                                                                    onBlur={(e) => handleChangeQty(n, e, idx)}
+                                                                />
+                                                            </CTableDataCell>
+                                                            <CTableDataCell>
+                                                                <InputTextWithPrompt
+                                                                    inputHeight={'1.75rem'}
+                                                                    width={'6.25rem'}
+                                                                    name={`qty`}
+                                                                    defaultValue={new Intl.NumberFormat('id-ID').format(
+                                                                        rowDetails.qty,
+                                                                    )?? '-'}
+                                                                    onBlur={(e) => handleChangeQty(n, e, idx)}
+                                                                />
+                                                            </CTableDataCell>
+                                                            <CTableDataCell>
+                                                                {new Intl.NumberFormat('id-ID').format(
+                                                                    rowDetails.qty * rowDetails.harga_unit,
+                                                                )?? '-'}
+                                                            </CTableDataCell>
+                                                        </CTableRow>
+                                                    </>
+                                                ))}
+                                            </>
+                                        )) : (
+                                            <></>
+                                        )}
+                                    </CTableBody>
+                                </CTable>
+                                <div 
+                                    style={{ 
+                                        borderTop:'2px solid var(--color-disable)', 
+                                        borderBottom:'2px solid var(--color-disable)',
+                                        padding:'0.225rem',
+                                        backgroundColor: 'var(--color-disable-light)',
+                                    }}
+                                    className="row-end-start w-full" 
+                                >
+                                    <span className="subtitle">TOTAL</span>
+                                    <Spacing width={'4.45rem'}/>
+                                    <span className="subtitle">{getTotal(postData, 'harga_unit', 'qty')}</span>
+                                </div>
+                                <Spacing height="2.5rem" />
+                                
+                                <section className='col-center-center w-full'>
+                                    <div className="row-center-start w-full" style={{ padding:'0 2.25rem' }}>
+                                        <CFormCheck style={{ width: "1.575rem" }} checked={confirm} onClick={() => setConfirm(!confirm)}></CFormCheck>
+                                        <Spacing width={"1.75rem"}/>
+                                        <span className="description">Dengan ini saya menyatakan bahwa informasi yang disampaikan adalah benar dan bahwa kegiatan ini belum didanai oleh program lain</span>
+                                    </div>
+                                    <Spacing height={'1.85rem'}/>
+                                    <ButtonSolid 
+                                        label="Kirim Pengajuan" 
+                                        disabled={!confirm}
+                                        onClick={() => handleCloseForm()}
+                                        width={'25%'} />  
+                                </section>
+                                <Spacing height="2.7rem" />
+                            </CModalBody>
+                        </>
+                    )}
                 </Wrapper>
             </BrowserView>
         </>

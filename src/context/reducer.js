@@ -104,6 +104,11 @@ import {
   POST_FORM_PENGAJUAN,
   POST_FORM_PENGAJUAN_BEGIN,
   POST_FORM_PENGAJUAN_ERROR,
+  GET_DATA_VALIDASI,
+  GET_DATA_VALIDASI_BEGIN,
+  GET_DATA_VERIFIKASI_BEGIN,
+  GET_DATA_VERIFIKASI,
+  TOGGLE_FORM_MODAL,
 } from './actions';
 
 import { initialState } from './appContext';
@@ -601,6 +606,29 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === GET_DATA_VALIDASI_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_DATA_VALIDASI) {
+    return {
+      ...state,
+      isLoading: false,
+      dataValidasi: action.payload.data,
+    };
+  }
+
+  if (action.type === GET_DATA_VERIFIKASI_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_DATA_VERIFIKASI) {
+    return {
+      ...state,
+      isLoading: false,
+      dataVerifikasi: action.payload.data,
+    };
+  }
+
+
   if (action.type === SET_EDIT_JOB) {
     const job = state.jobs.find((job) => job._id === action.payload.id);
     const { _id, position, company, jobLocation, jobType, status } = job;
@@ -837,6 +865,13 @@ const reducer = (state, action) => {
     return {
       ...state,
       showProfileModal: !state.showProfileModal,
+    };
+  }
+
+  if (action.type === TOGGLE_FORM_MODAL) {
+    return {
+      ...state,
+      showFormModal: !state.showFormModal,
     };
   }
 

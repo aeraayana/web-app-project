@@ -45,7 +45,7 @@ const ResetPasswordPage = () => {
 
         const success = await resetPassword({ password: password,  serial: serial});
         if( success ){
-            navigate("/sign-in");        
+            navigate("/layanan-masyarakat/sign-in");        
         }
     }
 

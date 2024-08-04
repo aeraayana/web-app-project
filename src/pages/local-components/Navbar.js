@@ -20,7 +20,7 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
     const { token, toggleProfileModal, setSearch, logoutUser } = useAppContext();
 
     const actionSignInClick = () => {
-        navigate("/sign-in");    
+        navigate("/layanan-masyarakat/sign-in");    
         logoutUser();
     }
 
@@ -113,7 +113,7 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
                                 color: 'rgb(100, 100, 100)',
                                 paddingLeft: "0.5rem",
                                 paddingRight: '3.5rem', 
-                            }} > Budi Hendrawan </span>
+                            }} > {JSON.parse(localStorage.getItem('user_data'))?.kelompok_masyarakat} </span>
                         <ButtonOutlined
                             color={"rgb(166, 166, 166);"}
                             label={"Log Out"} 

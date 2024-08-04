@@ -6,7 +6,7 @@ import {
   ContainerCardArticle,
   Spacing,
 } from "../../../components";
-import AmbatukamContainerCard from "./RekapitulasiPengajuanCard";
+import RekapitulasiPengajuanCard from "./RekapitulasiPengajuanCard";
 
 const MembershipSubscriptionCard = ({
   name,
@@ -77,7 +77,7 @@ const MembershipSubscriptionCard = ({
       className={"col-start-start"}
     >
       <h1 className="membership-tag">{name}</h1>
-      {isBestValue && <AmbatukamContainerCard Judul={cardName} Bulan={month} Persen={percent} SDHI={sdhi} Tipe={tipe}/>}
+      {isBestValue && <RekapitulasiPengajuanCard Judul={cardName} Bulan={month} Persen={percent} SDHI={sdhi} Tipe={tipe}/>}
       {isBestValue && <Spacing height="0.5rem" />} {/* 8px */}
       <Spacing height="2.7rem" /> {/* 4px */}
       <div className="row-center-center price-tag w-full">

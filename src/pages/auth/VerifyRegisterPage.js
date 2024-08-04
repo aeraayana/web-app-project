@@ -19,7 +19,7 @@ const VerifyRegisterPage = () => {
 
     const actionLoginClick = (e) => {
         e.preventDefault();
-        navigate('/sign-in');        
+        navigate('/layanan-masyarakat/sign-in');        
     }
 
     useEffect(() => {

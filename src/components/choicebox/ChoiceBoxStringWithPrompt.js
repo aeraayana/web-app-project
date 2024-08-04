@@ -33,14 +33,19 @@ const Wrapper = styled.div`
     }
 `;
 
-const ChoiceBoxStringWithPrompt = ({ prompt,  options, id, name, onChange, height, errorMessage, className, width, value, onBlur }) => {
+const ChoiceBoxStringWithPrompt = ({ prompt, disabled, options, id, name, onChange, height, errorMessage, className, width, value, onBlur }) => {
 
     const isError = errorMessage && errorMessage.length>0;
 
     return (
         <Wrapper className={`col-start-start ${className}`} >
             {prompt && <label className="label" htmlFor={id} >{prompt}</label> }
-            <WrapperChoiceBox id={id} name={name} onChange={onChange} onBlur={onBlur}
+            <WrapperChoiceBox 
+                id={id} 
+                name={name} 
+                onChange={onChange} 
+                onBlur={onBlur}
+                disabled={disabled}
                 style={{
                     width: width,
                     height: `${ height? height : '3.85rem' }`,

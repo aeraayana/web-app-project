@@ -34,21 +34,21 @@ const SignInPage = () => {
     } 
 
     const actionCreateAccountClick = () => {
-        navigate("/create-account");        
+        navigate("/layanan-masyarakat/create-account");        
     }
 
     const actionSignInClick = async (e) => {
         e.preventDefault();
         await loginUser({ email: values.email, password: values.password });
-        navigate('/')
+        navigate('/layanan-masyarakat/')
     }
 
     const actionLandingPageClick = () => {
-        navigate("/landing")
+        navigate("/layanan-masyarakat/landing")
     }
 
     const actionForgotPasswordClick = () => {
-        navigate("/forgot-password");
+        navigate("/layanan-masyarakat/forgot-password");
     }
 
     return (

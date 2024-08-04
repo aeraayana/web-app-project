@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { CFormInput } from '@coreui/react';
 
 const WrapperInputText = styled(CFormInput)`
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     font-family: var(--font-family-primary);
     font-size: var(--font-size-normal);
     font-weight: var(--font-weight-normal);
@@ -39,7 +39,7 @@ const Wrapper = styled.div`
 `;
 
 
-const InputTextWithPrompt = ({ prompt, id, type, name, errorMessage, placeholder, className, onChange, width, inputHeight, value, onBlur, onKeyDown }) => {
+const InputTextWithPrompt = ({ onInput, defaultValue, prompt, id, type, name, errorMessage, placeholder, className, onChange, width, inputHeight, value, onBlur, onKeyDown }) => {
 
     const isError = errorMessage && errorMessage.length>0;
 
@@ -47,12 +47,15 @@ const InputTextWithPrompt = ({ prompt, id, type, name, errorMessage, placeholder
         <Wrapper className={`col-start-start ${className}`} >
             {prompt && <label className="label" htmlFor={id} >{prompt}</label> }
             <WrapperInputText id={id} 
+                // accept="image/png, image/jpeg, application/pdf, image/png"
                 name={name} 
                 type={type? type : "text"} 
                 autoComplete="off" 
                 placeholder={placeholder? placeholder : ""} 
                 className={className} 
                 onChange={onChange}
+                onChangeCapture={onInput}
+                defaultValue={defaultValue}
                 value={value}
                 onBlur={onBlur}
                 onKeyDown={onKeyDown}

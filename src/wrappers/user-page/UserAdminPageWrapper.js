@@ -4,10 +4,17 @@ const Wrapper = styled.main`
   padding: 2.5rem 5.5rem 2.5rem 5.5rem;
   background-color: var(--color-white);
 
-  .title {
+  .title{
     font-family: var(--font-family-primary);
-    font-weight: var(--font-weight-normal);
+    font-weight: var(--font-weight-bold);
     font-size: var(--font-size-big);
+    color: var(--color-black);
+  }
+
+  .title-description{
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-light);
+    font-size: var(--font-size-semi-big);
     color: var(--color-black);
   }
 
@@ -36,55 +43,90 @@ const Wrapper = styled.main`
     font-family: var(--font-family-primary);
     font-size: var(--font-size-normal-2);
     font-weight: var(--font-weight-semibold);
+    letter-spacing: 2px;
     color: var(--color-semiblack);
   }
 
   .subtitle {
     font-family: var(--font-family-primary);
     font-weight: var(--font-weight-normal);
-    font-size: 1.5rem; /* 24px */
+    font-size: var(--font-size-normal);
     color: var(--color-black);
   }
 
-  .description-subtitle {
+  .description-subtitle{
     font-family: var(--font-family-primary);
     font-weight: var(--font-weight-normal);
     font-size: var(--font-size-normal);
-    color: #4d4d4d;
+    border-left: 1pxpx solid black;
+    padding: 0.5rem;
+    background-color: white;
+    &:hover {
+      color: var(--color-primary-dark);
+      background-color: white;
+      border-color: var(--color-primary-dark);
+    },
+  } 
+
+  .card-title{
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-normal-2);
+    color: var(--color-black);
   }
 
-  h3 {
-    color: rgba(0, 0, 0, 0.7);
+  .card-subtitle{
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-normal);   
+    color: var(--color-black);     
+  }
+
+  .card-text-content{
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-normal);  
+    color: var(--color-black);  
+  }
+    
+  .page-number{
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-normal-2);   /* 24px */
+    color: var(--color-black);
+    letter-spacing: 1px;
   }
 
   .title-pengajuan-baru {
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-normal-2);
+    letter-spacing: 2px;
     border-bottom: 2px solid orange;
   }
 
   .title-pra-kegiatan {
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-normal-2);
+    letter-spacing: 2px;
     border-bottom: 2px solid var(--color-primary-light);
   }
 
   .title-kegiatan {
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-normal-2);
+    letter-spacing: 2px;
     border-bottom: 2px solid var(--color-primary);
   }
 
   .title-pasca-kegiatan {
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-normal-2);
+    letter-spacing: 2px;
     border-bottom: 2px solid var(--color-primary-dark);
-  }
-
-  .card-container {
-    color: Tipe;
-    borderColor: Tipe;
-    border: "solid 2px";
-    width: "60%";
-    height: "20%";
-    borderRadius: "0.625rem";
-  }
-
-  .text-title {
-    paddingLeft: "1%";
-    fontSize: "15px";
   }
 
   .text-subtitle {

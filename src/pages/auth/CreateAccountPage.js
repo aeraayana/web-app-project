@@ -63,7 +63,7 @@ const CreateAccountPage = () => {
         const success = await registerUser({ 
             category: namaKelompokMasyarakat, email: email, name: nama, identity_type: jenisId, identity_number: userId, phone_number: noTelp });
         if( success ){
-            navigate("/sign-in");        
+            navigate("/layanan-masyarakat/sign-in");        
         }
     }
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { CFormInput } from '@coreui/react';
 
 const Wrapper = styled(CFormInput)`
-    padding: 1rem;
+    padding: 0.15rem;
     font-family: var(--font-family-primary);
     font-size: var(--font-size-normal);
     font-weight: var(--font-weight-normal);
@@ -15,10 +15,12 @@ const Wrapper = styled(CFormInput)`
     }
 `
 
-const InputText = ({ id, name, type, isError, placeholder, className, onChange }) => {
+const InputText = ({ id, name, type, isError, placeholder, className, onChange, width, height }) => {
     return (
         <Wrapper id={id} 
             name={name} 
+            width={width}
+            height={height}
             type={type? type : "text"} 
             autoComplete="off" 
             placeholder={placeholder? placeholder : ""} 

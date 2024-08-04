@@ -23,18 +23,18 @@ const ButtonSolid = ({ hoverColor, thickness, label, iconPre, icon, borderColor,
 
         padding: 0;
         flex-direction: column;
-        background-color: ${bgColor? bgColor : ( secondary? `var(--color-secondary)` : `var(--color-primary)` )};
-        color: ${color? color : `var(--color-white)`};
-        border: ${thickness ? 'solid ' + thickness : "none"};
+        background-color: ${bgColor? bgColor : ( secondary? 'var(--color-secondary)' : 'var(--color-primary)' )};
+        color: ${color? color : 'var(--color-white)'};
+        border: ${thickness ? 'solid' + thickness : 'none'};
         border-color: ${borderColor? borderColor : 'black'};
         border-radius: 0.3125rem;
         font-weight: var(--font-weight-normal);
         &:hover {
-            color: ${hoverColor? hoverColor : `var(--color-white)`};
+            color: ${hoverColor? hoverColor : 'var(--color-white)'};
             background-color: ${bgColor? bgColor : 'var(--color-primary-dark)'};
             border-color: var(--color-primary-dark);
         },
-        font-size: ${ fontSize? fontSize : "var(--font-size-normal)"};
+        font-size: ${ fontSize? fontSize : `var(--font-size-normal)`};
         ${ width &&
             `width: ` + width + `;` 
         }

@@ -15,12 +15,13 @@ import circlePlusSmallIcon from './../../assets/images/circle-plus-small.png'
 import CreateSubmissionModal from './local-components/CreateSubmissionModal';
 import { BrowserView, MobileView } from 'react-device-detect';
 import MobileWrapper from '../../wrappers/user-page/mobile/UserMembershipMobilePageWrapper';
+import { useAppContext } from '../../context/appContext';
 
 
 const UserMembershipPage = () => {
 
     const [time, setTime] = useState(new Date());
-    const [show, setShowModal] = useState(false);
+    const { showFormModal, toggleFormModal } = useAppContext();
     const [index, setIndex] = useState(1);
 
     // useEffect(() => {
@@ -29,9 +30,9 @@ const UserMembershipPage = () => {
     //     }, 60000);
     // }, []);
 
-    const handleShowModal = () => {
-        setShowModal(!show);
-    }
+    // const handleShowModal = () => {
+    //     setShowModal(!show);
+    // }
 
     const actionOnClick = ({ membership }) => {
         console.log(`MEMBERSHIP => ${ membership }`);
@@ -41,12 +42,12 @@ const UserMembershipPage = () => {
         <>
         <MobileView>
             <MobileWrapper>
-                <CreateSubmissionModal show={show} onClose={() => handleShowModal()} index={index} setIndex={setIndex} /> 
+                <CreateSubmissionModal show={showFormModal} onClose={toggleFormModal} index={index} setIndex={setIndex} /> 
                 <div className="row-center-end w-full">
                     <div className='col-start-start w-full'>
                         <span className='title-description'>Halo, </span>
                         <div>
-                            <span className='title' style={{ fontWeight: "bold" }}>SDN 06 SAWAHLUNTO</span>
+                            <span className='title' style={{ fontWeight: "bold" }}>{JSON.parse(localStorage.getItem('user_data'))?.kelompok_masyarakat}</span>
                         </div>
                         <span className='description'> 
                             {time.toLocaleString("id-ID", {
@@ -75,7 +76,7 @@ const UserMembershipPage = () => {
                     </div>
                     <Spacing height="0.5rem"/>
                     <div className='w-full'>
-                        <ButtonSolid onClick={() => handleShowModal()} hoverColor={'var(--color-primary-dark)'} 
+                        <ButtonSolid onClick={toggleFormModal} hoverColor={'var(--color-primary-dark)'} 
                             thickness='0.0625rem' borderColor={'var(--color-disable)'} 
                             label={"Buat Pengajuan"} height={'70px'} width={'100%'} color="grey" 
                             iconPre={<img src={circlePlusSmallIcon} />} bgColor={"var(--color-disable-light)"} />
@@ -113,12 +114,12 @@ const UserMembershipPage = () => {
         </MobileView>
         <BrowserView>
             <Wrapper>
-                <CreateSubmissionModal show={show} onClose={() => handleShowModal()} index={index} setIndex={setIndex} /> 
+                <CreateSubmissionModal show={showFormModal} onClose={toggleFormModal} index={index} setIndex={setIndex} /> 
                 <div className="row-start-end w-full">
                     <div className='col-start-start w-full'>
                         <div>
                             <span className='title-description'>Halo, </span>
-                            <span className='title' style={{ fontWeight: "bold" }}>SDN 06 SAWAHLUNTO</span>
+                            <span className='title' style={{ fontWeight: "bold" }}>{JSON.parse(localStorage.getItem('user_data'))?.kelompok_masyarakat}</span>
                         </div>
                         <span className='description'> 
                             {time.toLocaleString("id-ID", {
@@ -144,7 +145,7 @@ const UserMembershipPage = () => {
                             bgColor={"var(--color-disable-light)"}
                             isBestValue={false}
                             onClick={ () => actionOnClick("Premium 1") } />
-                        <ButtonSolid onClick={() => handleShowModal()} hoverColor={'var(--color-primary-dark)'} 
+                        <ButtonSolid onClick={toggleFormModal} hoverColor={'var(--color-primary-dark)'} 
                             thickness='0.0625rem' borderColor={'var(--color-disable)'} 
                             label={"Buat Pengajuan"} height={'200px'} width={'20%'} color="grey" 
                             icon={<img src={circlePlusOutlineIcon} />} bgColor={"var(--color-disable-light)"} />

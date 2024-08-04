@@ -7,7 +7,7 @@ import {
     CSidebarNav
 } from '@coreui/react';
 
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import LogoHouse from '../../components/logo-icon/LogoHouse';
 
 const AdminSideBar = () => {
@@ -25,12 +25,12 @@ const AdminSideBar = () => {
                 <CSidebar style={sidebarStyle}>
                     <CSidebarNav>
                         <CNavItem className=' fs-2'> 
-                            <Link className='nav-link fs-2' to={'/'}>
+                            <Link className='nav-link fs-2' to={'/layanan-masyarakat/'}>
                                 <LogoHouse />
                             </Link>
                         </CNavItem>
                         <CNavItem className='fs-6'> 
-                            <Link className='nav-link fs-6' to={'/admin'}>
+                            <Link className='nav-link fs-6' to={'/layanan-masyarakat/admin'}>
                                 <LogoHouse /> 
                             </Link>
                         </CNavItem>

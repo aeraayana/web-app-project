@@ -39,7 +39,7 @@ const ForgotPasswordPage = () => {
         // if( success ){
         //     navigate("/admin/email-sent");
         // }
-        navigate('/admin/email-sent');
+        navigate('/layanan-masyarakat/admin/email-sent');
     }
 
     return (

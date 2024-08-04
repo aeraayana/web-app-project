@@ -21,8 +21,8 @@ import {
   RESET_PASSWORD_BEGIN,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_ERROR,
-  /////////////////////////////////////////////////////////////////////////////////////////
   TOGGLE_PROFILE_MODAL,
+  /////////////////////////////////////////////////////////////////////////////////////////
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
   GET_PAKET_KATEGORI_DATA,
@@ -46,6 +46,11 @@ import {
   POST_FORM_PENGAJUAN_ERROR,
   GET_PROVINSI_BEGIN,
   GET_PROVINSI,
+  GET_DATA_VERIFIKASI_BEGIN,
+  GET_DATA_VERIFIKASI,
+  GET_DATA_VALIDASI_BEGIN,
+  GET_DATA_VALIDASI,
+  TOGGLE_FORM_MODAL,
 } from './actions';
 
 const user = localStorage.getItem('token');
@@ -58,13 +63,8 @@ const initialState = {
   isSuccess: false,
   successMessage: '',
   /////////////////////////////////////////////////////////////////////////////////////////
-  showAlert: false,
-  showSidebar: false,
-  isEditing: false,
   kelompokMasyarakat: [],
   namaKelompokMasyarakat: [],
-  showProfileModal: false,
-  showShareProfile: false,
   tematikKegiatan: [],
   paketKategoriData: [],
   subTematikKegiatan: [],
@@ -73,6 +73,15 @@ const initialState = {
   bidangFolu: [],
   kelurahan: [],
   kecamatan: [],
+  /////////////////////////////////////////////////////////////////////////////////////////
+  showAlert: false,
+  showSidebar: false,
+  isEditing: false,
+  showProfileModal: false,
+  showFormModal: false,
+  /////////////////////////////////////////////////////////////////////////////////////////
+  dataVerifikasi: [],
+  dataValidasi: [],
 };
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
@@ -146,7 +155,7 @@ const AppProvider = ({ children }) => {
         type: LOGIN_USER_SUCCESS,
         payload: { message: message, token: token_access },
       });
-      addUserToLocalStorage({ token: token_access });
+      addUserToLocalStorage({ token: token_access, user_data: data });
     } catch (error) {
       //console.log(error);
       const { message, data } = error.response;
@@ -157,12 +166,14 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const addUserToLocalStorage = ({ token }) => {
-    localStorage.setItem('token', token)
+  const addUserToLocalStorage = ({ token, user_data }) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user_data', JSON.stringify(user_data));
   };
 
   const removeUserFromLocalStorage = () => {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_data');
   };
 
   const getCurrentUser = async () => {
@@ -341,11 +352,11 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
-  const getPaketKategoriData = async ({ subId, categoryId }) => {
+  const getPaketKategoriData = async ({ subId, id }) => {
     dispatch({ type: GET_PAKET_KATEGORI_DATA_BEGIN });
     try {
       const { data } = await authFetch.get(
-        `paketKegiatan/${categoryId}/${subId}`,
+        `paketKegiatan/${id}/${subId}`,
       );
       
       dispatch({
@@ -439,29 +450,21 @@ const AppProvider = ({ children }) => {
     dispatch({ type: TOGGLE_PROFILE_MODAL });
   };
 
+  const toggleFormModal = () => {
+    dispatch({ type: TOGGLE_FORM_MODAL });
+  };
+
   /////////////////////////////////////////////////////////////////////////////////////////////////////////
   
-  const postFormProposal = async ({ title, provinsi_code, kabupaten_code, 
-    kecamatan_code, kelurahan_code, alamat_kegiatan, tanggal_kegiatan, waktu_kegiatan, proposal_kegiatan,
-    tujuan_kegiatan, ruang_lingkup_kegiatan, paket_kegiatan_id, folu_location, fileDocument }) => {
+  const postFormProposal = async ({ catatan_log, status, _method, paket_kegiatan_id, id }) => {
     dispatch({ type: POST_FORM_PENGAJUAN_BEGIN });
     try {
-      const response = await unAuthFetch.post(
-        `register`, {
-          judul_pengajuan_kegiatan: title,
-          provinsi_kegiatan: provinsi_code,
-          kabupaten_kegiatan: kabupaten_code,
-          kecamatan_kegiatan: kecamatan_code,
-          kelurahan_kegiatan: kelurahan_code,
-          alamat_kegiatan: alamat_kegiatan,
-          tanggal_kegiatan: tanggal_kegiatan,
-          waktu_kegiatan: waktu_kegiatan,
-          proposal_kegiatan: proposal_kegiatan,
-          tujuan_kegiatan: tujuan_kegiatan,
-          ruang_lingkup_kegiatan: ruang_lingkup_kegiatan,
-          paket_kegiatan_id: paket_kegiatan_id,
-          lokasi_bidang_folu_id: folu_location,
-          fileDocument: fileDocument,
+      const response = await authFetch.post(
+        `verifikasiPengajuanKegiatan/${id}`, {
+          catatan_log, 
+          status, 
+          _method, 
+          paket_kegiatan_id
       }
       );
       const { message } = response.data;
@@ -480,6 +483,38 @@ const AppProvider = ({ children }) => {
     }
     return false;
   };
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const getDataValidasi = async () => {
+    dispatch({ type: GET_DATA_VALIDASI_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getDataValidasiPengajuan`);
+      
+      dispatch({
+        type: GET_DATA_VALIDASI,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
+  const getDataVerifikasi = async () => {
+    dispatch({ type: GET_DATA_VERIFIKASI_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getDataVerifikasiPengajuan`);
+      
+      dispatch({
+        type: GET_DATA_VERIFIKASI,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
 
   return (
     <AppContext.Provider
@@ -505,8 +540,12 @@ const AppProvider = ({ children }) => {
         ///////////////////////////////////////////////
         logoutUser,
         toggleProfileModal,
+        toggleFormModal,
         ///////////////////////////////////////////////
         postFormProposal,
+        ///////////////////////////////////////////////
+        getDataValidasi,
+        getDataVerifikasi,
       }}
     >
       {children}

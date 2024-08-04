@@ -19,7 +19,7 @@ const EmailSentPage = () => {
 
     const actionOkayClick = (e) => {
         e.preventDefault();
-        navigate("/sign-in");        
+        navigate("/layanan-masyarakat/sign-in");        
     }
 
     return (
