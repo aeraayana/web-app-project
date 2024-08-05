@@ -21,7 +21,6 @@ export default function RekapitulasiPengajuanCard({ Judul, Bulan, SDHI, Persen, 
       background-color: ${green ? green.replace(')', '-light)') : 'black'};
       font-size: var(--font-size-small-2);
       border-radius: 5px;
-      width: 75%;
     }
 
     .card-title {

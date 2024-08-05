@@ -3,6 +3,13 @@ import styled from 'styled-components'
 const Wrapper = styled.main`
     padding: 2.5rem 5.5rem 2.5rem 5.5rem;
     background-color: var(--color-white);
+    
+    .label{
+        color: var(--color-black);
+        font-family: var(--font-family-primary);
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-normal);
+    }
 
     .title{
         font-family: var(--font-family-primary);
@@ -41,10 +48,10 @@ const Wrapper = styled.main`
     }
 
     .description-subtitle{
-        font-family: var(--font-family-secondary);
+        font-family: var(--font-family-primary);
         font-weight: var(--font-weight-normal);
         font-size: var(--font-size-normal);
-        color: #4D4D4D;
+        color: var(--color-black);
     }
 `
 

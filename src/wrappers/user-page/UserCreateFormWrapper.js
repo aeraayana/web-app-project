@@ -3,13 +3,37 @@ import styled from 'styled-components';
 
 const Wrapper = styled(CModal)`
     padding: 2.5rem 5.5rem 2.5rem 5.5rem;
+    text-wrap: balance;
+    word-wrap: break-word;
     
+    .connector{
+        width: 2px;
+        height: 3.25rem;
+        border-radius: 6px;
+        background-color: var(--color-black);
+    }
+
+    .title-thin{
+        font-family: var(--font-family-primary);
+        font-weight: var(--font-weight-normal);
+        font-size: var(--font-size-big);
+        color: var(--color-primary);
+    }
+
     .label{
         color: var(--color-black);
         font-family: var(--font-family-primary);
         font-weight: var(--font-weight-bold);
         font-size: var(--font-size-normal);
         padding-bottom: 0.5rem;
+    }
+
+    .hyperlink{
+        color: var(--color-primary);
+        font-family: var(--font-family-primary);
+        font-weight: var(--font-weight-bold);
+        text-decoration: underline;
+        font-size: var(--font-size-normal);
     }
 
     .outer-row > td{
@@ -157,19 +181,19 @@ const Wrapper = styled(CModal)`
 
     .break {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        width: 85%;
+        grid-gap: 2rem;
+        grid-template-columns: repeat(3, 1fr);
+        width: 100%;
     }
 
     .price-tag{
         font-family: var(--font-family-primary);
         font-weight: var(--font-weight-normal);
         font-size: var(--font-size-normal);
-        color: #4D4D4D;
+        color: var(--color-black);
         border-radius: 25px;
-        border: 1px solid var(--color-disable);
-        padding: 20px;
-        margin: 1rem;
+        border: 1px solid var(--color-black);
+        padding: 5px;
         height: 200px; 
         &:hover {
             color: var(--color-primary-dark);

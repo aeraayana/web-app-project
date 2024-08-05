@@ -98,9 +98,6 @@ import {
   GET_PROVINSI_ERROR,
   GET_KELOMPOK_MASYARAKAT,
   GET_KELOMPOK_MASYARAKAT_BEGIN,
-  GET_BIDANG_FOLU_ERROR,
-  GET_BIDANG_FOLU_BEGIN,
-  GET_BIDANG_FOLU,
   POST_FORM_PENGAJUAN,
   POST_FORM_PENGAJUAN_BEGIN,
   POST_FORM_PENGAJUAN_ERROR,
@@ -109,6 +106,18 @@ import {
   GET_DATA_VERIFIKASI_BEGIN,
   GET_DATA_VERIFIKASI,
   TOGGLE_FORM_MODAL,
+  GET_PROGRESS_KEGIATAN_ERROR,
+  GET_PROGRESS_KEGIATAN,
+  GET_PROGRESS_KEGIATAN_BEGIN,
+  GET_RIWAYAT_PENGAJUAN_ERROR,
+  GET_RIWAYAT_PENGAJUAN,
+  GET_RIWAYAT_PENGAJUAN_BEGIN,
+  TOGGLE_DETAIL_PROGRESS_MODAL,
+  POST_FORM_VERIFIKASI_BEGIN,
+  POST_FORM_VERIFIKASI,
+  POST_FORM_VERIFIKASI_ERROR,
+  TOGGLE_VALIDASI_MODAL,
+  TOGGLE_VERIFIKASI_MODAL,
 } from './actions';
 
 import { initialState } from './appContext';
@@ -244,7 +253,7 @@ const reducer = (state, action) => {
     return { ...state, isLoading: true };
   }
 
-  if (action.type === GET_BIDANG_FOLU_ERROR) {
+  if (action.type === GET_PROGRESS_KEGIATAN_ERROR) {
     return {
       ...state,
       isLoading: false,
@@ -253,15 +262,36 @@ const reducer = (state, action) => {
       errorDetail: action.payload.data,
     };
   }
-  if (action.type === GET_BIDANG_FOLU) {
+  if (action.type === GET_PROGRESS_KEGIATAN) {
     return {
       ...state,
       isSuccess: true,
       isLoading: false,
-      bidangFolu: action.payload.data,
+      dataProgress: action.payload.data,
     }
   }
-  if (action.type === GET_BIDANG_FOLU_BEGIN){
+  if (action.type === GET_PROGRESS_KEGIATAN_BEGIN){
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === GET_RIWAYAT_PENGAJUAN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
+  if (action.type === GET_RIWAYAT_PENGAJUAN) {
+    return {
+      ...state,
+      isSuccess: true,
+      isLoading: false,
+      dataRiwayat: action.payload.data,
+    }
+  }
+  if (action.type === GET_RIWAYAT_PENGAJUAN_BEGIN){
     return { ...state, isLoading: true };
   }
 
@@ -584,6 +614,31 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === POST_FORM_VERIFIKASI_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === POST_FORM_VERIFIKASI) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New Job Created!',
+    };
+  }
+  if (action.type === POST_FORM_VERIFIKASI_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    };
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////////////
+
   if (action.type === GET_JOBS_BEGIN) {
     return { ...state, isLoading: true, showAlert: false };
   }
@@ -865,6 +920,27 @@ const reducer = (state, action) => {
     return {
       ...state,
       showProfileModal: !state.showProfileModal,
+    };
+  }
+
+  if (action.type === TOGGLE_VALIDASI_MODAL) {
+    return {
+      ...state,
+      showValidasiModal: !state.showProfileModal,
+    };
+  }
+
+  if (action.type === TOGGLE_VERIFIKASI_MODAL) {
+    return {
+      ...state,
+      showVerifikasiModal: !state.showProfileModal,
+    };
+  }
+
+  if (action.type === TOGGLE_DETAIL_PROGRESS_MODAL) {
+    return {
+      ...state,
+      showDetailProgressModal: !state.showDetailProgressModal,
     };
   }
 

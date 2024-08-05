@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { CButton } from '@coreui/react';
 
-const ButtonSolid = ({ hoverColor, thickness, label, iconPre, icon, borderColor, disabled, iconPost, width, height, onClick, bgColor, color, secondary, className, fontSize }) => {
+const ButtonSolid = ({ hoverColor, thickness, label, iconPre, icon, borderRadius, borderColor, disabled, iconPost, width, height, onClick, bgColor, color, secondary, className, fontSize }) => {
 
     if( iconPre && (typeof iconPre == "string" ) ){
         iconPre = <img src={iconPre} alt='pre-img'/>;
@@ -21,13 +21,19 @@ const ButtonSolid = ({ hoverColor, thickness, label, iconPre, icon, borderColor,
             width: auto; 
         }
 
+        &:disabled{
+            border: 1px solid var(--color-disable-light);
+            background-color: var(--color-disable);
+            color: var(--color-white);
+        }
+
         padding: 0;
         flex-direction: column;
         background-color: ${bgColor? bgColor : ( secondary? 'var(--color-secondary)' : 'var(--color-primary)' )};
         color: ${color? color : 'var(--color-white)'};
         border: ${thickness ? 'solid' + thickness : 'none'};
         border-color: ${borderColor? borderColor : 'black'};
-        border-radius: 0.3125rem;
+        border-radius: ${borderRadius? borderRadius : '0.3125rem'};
         font-weight: var(--font-weight-normal);
         &:hover {
             color: ${hoverColor? hoverColor : 'var(--color-white)'};

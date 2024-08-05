@@ -8,6 +8,8 @@ import Amico from "../../../assets/images/landing/amico.png";
 import Vector from "../../../assets/images/landing/Vector.png";
 import VectorBlack from "../../../assets/images/landing/VectorBlack.png";
 import Protect from "../../../assets/images/landing/protect.png";
+import Health from "../../../assets/images/landing/health.png";
+import Trip from "../../../assets/images/landing/trip.png";
 import Sun from "../../../assets/images/landing/sun.png";
 import Planting from "../../../assets/images/landing/planting.png";
 import Water from "../../../assets/images/landing/water.png";
@@ -34,10 +36,12 @@ const imgUrls = [
 ]
 
 const imgUrlPage2 = [
-    Protect,
-    Sun,
     Planting,
+    Sun,
+    Trip,
     Water,
+    Protect,
+    Health,
 ]
 
 const numFormat = (number) => {
@@ -106,17 +110,19 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
     
     const handleGetPaketKategoriData = async (e, index) => {
         if(!data){
-            setData({ id: e.id, tematik_kegiatan_id: e.tematik_kegiatan_id });
+            setData({ subId: e.id, id: e.tematik_kegiatan_id });
             Promise.all([
                 getProvinsi(),
-                getKecamatan(),
-                getKota(),
-                getKelurahan(),
             ]);
         }
         await getPaketKategoriData({ id: e.tematik_kegiatan_id, subId: e.id });
         setKategori({ jenis_kegiatan: '' })
         setIndex(index);
+    }
+
+    const handleFormClose = () => {
+        toggleFormModal();
+        setIndex(1);
     }
     
     const handleChange = (e) => {
@@ -128,10 +134,30 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
         }
     }
 
+    const handleChangeProvinsi = async (e) => {
+        const list = initialState;
+        setInitialState({ ...list, [e.target.name]: e.target.value });
+        await getKota({ id: e.target.value });
+    }
+
+    const handleChangeKabupaten = async (e) => {
+        const list = initialState;
+        setInitialState({ ...list, [e.target.name]: e.target.value });
+        await getKecamatan({ id: e.target.value });
+    }
+
+    const handleChangeKecamatan = async (e) => {
+        const list = initialState;
+        setInitialState({ ...list, [e.target.name]: e.target.value });
+        await getKelurahan({ id: e.target.value })
+    }
+
     const handleChangeQty = async (n, e, idx) => {
         let list = dataForm;
-        list.komponen_rab[n][idx][e.target.name] = e.target.value;
+        const r = new RegExp('[.]', 'g')
+        list.komponen_rab[n][idx][e.target.name] = e.target.value.replace(r, '');
         setPostData({ ...list.komponen_rab })
+        console.log(postData);
     }
 
     const handleCloseForm = async (e) => {
@@ -146,7 +172,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 }
             }
-        ).then(() => toggleFormModal)
+        ).then(handleFormClose());
     }
 
     const handlePostForm = (e, index) => {
@@ -159,7 +185,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
             formData.append('tanggal_kegiatan', `${e.tanggal_kegiatan} - ${e.tanggal_kegiatan}`);
             formData.append('alamat_kegiatan', e.alamat_kegiatan.concat(` ${e.alamat_kegiatan_ext}`));
             formData.append('kabupaten_kegiatan', e.kota_code);
-            formData.append('kelurahan_kegiatan', e.kelurahan_code);
+            formData.append('kelurahan_kegiatan', e.kelurahan_code?? 1);
             formData.append('kecamatan_kegiatan', e.kecamatan_code);
             formData.append('provinsi_kegiatan', e.province_code);
             formData.append('judul_pengajuan_kegiatan', e.title);
@@ -307,7 +333,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                 </div>
                                                 <Spacing height="1.25rem" />
                                                 <ChoiceBoxStringWithPrompt 
-                                                    prompt={'Jumlah Peserta'} 
+                                                    prompt={n.jenis_kegiatan === "Penanaman Pohon" ? 'Jumlah Hectare' : 'Jumlah Peserta'} 
                                                     options={n.paket_kegiatan} 
                                                     id={'jumlah_peserta'}
                                                     height={'2.25rem'} 
@@ -329,7 +355,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             <div className="col-start-start">
                                                     <span className="description" style={{ color: "var(--color-primary-dark)" }}>Rehabilitasi:</span>
                                                     <Spacing height="0.45rem" />
-                                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${kategori.jenis_kegiatan === "Penanaman Pohon" && kategori.jenis_kegiatan ? 'Hectare' : 'Orang'}`}</span>
                                             </div>
                                             
                                             <div className="col-end-end w-full">
@@ -364,7 +390,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
                                     <Spacing height="0.25rem" />   
                                     
-                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${kategori.jenis_kegiatan === "Penanaman Pohon" && kategori.jenis_kegiatan ? 'Hectare' : 'Orang'}`}</span>
                                 </div>
 
                                 <Spacing height="1.25rem" /> 
@@ -402,14 +428,15 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             height={'2.25rem'} 
                                             name={"province_code"} 
                                             value={parseInt(initialState?.province_code)} 
-                                            onBlur={(e) => handleChange(e)} />  
+                                            onChange={(e) => handleChangeProvinsi(e)} />  
                                             
                                         <Spacing height="0.75rem" /> 
                                         
                                         <ChoiceBoxStringWithPrompt 
                                             className={'w-full'}
                                             prompt={"Kota/Kabupaten"} 
-                                            options={kota?.data} 
+                                            disabled={kota.length === 0}
+                                            options={kota?.data?.kota?? ['pilih kota/kabupaten']} 
                                             id={"name"} 
                                             height={'2.25rem'} 
                                             name={"kota_code"} 
@@ -422,7 +449,8 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                         <ChoiceBoxStringWithPrompt 
                                             className={'w-full'}
                                             prompt={"Kecamatan"} 
-                                            options={kecamatan?.data} 
+                                            disabled={kecamatan.length === 0}
+                                            options={kecamatan?.data?.kecamatan?? ['pilih kecamatan']} 
                                             id={"name"} 
                                             height={'2.25rem'} 
                                             name={"kecamatan_code"} 
@@ -434,7 +462,8 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                         <ChoiceBoxStringWithPrompt 
                                             className={'w-full'}
                                             prompt={"Kelurahan"} 
-                                            options={kelurahan?.data} 
+                                            disabled={kelurahan.length === 0}
+                                            options={kelurahan?.data?.kelurahan?? ['pilih kelurahan']} 
                                             id={"name"} 
                                             height={'2.25rem'} 
                                             name={"kelurahan_code"} 
@@ -524,7 +553,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
                                     <Spacing height="0.25rem" />   
                                     
-                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.jenis_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.jenis_kegiatan_id)[0]?.jumlah_peserta?? ''} ${kategori.jenis_kegiatan === "Penanaman Pohon" && kategori.jenis_kegiatan ? 'Hectare' : 'Orang'}`}</span>
                                 </div>
 
                                 <Spacing height="1.25rem" /> 
@@ -661,9 +690,9 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                     <div className="break">
                                         {tematikKegiatan.data ? tematikKegiatan.data.map((n, idx) => (
                                             <>
-                                                <div className="col-center-center price-tag" style={{ cursor: "pointer" }} onClick={() => handleGetPaketKategoriData(n, index + 1)}>
-                                                    <img src={imgUrlPage2[idx]}></img>
-                                                    <span style={{ marginTop: "10px" }} className="subtitle">{n.sub_tematik_kegiatan}</span>
+                                                <div className="col-around-center price-tag w-full" style={{ cursor: "pointer" }} onClick={() => handleGetPaketKategoriData(n, index + 1)}>
+                                                    <img style={{ width:'90px', height:'90px' }} src={imgUrlPage2[idx]}></img>
+                                                    <span className="subtitle" style={{ fontSize:'16px', textAlign:'center' }}>{n.sub_tematik_kegiatan}</span>
                                                 </div>
                                             </>
                                         )) : (
@@ -716,7 +745,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                 <ChoiceBoxStringWithPrompt 
                                                     disabled={kategori.jenis_kegiatan !== n.jenis_kegiatan}
                                                     className={'row-end-end'}
-                                                    prompt={'Jumlah Peserta'} 
+                                                    prompt={n.jenis_kegiatan === "Penanaman Pohon" ? 'Jumlah Hectare' : 'Jumlah Peserta'} 
                                                     options={n.paket_kegiatan} 
                                                     id={'jumlah_peserta'}
                                                     height={'2.25rem'} 
@@ -736,7 +765,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             <div className="col-start-start">
                                                 <span className="description" style={{ color: "var(--color-primary-dark)" }}>Rehabilitasi:</span>
                                                 <Spacing height="0.45rem" />
-                                                <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id ? 'Orang' : ''}`}</span>
+                                                <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${kategori.jenis_kegiatan === "Penanaman Pohon" && kategori.jenis_kegiatan ? 'Hectare' : 'Orang'}`}</span>
                                             </div>
                                             
                                             <ButtonSolid 
@@ -769,7 +798,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
                                     <Spacing height="0.25rem" />   
                                     
-                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${kategori.jenis_kegiatan === "Penanaman Pohon" && kategori.jenis_kegiatan ? 'Hectare' : 'Orang'}`}</span>
                                 </div>
 
                                 <Spacing height="1.25rem" /> 
@@ -809,19 +838,20 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             height={'2.25rem'} 
                                             name={"province_code"} 
                                             value={parseInt(initialState?.province_code)} 
-                                            onBlur={(e) => handleChange(e)} />  
+                                            onBlur={(e) => handleChangeProvinsi(e)} />  
                                         
                                         <Spacing width="4.75rem" /> 
                                         
                                         <ChoiceBoxStringWithPrompt 
                                             className={'w-full'}
                                             prompt={"Kota/Kabupaten"} 
-                                            options={kota?.data} 
+                                            disabled={kota.length === 0}
+                                            options={kota?.data?.kota?? ['pilih kota/kabupaten']} 
                                             id={"name"} 
                                             height={'2.25rem'} 
                                             name={"kota_code"} 
                                             value={parseInt(initialState?.kota_code)} 
-                                            onChange={(e) => handleChange(e)}  /> 
+                                            onChange={(e) => handleChangeKabupaten(e)}  /> 
                                     </div>
                                     
                                     <Spacing height="0.75rem" />
@@ -830,19 +860,21 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                         <ChoiceBoxStringWithPrompt 
                                             className={'w-full'}
                                             prompt={"Kecamatan"} 
-                                            options={kecamatan?.data} 
+                                            disabled={kecamatan.length === 0}
+                                            options={kecamatan?.data?.kecamatan?? ['pilih kecamatan']} 
                                             id={"name"} 
                                             height={'2.25rem'} 
                                             name={"kecamatan_code"} 
                                             value={parseInt(initialState?.kecamatan_code)} 
-                                            onChange={(e) => handleChange(e)} /> 
+                                            onChange={(e) => handleChangeKecamatan(e)} /> 
                                         
                                         <Spacing width="4.75rem" />
 
                                         <ChoiceBoxStringWithPrompt 
                                             className={'w-full'}
-                                            prompt={"Kelurahan"} 
-                                            options={kelurahan?.data} 
+                                            prompt={"Kelurahan"}
+                                            disabled={kelurahan.length === 0} 
+                                            options={kelurahan?.data?.kelurahan?? ['pilih kelurahan']} 
                                             id={"name"} 
                                             height={'2.25rem'} 
                                             name={"kelurahan_code"} 
@@ -930,7 +962,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
                                     <Spacing height="0.25rem" />   
                                     
-                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                    <span className="subtitle" style={{ color: "var(--color-primary-dark)" }} >{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${kategori.jenis_kegiatan === "Penanaman Pohon" && kategori.jenis_kegiatan ? 'Hectare' : 'Orang'}`}</span>
                                 </div>
 
                                 <Spacing height="1.25rem" /> 
@@ -1032,7 +1064,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                 <div className="col-start-start">
                                     <span className='page-number'>HALAMAN 3 DARI 3</span>
                                     <span className='subtitle'>Rencana Anggaran Biaya</span>
-                                    <span className="description">{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${initialState?.paket_kegiatan_id === '' ? '' : 'Orang'}`}</span>
+                                    <span className="description">{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${kategori.jenis_kegiatan === "Penanaman Pohon" && kategori.jenis_kegiatan ? 'Hectare' : 'Orang'}`}</span>
                                 </div>
                                 
                                 <Spacing height="2.25rem" />   
@@ -1081,7 +1113,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                                     width={'6.65rem'}
                                                                     name={`harga_unit`}
                                                                     defaultValue={new Intl.NumberFormat('id-ID').format(
-                                                                        rowDetails.harga_unit,
+                                                                        postData ? postData[n]?.[idx]?.harga_unit : rowDetails.harga_unit,
                                                                     )?? '-'}
                                                                     onBlur={(e) => handleChangeQty(n, e, idx)}
                                                                 />
@@ -1092,7 +1124,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                                     width={'6.25rem'}
                                                                     name={`qty`}
                                                                     defaultValue={new Intl.NumberFormat('id-ID').format(
-                                                                        rowDetails.qty,
+                                                                        postData ? postData[n]?.[idx]?.qty : rowDetails.qty,
                                                                     )?? '-'}
                                                                     onBlur={(e) => handleChangeQty(n, e, idx)}
                                                                 />
@@ -1136,7 +1168,9 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                     <ButtonSolid 
                                         label="Kirim Pengajuan" 
                                         disabled={!confirm}
-                                        onClick={() => handleCloseForm()}
+                                        onClick={() => {
+                                            handleCloseForm()
+                                        }}
                                         width={'25%'} />  
                                 </section>
                                 <Spacing height="2.7rem" />

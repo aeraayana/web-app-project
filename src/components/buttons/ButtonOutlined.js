@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { CButton } from '@coreui/react';
 
-const ButtonOutlined = ({ fontSize, hoverColor, label, iconPre, icon, disabled, iconPost, width, height, onClick, color, borderColor, coreUiColor, secondary, className }) => {
+const ButtonOutlined = ({ fontSize, hoverColor, label, borderRadius, iconPre, icon, disabled, iconPost, width, height, onClick, color, borderColor, coreUiColor, secondary, className }) => {
 
     if( !borderColor ){
         borderColor = color;
@@ -29,7 +29,7 @@ const ButtonOutlined = ({ fontSize, hoverColor, label, iconPre, icon, disabled, 
         background-color: transparent;
         color: ${color? color : `var(--color-primary-dark)`};
         border-color: ${borderColor? borderColor : 'black'};
-        border-radius: 0.3125rem;
+        border-radius: ${borderRadius? borderRadius : '0.3125rem'};
         font-weight: var(--font-weight-normal);
         &:hover {
             color: ${hoverColor? hoverColor : ( hoverColor? `var(--color-secondary)` : `var(--color-primary-dark)` )};
@@ -41,6 +41,12 @@ const ButtonOutlined = ({ fontSize, hoverColor, label, iconPre, icon, disabled, 
             `width: ` + width + `;` 
         }
         height: ${ height? height : `3.25rem` }; //52px
+        
+        &:disabled{
+            color: var(--color-disable);
+            background-color: white;
+            border-color: var(--color-disable);
+        }
 
         &:focus{
             outline: none !important;

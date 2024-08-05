@@ -12,11 +12,10 @@ import ValidateSubmissionFormModal from "./local-components/ValidateSubmissionFo
 import PenyerapanDanaCard from "./local-components/PenyerapanDanaCard";
 
 const UserAdminPage = () => {
-  const { dataVerifikasi, getDataVerifikasi } = useAppContext();
+  const { dataVerifikasi, getDataVerifikasi, toggleVerifikasiModal, showVerifikasiModal } = useAppContext();
   const [time, setTime] = useState(new Date());
 
   const [selectedData, setSelectedData] = useState(null);
-  const [show, setShowModal] = useState(false);
 
   useEffect(() => {
     getDataVerifikasi();
@@ -24,16 +23,12 @@ const UserAdminPage = () => {
 
   const handleClick = (data) => {
     setSelectedData(data);
-    setShowModal(!show);
-  }
-
-  const handleShowModal = () => {
-    setShowModal(!show);
+    toggleVerifikasiModal();
   }
 
   return (
     <Wrapper>
-      <ValidateSubmissionFormModal show={show} onClose={() => handleShowModal()} selectedData={selectedData}/>
+      <ValidateSubmissionFormModal show={showVerifikasiModal} onClose={toggleVerifikasiModal} selectedData={selectedData}/>
 
       <div style={{ height: '100%' }}>
         <div className="row-start-end w-full">

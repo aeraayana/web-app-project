@@ -9,39 +9,43 @@ import {
     InputTextSearch,
     Spacing,
 } from '../../components'
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import circlePlusOutlineIcon from './../../assets/images/circle-plus-logo.png'
 import circlePlusSmallIcon from './../../assets/images/circle-plus-small.png'
 import CreateSubmissionModal from './local-components/CreateSubmissionModal';
 import { BrowserView, MobileView } from 'react-device-detect';
 import MobileWrapper from '../../wrappers/user-page/mobile/UserMembershipMobilePageWrapper';
 import { useAppContext } from '../../context/appContext';
+import DraftPengajuanCard from './local-components/DraftPengajuanCard';
+import DetailKegiatanModal from './local-components/DetailKegiatanModal';
 
 
 const UserMembershipPage = () => {
 
     const [time, setTime] = useState(new Date());
-    const { showFormModal, toggleFormModal } = useAppContext();
+
+    // const [show, setShow] = useState(false);
+    const { 
+        dataProgress,
+        getDataProgressKegiatan,
+        showFormModal, 
+        toggleFormModal, 
+        showDetailProgressModal,
+        toggleDetailProgressModal,
+    } = useAppContext();
+
+    useEffect(() => {getDataProgressKegiatan()}, [])
+
     const [index, setIndex] = useState(1);
-
-    // useEffect(() => {
-    //     setInterval(() => {
-    //         setTime(new Date());
-    //     }, 60000);
-    // }, []);
-
-    // const handleShowModal = () => {
-    //     setShowModal(!show);
-    // }
 
     const actionOnClick = ({ membership }) => {
         console.log(`MEMBERSHIP => ${ membership }`);
     }
-
     return (
         <>
         <MobileView>
             <MobileWrapper>
+                <DetailKegiatanModal show={showDetailProgressModal} onClose={toggleDetailProgressModal} data={dataProgress}/>
                 <CreateSubmissionModal show={showFormModal} onClose={toggleFormModal} index={index} setIndex={setIndex} /> 
                 <div className="row-center-end w-full">
                     <div className='col-start-start w-full'>
@@ -70,9 +74,10 @@ const UserMembershipPage = () => {
                             width={"100%"}
                             bgColor={"var(--color-disable-light)"}
                             isEmpty
+                            onClick={toggleDetailProgressModal}
                             height={"170px"}
                             isBestValue={false}
-                            onClick={ () => actionOnClick("Premium 1") } />
+                        />
                     </div>
                     <Spacing height="0.5rem"/>
                     <div className='w-full'>
@@ -114,6 +119,7 @@ const UserMembershipPage = () => {
         </MobileView>
         <BrowserView>
             <Wrapper>
+                <DetailKegiatanModal show={showDetailProgressModal} onClose={toggleDetailProgressModal} data={dataProgress}/>
                 <CreateSubmissionModal show={showFormModal} onClose={toggleFormModal} index={index} setIndex={setIndex} /> 
                 <div className="row-start-end w-full">
                     <div className='col-start-start w-full'>
@@ -139,24 +145,29 @@ const UserMembershipPage = () => {
                     <div className='row-between-start w-full'>
                         <MembershipSubscriptionCard 
                             name={"PROGRESS KEGIATAN"}
-                            width={"50%"}
-                            isEmpty
-                            height={"200px"}
+                            width={"65%"}
+                            height={'255px'}
                             bgColor={"var(--color-disable-light)"}
                             isBestValue={false}
-                            onClick={ () => actionOnClick("Premium 1") } />
+                            onClick={toggleDetailProgressModal} />
+                        
+                        <Spacing width={'1.3rem'}/>
+                        
                         <ButtonSolid onClick={toggleFormModal} hoverColor={'var(--color-primary-dark)'} 
                             thickness='0.0625rem' borderColor={'var(--color-disable)'} 
-                            label={"Buat Pengajuan"} height={'200px'} width={'20%'} color="grey" 
+                            borderRadius={'20px'}
+                            label={"Buat Pengajuan"} height={'255px'} width={'20%'} color="grey" 
                             icon={<img src={circlePlusOutlineIcon} />} bgColor={"var(--color-disable-light)"} />
+
+                        <Spacing width={'1.3rem'}/>
                         
-                        <MembershipSubscriptionCard 
+                        <DraftPengajuanCard 
                             name={"DRAFT PENGAJUAN"}
-                            width={"25%"}
-                            isEmpty
-                            height={"200px"}
+                            width={"35%"}
+                            height={'255px'}
                             bgColor={"var(--color-white)"}
                             isBestValue={false}
+                            isEmpty
                             onClick={ () => actionOnClick("Premium 3") } />
                     </div>
                     <Spacing height="2.5rem"/>

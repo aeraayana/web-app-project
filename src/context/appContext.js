@@ -51,6 +51,13 @@ import {
   GET_DATA_VALIDASI_BEGIN,
   GET_DATA_VALIDASI,
   TOGGLE_FORM_MODAL,
+  GET_PROGRESS_KEGIATAN,
+  GET_PROGRESS_KEGIATAN_BEGIN,
+  GET_RIWAYAT_PENGAJUAN,
+  GET_RIWAYAT_PENGAJUAN_BEGIN,
+  TOGGLE_DETAIL_PROGRESS_MODAL,
+  TOGGLE_VERIFIKASI_MODAL,
+  TOGGLE_VALIDASI_MODAL,
 } from './actions';
 
 const user = localStorage.getItem('token');
@@ -79,9 +86,14 @@ const initialState = {
   isEditing: false,
   showProfileModal: false,
   showFormModal: false,
+  showVerifikasiModal: false,
+  showValidasiModal: false,
+  showDetailProgressModal: false,
   /////////////////////////////////////////////////////////////////////////////////////////
   dataVerifikasi: [],
   dataValidasi: [],
+  dataRiwayat: [],
+  dataProgress: [],
 };
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
@@ -369,6 +381,36 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
+  const getDataProgressKegiatan = async () => {
+    dispatch({ type: GET_PROGRESS_KEGIATAN_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getDataProsesKegiatan`);
+      
+      dispatch({
+        type: GET_PROGRESS_KEGIATAN,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
+  const getDataRiwayatPengajuan = async () => {
+    dispatch({ type: GET_RIWAYAT_PENGAJUAN_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getDataRiwayatPengajuan`);
+      
+      dispatch({
+        type: GET_RIWAYAT_PENGAJUAN,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
   /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const getProvinsi = async () => {
@@ -386,10 +428,10 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
-  const getKelurahan = async () => {
+  const getKelurahan = async ({ id }) => {
     dispatch({ type: GET_KELURAHAN_BEGIN });
     try {
-      const { data } = await authFetch.get(`kelurahan`);
+      const { data } = await authFetch.get(`kecamatan/${id}`);
       
       dispatch({
         type: GET_KELURAHAN,
@@ -401,10 +443,10 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
-  const getKota = async () => {
+  const getKota = async ({ id }) => {
     dispatch({ type: GET_KOTA_BEGIN });
     try {
-      const { data } = await authFetch.get(`kota`);
+      const { data } = await authFetch.get(`provinsi/${id}`);
       
       dispatch({
         type: GET_KOTA,
@@ -416,10 +458,10 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
-  const getKecamatan = async () => {
+  const getKecamatan = async ({ id }) => {
     dispatch({ type: GET_KECAMATAN_BEGIN });
     try {
-      const { data } = await authFetch.get(`kecamatan`);
+      const { data } = await authFetch.get(`kota/${id}`);
       
       dispatch({
         type: GET_KECAMATAN,
@@ -431,20 +473,20 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
-  const getLokasiBidangFolu = async () => {
-    dispatch({ type: GET_BIDANG_FOLU_BEGIN });
-    try {
-      const { data } = await authFetch.get(`getLokasiBidangFolu`);
+  // const getLokasiBidangFolu = async () => {
+  //   dispatch({ type: GET_BIDANG_FOLU_BEGIN });
+  //   try {
+  //     const { data } = await authFetch.get(`getLokasiBidangFolu`);
       
-      dispatch({
-        type: GET_BIDANG_FOLU,
-        payload: { data: data },
-      });
-    } catch (error) {
-      logoutUser();
-    }
-    clearAlert();
-  }
+  //     dispatch({
+  //       type: GET_BIDANG_FOLU,
+  //       payload: { data: data },
+  //     });
+  //   } catch (error) {
+  //     logoutUser();
+  //   }
+  //   clearAlert();
+  // }
 
   const toggleProfileModal = () => {
     dispatch({ type: TOGGLE_PROFILE_MODAL });
@@ -454,17 +496,53 @@ const AppProvider = ({ children }) => {
     dispatch({ type: TOGGLE_FORM_MODAL });
   };
 
+  const toggleDetailProgressModal = () => {
+    dispatch({ type: TOGGLE_DETAIL_PROGRESS_MODAL });
+  };
+
+  const toggleValidasiModal = () => {
+    dispatch({ type: TOGGLE_VALIDASI_MODAL });
+  };
+
+  const toggleVerifikasiModal = () => {
+    dispatch({ type: TOGGLE_VERIFIKASI_MODAL });
+  };
+
   /////////////////////////////////////////////////////////////////////////////////////////////////////////
   
-  const postFormProposal = async ({ catatan_log, status, _method, paket_kegiatan_id, id }) => {
+  const postVerifikasiFormProposal = async ({ catatan_log, status, _method, paket_kegiatan_id, id }) => {
     dispatch({ type: POST_FORM_PENGAJUAN_BEGIN });
     try {
-      const response = await authFetch.post(
+      const response = await authFetch.put(
         `verifikasiPengajuanKegiatan/${id}`, {
           catatan_log, 
           status, 
-          _method, 
-          paket_kegiatan_id
+      }
+      );
+      const { message } = response.data;
+
+      dispatch({
+        type: POST_FORM_PENGAJUAN,
+        payload: { message: message },
+      });
+      return true;
+    } catch (error) {
+      const { message, data } = error.response;
+      dispatch({
+        type: POST_FORM_PENGAJUAN_ERROR,
+        payload: { message: message, data: data },
+      });
+    }
+    return false;
+  };
+
+  const postValidasiFormProposal = async ({ catatan_log, status, id }) => {
+    dispatch({ type: POST_FORM_PENGAJUAN_BEGIN });
+    try {
+      const response = await authFetch.put(
+        `validasiPengajuanKegiatan/${id}`, {
+          catatan_log, 
+          status, 
       }
       );
       const { message } = response.data;
@@ -531,18 +609,24 @@ const AppProvider = ({ children }) => {
         getTematikKegiatan,
         getSubTematikKegiatan,
         getPaketKategoriData,
+        getDataProgressKegiatan,
+        getDataRiwayatPengajuan,
         ///////////////////////////////////////////////
         getKelurahan,
         getKecamatan,
         getKota,
         getProvinsi,
-        getLokasiBidangFolu,
+        // getLokasiBidangFolu,
         ///////////////////////////////////////////////
         logoutUser,
         toggleProfileModal,
         toggleFormModal,
+        toggleDetailProgressModal,
+        toggleValidasiModal,
+        toggleVerifikasiModal,
         ///////////////////////////////////////////////
-        postFormProposal,
+        postVerifikasiFormProposal,
+        postValidasiFormProposal,
         ///////////////////////////////////////////////
         getDataValidasi,
         getDataVerifikasi,

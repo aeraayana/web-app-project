@@ -10,6 +10,8 @@ import JobInfo from "../../../components/JobInfo";
 import { FaArrowsAltH, FaFontAwesome } from "react-icons/fa";
 import ArrowRotate from "../../../components/logo-icon/ArrowRotate";
 import { isMobile, MobileView } from "react-device-detect";
+import { useAppContext } from "../../../context/appContext";
+import React from "react";
 
 const MembershipTable = () => {
 
@@ -59,6 +61,12 @@ const MembershipTable = () => {
             text-align: left;
         }
     `;
+
+    const { dataRiwayat, getDataRiwayatPengajuan } = useAppContext();
+
+    // React.useEffect(() => {getDataRiwayatPengajuan()}, []);
+    // console.log(dataRiwayat);
+
     if (isMobile){
         return (
             <Wrapper padding={'0'}>
@@ -126,7 +134,7 @@ const MembershipTable = () => {
                     </CTableHead>
                     <CTableBody>
                         <CTableRow >
-                            <CTableDataCell width={"12%"}>
+                            {/* <CTableDataCell width={"12%"}>
                                 {'130192847'}
                             </CTableDataCell>
                             <CTableDataCell width={'17%'}>
@@ -152,7 +160,7 @@ const MembershipTable = () => {
                             </CTableDataCell>
                             <CTableDataCell width={'17%'}>
                                 <Hyperlink small={'14px'} label={'Lihat Detail'}/>
-                            </CTableDataCell>
+                            </CTableDataCell> */}
                         </CTableRow>
                         {/* {isLoading?<CSpinner color="info" /> : users.map((n) => (
                             <>

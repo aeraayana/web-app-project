@@ -31,7 +31,6 @@ const PenyerapanDanaCard = ({
       font-size: var(--font-size-small-2);
       border-radius: 5px;
       padding: 0.15rem 0.35rem;
-      width: 37%;
     }
 
     .price {

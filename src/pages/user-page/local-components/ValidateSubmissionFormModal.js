@@ -7,15 +7,30 @@ import MobileWrapper from "../../../wrappers/user-page/mobile/UserCreateFormMobi
 import InputTextArea from "../../../components/inputs/InputTextArea";
 import FeaturedIcon from "../../../../src/assets/images/Featured icon.png"
 import { CAvatar, CModalBody, CModalHeader, CModalTitle } from "@coreui/react";
+import { FaChevronDown } from "react-icons/fa";
 
 const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
-    const [initialState, setInitialState] = React.useState(null)
+    
+    const [initialState, setInitialState] = React.useState([]);
+    const { postVerifikasiFormProposal, toggleVerifikasiModal } = useAppContext();
 
-    const { 
-        postFormProposal,
-    } = useAppContext();
+    const handleTolak = async (e) => {
+        await postVerifikasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 0 });
+        toggleVerifikasiModal();
+    }
 
-    console.log(selectedData);
+    const handleSetuju = async (e) => {
+        await postVerifikasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 1 });
+        toggleVerifikasiModal();
+    }
+
+    const handleChange = (e) => {
+        const list = initialState;
+        setInitialState({ ...list, [e.target.name]: e.target.value });
+    }
+    
+    // console.log(initialState);
+    // console.log(selectedData);
     return (
         <>
             <MobileView>
@@ -80,7 +95,7 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                 </span>
                             </div>
                             <div className="col-start-start w-full">
-                                <span className='description' style={{ fontWeight: 'bold' }}>Rencana Kegiatan</span>
+                                <span className='description' style={{ fontWeight: 'bold' }}>Tanggal Kegiatan</span>
                                 <span className='description'>
                                     {selectedData?.tanggal_akhir_verifikasi}
                                 </span>
@@ -131,6 +146,7 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                         color={'var(--color-semiblack)'}
                                         height={'1.85rem'}
                                         width={'30%'}
+                                        disabled
                                         label={'Buka'}
                                     />
                                     
@@ -140,6 +156,7 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                         color={'var(--color-semiblack)'}
                                         height={'1.85rem'}
                                         width={'30%'}
+                                        disabled
                                         label={'Simpan'}
                                     />
                                 </div>
@@ -159,6 +176,7 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                         color={'var(--color-semiblack)'}
                                         height={'1.85rem'}
                                         width={'30%'}
+                                        disabled
                                         label={'Buka'}
                                     />
                                     
@@ -168,10 +186,52 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                         color={'var(--color-semiblack)'}
                                         height={'1.85rem'}
                                         width={'30%'}
+                                        disabled
                                         label={'Simpan'}
                                     />
                                 </div>
                             </ContainerCardSection>
+                        </div>
+                        <Spacing height="1.5rem" />
+                        <div>
+                            <span className="label"> <FaChevronDown width={'12px'} /> Attachment </span>
+                            <Spacing height="0.95rem" />
+                            <div className="row-start-center w-full">
+                                <img src={FeaturedIcon} width={'40px'}></img>
+                                <span className="description" style={{ fontWeight:'bold', marginLeft:'0.5rem' }}>{selectedData?.document[0]?.file_name}</span>
+                            </div>
+                            <hr></hr>
+                            <span className="description" style={{ fontWeight:'bold' }}> Catatan </span>
+                            <Spacing height="0.5rem" />
+                            <InputTextArea 
+                                placeholder={'Enter a description...'}
+                                rows={4}
+                                name={'catatan_log'}
+                                onBlur={(e) => handleChange(e)}
+                            />
+                        </div>
+                        <Spacing height="6.5rem" />
+                        <div className="row-between-start w-full">
+                            <ButtonOutlined 
+                                label={'Tolak'} 
+                                className={'w-full'} 
+                                width={'25%'} 
+                                height={'2.75rem'} 
+                                fontSize={'12px'}
+                                onClick={handleTolak}
+                                borderRadius={'9px'}
+                                color={'var(--color-black)'}
+                                borderColor={'var(--color-black)'} />
+
+                            <ButtonSolid 
+                                label={'Setujui'} 
+                                className={'w-full'} 
+                                width={'25%'} 
+                                onClick={handleSetuju}
+                                height={'2.75rem'} 
+                                borderRadius={'9px'}
+                                bgColor={'var(--color-primary-dark)'}
+                                fontSize={'12px'} />
                         </div>
                     </CModalBody>
                 </Wrapper>

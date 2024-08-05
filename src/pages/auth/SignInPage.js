@@ -40,7 +40,11 @@ const SignInPage = () => {
     const actionSignInClick = async (e) => {
         e.preventDefault();
         await loginUser({ email: values.email, password: values.password });
-        navigate('/layanan-masyarakat/')
+        if(JSON.parse(localStorage.getItem('user_data')).role_user === 'verifikator'){
+            navigate('/layanan-masyarakat/admin')            
+        }else{
+            navigate('/layanan-masyarakat/')
+        }
     }
 
     const actionLandingPageClick = () => {
