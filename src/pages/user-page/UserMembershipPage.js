@@ -145,7 +145,7 @@ const UserMembershipPage = () => {
                     <div className='row-between-start w-full'>
                         <MembershipSubscriptionCard 
                             name={"PROGRESS KEGIATAN"}
-                            width={"65%"}
+                            width={"100%"}
                             height={'255px'}
                             bgColor={"var(--color-disable-light)"}
                             isBestValue={false}
@@ -156,14 +156,14 @@ const UserMembershipPage = () => {
                         <ButtonSolid onClick={toggleFormModal} hoverColor={'var(--color-primary-dark)'} 
                             thickness='0.0625rem' borderColor={'var(--color-disable)'} 
                             borderRadius={'20px'}
-                            label={"Buat Pengajuan"} height={'255px'} width={'20%'} color="grey" 
+                            label={"Buat Pengajuan"} height={'255px'} width={'25%'} color="grey" 
                             icon={<img src={circlePlusOutlineIcon} />} bgColor={"var(--color-disable-light)"} />
 
                         <Spacing width={'1.3rem'}/>
                         
                         <DraftPengajuanCard 
                             name={"DRAFT PENGAJUAN"}
-                            width={"35%"}
+                            width={"45%"}
                             height={'255px'}
                             bgColor={"var(--color-white)"}
                             isBestValue={false}

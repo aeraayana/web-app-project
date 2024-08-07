@@ -95,7 +95,7 @@ function App() {
             <Route path='/layanan-masyarakat/reset-password/:serial' element={<ResetPasswordPage />} />
             <Route path='/layanan-masyarakat/verify-register/:serial' element={<VerifyRegisterPage />} />
 
-            <Route path='*' element={<Error />} />
+            <Route path='*' element={<Navigate to="layanan-masyarakat/" />} />
         </Routes>
     </BrowserRouter>
     )

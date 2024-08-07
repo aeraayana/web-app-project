@@ -131,9 +131,9 @@ const SignInPage = () => {
                         <article className='col-center w-full'>
                             <div className='col-start-center'>
                                 <Spacing height="3.25rem" />
-                                <div className='col-start-start'>    
-                                    <p className='col-start-start title-sub'>Selamat Datang di</p>
-                                    <h1 className='title'>Layanan Dana Masyarakat</h1>
+                                <div className='col-start-center' style={{ textWrap:'balance', textAlign:'center' }}>    
+                                    <p className='title-sub'>Selamat Datang di</p>
+                                    <h1 className='title'>Layanan Dana Masyarakat untuk Lingkungan</h1>
                                 </div> 
                                 <Spacing height="5.525rem" />   {/* 34px */}
                                 <h1 className='text-center title' style={{ color: "var(--color-primary-dark)" }}>Log In</h1>

@@ -11,6 +11,7 @@ import { CProgress, CProgressBar } from "@coreui/react";
 import { useAppContext } from "../../../context/appContext";
 import React from "react";
 import DetailKegiatanModal from "./DetailKegiatanModal";
+import { BrowserView, MobileView } from "react-device-detect";
 
 const ProgressValue = {
   "Dalam Proses Verifikasi": 6,
@@ -98,56 +99,81 @@ const MembershipSubscriptionCard = ({
   React.useEffect(() => {getDataProgressKegiatan()}, [])
 
   return (
-    <Wrapper
-      border="var(--color-disable)"
-      bgColor={bgColor}
-      borderRadius="0.4rem"
-      thickness={"0.05rem"}
-      className={"col-start-start"}
-    >
-      <h1 className="membership-tag">{name}</h1>
-      {isBestValue && <RekapitulasiPengajuanCard Judul={cardName} Bulan={month} Persen={percent} SDHI={sdhi} Tipe={tipe}/>}
-      {isBestValue && <Spacing height="0.5rem" />}
-      {!isBestValue && 
-        <div className="row-center-start price-tag w-full" style={{ cursor:'pointer' }} onClick={onClick}>
-          {dataProgress?.length === 0 ? (
-            <>
+    <>
+    
+      <MobileView>
+        <Wrapper
+          border="var(--color-disable)"
+          bgColor={bgColor}
+          borderRadius="0.4rem"
+          thickness={"0.05rem"}
+          className={"col-start-start"}
+        >
+          <h1 className="membership-tag">{name}</h1>
+          {isBestValue && <RekapitulasiPengajuanCard Judul={cardName} Bulan={month} Persen={percent} SDHI={sdhi} Tipe={tipe}/>}
+          {isBestValue && <Spacing height="0.5rem" />}
+          {!isBestValue && 
+            <div className="row-center-start price-tag w-full" style={{ cursor:'pointer' }} onClick={onClick}>
               <Spacing height="1.7rem" />
               <span>Tidak ada {name.toLowerCase()}</span>
-            </>
-          ) : (
-            <>
-              <div className="col-start-start w-full">
-                <Spacing height="1.25rem" />
-                <div className="row-between-start w-full">
-                  <span className="title-card">{dataProgress?.data[0].jenis_kegiatan} {dataProgress?.data[0].jumlah}</span>
-                  <span className="label" style={{ fontWeight: 'bold' }}>#{dataProgress?.data[0].nomor_pengajuan}</span>
-                </div>
-                <div className="col-start-start w-full">
-                  <Spacing height="1.45rem" />
-                  <div className="row-between-start w-full" style={{ padding:'0rem 0.75rem' }}>
-                    <span className="description-subtitle" style={{ fontWeight:400 }}>{dataProgress?.data[0].tahapan_pengajuan}</span>
-                    <span className="label">{ProgressValue[dataProgress?.data[0].tahapan_pengajuan]} %</span>
+            </div>}
+          <Spacing height="0.25rem" />
+          <Spacing height="1rem" />
+        </Wrapper>
+      </MobileView>
+      <BrowserView className="w-full">
+        <Wrapper
+          border="var(--color-disable)"
+          bgColor={bgColor}
+          borderRadius="0.4rem"
+          thickness={"0.05rem"}
+          className={"col-start-start"}
+        >
+          <h1 className="membership-tag">{name}</h1>
+          {isBestValue && <RekapitulasiPengajuanCard Judul={cardName} Bulan={month} Persen={percent} SDHI={sdhi} Tipe={tipe}/>}
+          {isBestValue && <Spacing height="0.5rem" />}
+          {!isBestValue && 
+            <div className="row-center-start price-tag w-full" style={{ cursor:'pointer' }} onClick={onClick}>
+              {dataProgress?.length === 0 ? (
+                <>
+                  <Spacing height="1.7rem" />
+                  <span>Tidak ada {name.toLowerCase()}</span>
+                </>
+              ) : (
+                <>
+                  <div className="col-start-start w-full">
+                    <Spacing height="1.25rem" />
+                    <div className="row-between-start w-full">
+                      <span className="title-card">{dataProgress?.data[0].jenis_kegiatan} {dataProgress?.data[0].jumlah}</span>
+                      <span className="label" style={{ fontWeight: 'bold' }}>#{dataProgress?.data[0].nomor_pengajuan}</span>
+                    </div>
+                    <div className="col-start-start w-full">
+                      <Spacing height="1.45rem" />
+                      <div className="row-between-start w-full" style={{ padding:'0rem 0.75rem' }}>
+                        <span className="description-subtitle" style={{ fontWeight:400 }}>{dataProgress?.data[0].tahapan_pengajuan}</span>
+                        <span className="label">{ProgressValue[dataProgress?.data[0].tahapan_pengajuan]} %</span>
+                      </div>
+                      
+                      <Spacing height="0.45rem" />
+                      <CProgress color="warning" className="progress-bar" value={ProgressValue[dataProgress?.data[0].tahapan_pengajuan]} />
+                      
+                      <Spacing height="0.45rem" />
+                      <div className="row-end-center w-full" style={{ padding:'0rem 0.75rem' }}>
+                        <span className="description-subtitle" style={{ width:'55%' }}>Total dana diterima</span>
+                        <span className="label">Rp {dataProgress?.data[0].dana_yang_dicairkan}</span>
+                      </div>
+                    </div>
+                    
                   </div>
-                  
-                  <Spacing height="0.45rem" />
-                  <CProgress color="warning" className="progress-bar" value={ProgressValue[dataProgress?.data[0].tahapan_pengajuan]} />
-                  
-                  <Spacing height="0.45rem" />
-                  <div className="row-end-center w-full" style={{ padding:'0rem 0.75rem' }}>
-                    <span className="description-subtitle" style={{ width:'55%' }}>Total dana diterima</span>
-                    <span className="label">Rp {dataProgress?.data[0].dana_yang_dicairkan}</span>
-                  </div>
-                </div>
-                
-              </div>
-            </>
-          )}
-        </div>
-      }
-      <Spacing height="0.25rem" />
-      <Spacing height="1rem" />
-    </Wrapper>
+                </>
+              )}
+            </div>
+          }
+          <Spacing height="0.25rem" />
+          <Spacing height="1rem" />
+        </Wrapper>
+      </BrowserView>
+    </>
   );
 };
 

@@ -65,7 +65,6 @@ const MembershipTable = () => {
     const { dataRiwayat, getDataRiwayatPengajuan } = useAppContext();
 
     React.useEffect(() => {getDataRiwayatPengajuan()}, []);
-    console.log(dataRiwayat);
 
     if (isMobile){
         return (

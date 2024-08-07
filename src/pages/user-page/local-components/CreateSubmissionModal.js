@@ -312,37 +312,36 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                     <Spacing height="1.75rem" />
                                     {paketKategoriData.data ? paketKategoriData.data.map((n, i) => (
                                         <>
-                                            <div className="row-start-start description-subtitle" style={{ width:'100%' }}>
+                                            <div className="row-start-start description-subtitle w-full" style={{ width:'100%' }}>
                                             
-                                            <WrapperChoiceBox 
-                                                className='center' 
-                                                style={{ marginTop:'1.25rem', marginRight: '1rem', cursor: 'pointer' }} 
-                                                id={`${n.jenis_kegiatan}-${i}`} 
-                                                label="" 
-                                                onClick={() => handleCheck(n)} 
-                                                checked={kategori.jenis_kegiatan === n.jenis_kegiatan}/>
+                                                <WrapperChoiceBox 
+                                                    className='center' 
+                                                    style={{ marginTop:'1.25rem', marginRight: '0.25rem', cursor: 'pointer' }} 
+                                                    id={`${n.jenis_kegiatan}-${i}`} 
+                                                    label="" 
+                                                    onClick={() => handleCheck(n)} 
+                                                    checked={kategori.jenis_kegiatan === n.jenis_kegiatan}/>
 
-                                            <div className="col-center-center">
-                                                <div className='row-start-start'>
-                                                    <div style={{ marginTop:'0.75rem' }}>
-                                                        <img height='38.33px' src={kategori.jenis_kegiatan ? Vector : VectorBlack}></img>
-                                                    </div>
-                                                    <div style={{ marginLeft:'2.5rem', marginTop:'0.75rem' }}>
-                                                        <span style={{ fontSize:'var(--font-size-normal)', fontWeight:'var(--font-weight-semibold)'}}>{n.jenis_kegiatan}</span>
+                                                <div className="col-center-center w-full">
+                                                    <div className='row-between-center w-full'>
+                                                        <div className="row-start-center w-full">
+                                                            <img height='28.33px' src={kategori.jenis_kegiatan === n.jenis_kegiatan ? Vector : VectorBlack}></img>
+                                                            <span style={{ textWrap:'stable', marginLeft:'0.55rem', fontSize:'var(--font-size-normal)', fontWeight:'var(--font-weight-semibold)'}}>{n.jenis_kegiatan}</span>
+                                                        </div>
+                                                        <ChoiceBoxStringWithPrompt 
+                                                            prompt={n.jenis_kegiatan === "Penanaman Pohon" ? 'Jumlah Hectare' : 'Jumlah Peserta'} 
+                                                            options={n.paket_kegiatan} 
+                                                            id={'jumlah_peserta'}
+                                                            height={'2.25rem'} 
+                                                            width={'4.75rem'}
+                                                            className={'col-end-end w-full'}
+                                                            disabled={kategori.jenis_kegiatan !== n.jenis_kegiatan}
+                                                            name={'paket_kegiatan_id'} 
+                                                            onChange={handleChange}/>
                                                     </div>
                                                 </div>
-                                                <Spacing height="1.25rem" />
-                                                <ChoiceBoxStringWithPrompt 
-                                                    prompt={n.jenis_kegiatan === "Penanaman Pohon" ? 'Jumlah Hectare' : 'Jumlah Peserta'} 
-                                                    options={n.paket_kegiatan} 
-                                                    id={'jumlah_peserta'}
-                                                    height={'2.25rem'} 
-                                                    // value={initialState?.}
-                                                    name={'paket_kegiatan_id'} 
-                                                    onChange={handleChange}/>
                                             </div>
-
-                                        </div>
+                                            <Spacing height={'1.25rem'}/>
                                         </>
                                     )) : (
                                         <></>
@@ -363,8 +362,8 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                     onClick={() => setIndex(index + 1)} 
                                                     disabled={!kategori?.jenis_kegiatan}
                                                     label={'Mulai Pengajuan'} 
-                                                    width={"6.75rem"} 
-                                                    height={"4.75rem"} 
+                                                    width={"9.75rem"} 
+                                                    height={"2.75rem"} 
                                                     bgColor={"var(--color-primary-dark)"} />
                                             </div>
                                                 
@@ -500,6 +499,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             className={'w-full'}
                                             prompt={"Tanggal Kegiatan"} 
                                             type={"date"} 
+                                            inputHeight={'2.25rem'} 
                                             id={"tanggal_kegiatan"} 
                                             name={"tanggal_kegiatan"} 
                                             value={initialState?.tanggal_kegiatan} 
@@ -507,18 +507,9 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
                                         <Spacing height="0.75rem" /> 
 
-                                        <InputTextWithPrompt 
-                                            className={'w-full'}
-                                            prompt={"Waktu Kegiatan"} 
-                                            type={"date"} 
-                                            id={"waktu_kegiatan"} 
-                                            name={"waktu_kegiatan"} 
-                                            value={initialState?.waktu_kegiatan} 
-                                            onChange={handleChange} />
-
                                         <div className="col-start-start w-full">
                                             <label className="label" htmlFor='time-range'> Waktu Kegiatan </label>
-                                            <div class="time-range" style={{ width:"100%" }}>
+                                            <div class="time-range" style={{ width:"100%", height:'2.25rem' }}>
                                                 <input type="time" id="start-time" name="start_time" onBlur={(e) => handleChange(e)} defaultValue={initialState?.start_time}/>
                                                 <span>-</span>
                                                 <input type="time" id="end-time" name="end_time" onBlur={(e) => handleChange(e)} defaultValue={initialState?.end_time}/>
@@ -530,6 +521,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                         <ButtonSolid 
                                             label="Berikutnya" 
                                             iconPost={<FaArrowRight/>} 
+                                            onClick={() => setIndex(index + 1)}
                                             className={'w-full'} />  
                                     </div>
 
@@ -575,7 +567,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             subLabel={"Project Background"}
                                             rows={4}
                                             textLimit={"(40 - 250 kata)"} />
-                                        <Spacing height="1.85rem" />
+                                        <Spacing height="1.45rem" />
                                     </div>                                    
 
                                     <div className='w-full'>                                    
@@ -586,7 +578,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             subLabel={"Objectives"}
                                             rows={4}
                                             textLimit={"(40 - 250 kata)"} />
-                                        <Spacing height="1.85rem" />
+                                        <Spacing height="1.45rem" />
                                     </div>
                                     
                                     <div className='w-full'>                                    
@@ -595,13 +587,26 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             id="ruang_lingkup_kegiatan"
                                             name={"ruang_lingkup_kegiatan"}
                                             rows={4}
+                                            className={'col-start-start w-full'}
                                             subLabel={"Scope of Work"}
                                             textLimit={"(40 - 250 kata)"} />
-                                        <Spacing height="1.85rem" />
+                                        <Spacing height="1.15rem" />
                                     </div>
 
-                                    <div className='row-start-start w-full'>
-                                        <Spacing height="2.85rem" />
+                                    <div className='col-start-start w-full'>
+                                        {/* <input type="file" onInput={(e) => handleChange(e)} /> */}
+                                        <InputTextWithPrompt 
+                                            className={'w-full'}
+                                            name={"fileDocument"}
+                                            width={"100%"}
+                                            inputHeight={"3.125rem"}
+                                            id={'fileDocument'}
+                                            type={'file'}
+                                            prompt={"Lampiran"}
+                                            onChange={handleChange}
+                                        />
+                                        <input type="hidden" onChange={(e) => console.log(e)}/>
+                                        <span className="description-label">pdf/jpg/jpeg/png maksimum 10 MB per file</span>
                                     </div>
 
                                     <Spacing height="3.5rem" />
@@ -609,15 +614,19 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                     <section className='row-between-start w-full'>
                                         <ButtonOutlined
                                             onClick={() => setIndex(index - 1)} 
-                                            label="Previous"
-                                            width={"47%"}
+                                            label="Kembali"
+                                            width={"37%"}
+                                            color={'var(--color-black)'}
+                                            height={'2.25rem'}
                                             iconPre={<FaArrowLeft/>} />
 
                                         <ButtonSolid 
-                                            label="Berikutnya" 
-                                            iconPost={<FaArrowRight/>} 
                                             onClick={() => handlePostForm(initialState, index + 1)}
-                                            width={'47%'} />  
+                                            label="Kirim Pengajuan" 
+                                            bgColor={'var(--color-primary-dark)'}
+                                            width={'47%'}
+                                            height={'2.25rem'} />  
+                                            
                                     </section>
 
                                 </ContainerCardSection>
@@ -1043,7 +1052,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                         <ButtonSolid 
                                             label="Berikutnya" 
                                             iconPost={<FaArrowRight/>} 
-                                            onClick={() => handlePostForm(initialState, index + 1)}
+                                            onClick={() => { handlePostForm(initialState, 1); toggleFormModal(); }}
                                             width={'47%'} />  
                                     </section>
 
