@@ -1,12 +1,11 @@
 import { ButtonOutlined, ButtonSolid, ContainerCardSection, Spacing } from "../../../components";
-import React, { useEffect } from "react";
-import { BrowserView, MobileView } from "react-device-detect";
+import React from "react";
+import { BrowserView } from "react-device-detect";
 import { useAppContext } from "../../../context/appContext";
 import Wrapper from "../../../wrappers/user-page/UserCreateFormWrapper";
-import MobileWrapper from "../../../wrappers/user-page/mobile/UserCreateFormMobileWrapper";
 import InputTextArea from "../../../components/inputs/InputTextArea";
 import FeaturedIcon from "../../../../src/assets/images/Featured icon.png"
-import { CAvatar, CModalBody, CModalHeader, CModalTitle } from "@coreui/react";
+import { CAvatar, CModalBody, CModalHeader } from "@coreui/react";
 import { FaChevronDown } from "react-icons/fa";
 
 const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
@@ -16,12 +15,10 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
 
     const handleTolak = async (e) => {
         await postVerifikasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 0 });
-        toggleVerifikasiModal();
     }
 
     const handleSetuju = async (e) => {
         await postVerifikasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 1 });
-        toggleVerifikasiModal();
     }
 
     const handleChange = (e) => {
@@ -30,7 +27,7 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
     }
     
     // console.log(initialState);
-    console.log(show);
+    // console.log(show);
     return (
         <>
             <BrowserView>
@@ -198,7 +195,10 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                 width={'25%'} 
                                 height={'2.75rem'} 
                                 fontSize={'12px'}
-                                onClick={handleTolak}
+                                onClick={() => {
+                                    handleTolak();
+                                    toggleVerifikasiModal();
+                                }}
                                 borderRadius={'9px'}
                                 color={'var(--color-black)'}
                                 borderColor={'var(--color-black)'} />
@@ -207,7 +207,10 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                 label={'Setujui'} 
                                 className={'w-full'} 
                                 width={'25%'} 
-                                onClick={handleSetuju}
+                                onClick={() => {
+                                    handleSetuju();
+                                    toggleVerifikasiModal();
+                                }}
                                 height={'2.75rem'} 
                                 borderRadius={'9px'}
                                 bgColor={'var(--color-primary-dark)'}

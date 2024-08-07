@@ -53,6 +53,14 @@ const Wrapper = styled.main`
         font-size: var(--font-size-normal);
         color: var(--color-black);
     }
+
+    .toast-message{
+        width: 90vh;
+        height: 22vh;
+        margin-left: 40vh;
+        margin-top: 40px;
+        padding: 20px 20px;
+    }
 `
 
 export default Wrapper

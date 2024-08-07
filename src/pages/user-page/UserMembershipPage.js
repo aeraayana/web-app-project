@@ -50,11 +50,11 @@ const UserMembershipPage = () => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             }
         }).then((res) => {
-            toast(
-                <div className="col-start-start">
-                    <span className="label">{res.data.data[0].data.message_header}</span>
-                    <span className="description">{res.data.data[0].data.message_body}</span>
-                </div>, { position: toast.POSITION.TOP_CENTER }
+            toast.success(
+                <div className="col-start-start w-full">
+                    <span style={{ fontSize: 'var(--font-size-bigger)' }} className="label">{res.data.data[0].data.message_header}</span>
+                    <span style={{ fontSize: 'var(--font-size-big)'}} className="description">{res.data.data[0].data.message_body}</span>
+                </div>, { position: toast.POSITION.TOP_LEFT, className: 'toast-message' }
             )
         })
     }, [])

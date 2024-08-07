@@ -107,7 +107,7 @@ const UserAdminPage = () => {
               <span className='page-number'>VERIFIKASI</span>
               <Spacing height="1.25rem" />
               
-              {dataVerifikasi.data ? dataVerifikasi.data.map((n) => (
+              {/* {dataVerifikasi.data ? dataVerifikasi.data.map((n) => (
                 <div className="w-full">
                   <UserAdminContainerCard
                     // data={n}
@@ -121,7 +121,13 @@ const UserAdminPage = () => {
                   <p className='card-text-content'></p>
                   <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
                 </div>
-              )}
+              )} */}
+              <div className="description-subtitle">
+                <p className="card-title"></p>
+                <p className="card-subtitle">Belum ada permintaan</p>
+                <p className='card-text-content'></p>
+                <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
+              </div>
             
             </ContainerCardSection>
           </div>
@@ -136,7 +142,7 @@ const UserAdminPage = () => {
               <span className='page-number'>VERIFIKASI</span>
               <Spacing height="1.25rem" />
 
-              {dataVerifikasi.data ? dataVerifikasi.data.map((n) => (
+              {/* {dataVerifikasi.data ? dataVerifikasi.data.map((n) => (
                 <div className="w-full">
                   <UserAdminContainerCard
                     // data={n}
@@ -150,7 +156,13 @@ const UserAdminPage = () => {
                   <p className='card-text-content'></p>
                   <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
                 </div>
-              )}
+              )} */}
+              <div className="description-subtitle">
+                <p className="card-title"></p>
+                <p className="card-subtitle">Belum ada permintaan</p>
+                <p className='card-text-content'></p>
+                <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
+              </div>
 
             </ContainerCardSection>
           </div>
@@ -165,7 +177,7 @@ const UserAdminPage = () => {
               <span className='page-number'>VERIFIKASI</span>
               <Spacing height="1.25rem" />
 
-              {dataVerifikasi.data ? dataVerifikasi.data.map((n) => (
+              {/* {dataVerifikasi.data ? dataVerifikasi.data.map((n) => (
                 <div className="w-full">
                   <UserAdminContainerCard
                     // data={n}
@@ -179,7 +191,13 @@ const UserAdminPage = () => {
                   <p className='card-text-content'></p>
                   <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
                 </div>
-              )}
+              )} */}
+              <div className="description-subtitle">
+                <p className="card-title"></p>
+                <p className="card-subtitle">Belum ada permintaan</p>
+                <p className='card-text-content'></p>
+                <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
+              </div>
 
             </ContainerCardSection>
           </div>
