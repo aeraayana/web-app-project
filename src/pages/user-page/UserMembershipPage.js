@@ -18,6 +18,9 @@ import MobileWrapper from '../../wrappers/user-page/mobile/UserMembershipMobileP
 import { useAppContext } from '../../context/appContext';
 import DraftPengajuanCard from './local-components/DraftPengajuanCard';
 import DetailKegiatanModal from './local-components/DetailKegiatanModal';
+import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
+import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from '../../configs/constants';
 
 
 const UserMembershipPage = () => {
@@ -34,13 +37,34 @@ const UserMembershipPage = () => {
         toggleDetailProgressModal,
     } = useAppContext();
 
-    useEffect(() => {getDataProgressKegiatan()}, [])
+    useEffect(() => {
+        getDataProgressKegiatan();
+    }, [])
+
+    useEffect(() => {
+        axios.get(`${HOST_URL}getNotification`, {
+            headers:{
+                "Content-Type": "application/json",
+                id: CLIENT_ID,
+                secret: CLIENT_ID_SECRET,
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            }
+        }).then((res) => {
+            toast(
+                <div className="col-start-start">
+                    <span className="label">{res.data.data[0].data.message_header}</span>
+                    <span className="description">{res.data.data[0].data.message_body}</span>
+                </div>, { position: toast.POSITION.TOP_CENTER }
+            )
+        })
+    }, [])
 
     const [index, setIndex] = useState(1);
 
     const actionOnClick = ({ membership }) => {
         console.log(`MEMBERSHIP => ${ membership }`);
     }
+
     return (
         <>
         <MobileView>

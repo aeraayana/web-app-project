@@ -30,29 +30,9 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
     }
     
     // console.log(initialState);
-    // console.log(selectedData);
+    console.log(show);
     return (
         <>
-            <MobileView>
-                <MobileWrapper
-                    fullscreen
-                    scrollable
-                    alignment="center"
-                    visible={show}
-                    onClose={onClose}
-                >
-                    <CModalHeader>
-                    </CModalHeader>
-                    <CModalBody>
-                        <div>
-                            <span className='title-description'>PERMINTAAN BARU</span>
-                            <span className='title-description'>PERMINTAAN BARU</span>
-                        </div>
-                        <Spacing height="2.7rem" />
-                    </CModalBody>
-                </MobileWrapper>
-            </MobileView>
-
             <BrowserView>
                 <Wrapper
                     size="lg"

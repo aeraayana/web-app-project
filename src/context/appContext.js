@@ -39,8 +39,6 @@ import {
   GET_KOTA_BEGIN,
   GET_KELOMPOK_MASYARAKAT,
   GET_KELOMPOK_MASYARAKAT_BEGIN,
-  GET_BIDANG_FOLU,
-  GET_BIDANG_FOLU_BEGIN,
   POST_FORM_PENGAJUAN_BEGIN,
   POST_FORM_PENGAJUAN,
   POST_FORM_PENGAJUAN_ERROR,
@@ -58,6 +56,8 @@ import {
   TOGGLE_DETAIL_PROGRESS_MODAL,
   TOGGLE_VERIFIKASI_MODAL,
   TOGGLE_VALIDASI_MODAL,
+  GET_NOTIFICATIONS_SUCCESS,
+  GET_NOTIFICATIONS_BEGIN,
 } from './actions';
 
 const user = localStorage.getItem('token');
@@ -94,6 +94,7 @@ const initialState = {
   dataValidasi: [],
   dataRiwayat: [],
   dataProgress: [],
+  notifications: [],
 };
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
@@ -473,20 +474,20 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
-  // const getLokasiBidangFolu = async () => {
-  //   dispatch({ type: GET_BIDANG_FOLU_BEGIN });
-  //   try {
-  //     const { data } = await authFetch.get(`getLokasiBidangFolu`);
+  const getNotification = async () => {
+    dispatch({ type: GET_NOTIFICATIONS_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getNotification`);
       
-  //     dispatch({
-  //       type: GET_BIDANG_FOLU,
-  //       payload: { data: data },
-  //     });
-  //   } catch (error) {
-  //     logoutUser();
-  //   }
-  //   clearAlert();
-  // }
+      dispatch({
+        type: GET_NOTIFICATIONS_SUCCESS,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
 
   const toggleProfileModal = () => {
     dispatch({ type: TOGGLE_PROFILE_MODAL });
@@ -616,7 +617,7 @@ const AppProvider = ({ children }) => {
         getKecamatan,
         getKota,
         getProvinsi,
-        // getLokasiBidangFolu,
+        getNotification,
         ///////////////////////////////////////////////
         logoutUser,
         toggleProfileModal,

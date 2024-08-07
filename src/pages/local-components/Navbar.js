@@ -47,14 +47,6 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
             <Wrapper className={`row-between-center ${className}`} >
                 <div className="row-start-center">
                     <Logo />
-                    {/* { isLoggedIn && <Spacing width="0.4375rem" />}
-                    { isLoggedIn && <InputTextSearch placeholder="Search..." width="21.875rem" onKeyDown={(e) => 
-                        {
-                            if (e.key === "Enter") {
-                                setSearch(e.target.value, "full_name", "contains")
-                                navigate("/search", { replace: true })
-                            }
-                        }}/> }  */}
                 </div>
                 {!isLoggedIn && 
                     <div className="row-start-center">
@@ -66,8 +58,6 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
                     <div className="row-end-center">
                         <Spacing width="1.25rem" />
                         <ButtonProfile 
-                            // imageSource={user.avatar ? HOST_ASSET_URL + user.avatar : null}  
-                            // label={'Budi Hendrawan'} 
                             height="2.4rem" 
                             fontSize="1rem"
                             width="2.4rem"
@@ -81,14 +71,6 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
             <Wrapper className={`row-between-center ${className}`} >
                 <div className="row-start-center">
                     <Logo />
-                    {/* { isLoggedIn && <Spacing width="0.4375rem" />}
-                    { isLoggedIn && <InputTextSearch placeholder="Search..." width="21.875rem" onKeyDown={(e) => 
-                        {
-                            if (e.key === "Enter") {
-                                setSearch(e.target.value, "full_name", "contains")
-                                navigate("/search", { replace: true })
-                            }
-                        }}/> }  */}
                 </div>
                 {!isLoggedIn && 
                     <div className="row-start-center">

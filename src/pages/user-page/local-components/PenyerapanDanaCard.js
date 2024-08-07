@@ -53,7 +53,7 @@ const PenyerapanDanaCard = ({
       bgColor={bgColor}
       borderRadius="0.4rem"
       thickness={"0.05rem"}
-      className={"col-start-start"}
+      className={"col-start-start w-full"}
     >
       <h1 className="card-title">{name}</h1>
       <Spacing height={'0.75rem'}/>

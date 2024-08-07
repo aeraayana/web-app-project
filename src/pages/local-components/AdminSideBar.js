@@ -27,7 +27,7 @@ const AdminSideBar = () => {
             <Wrapper >
                 <CSidebar style={sidebarStyle}>
                     <CSidebarNav>
-                        {user.role === 'verifikator' ? (
+                        {user.role_user === 'verifikator' ? (
                             <CNavItem className='fs-2'> 
                                 <Link className='nav-link fs-2' to={'/layanan-masyarakat/admin'}>
                                     <LogoHouse /> 
@@ -45,11 +45,6 @@ const AdminSideBar = () => {
                                <LogoDocument />
                             </Link> 
                         </CNavItem>
-                        {/* <CNavItem className='fs-6'>
-                            <Link className='nav-link fs-6' to={'/admin/generate-blast-email'}>
-                                Generate & Blast Email 
-                            </Link> 
-                        </CNavItem> */}
                     </CSidebarNav>
                 </CSidebar>
             </Wrapper>

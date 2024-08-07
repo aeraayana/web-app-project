@@ -63,8 +63,8 @@ import {
   DELETE_DATA_ERROR,
   TOGGLE_PROFILE_MODAL,
   TOGGLE_SHARE_PROFILE,
-  GET_NOTIFICATIONS_USERNAME_BEGIN,
-  GET_NOTIFICATIONS_USERNAME_SUCCESS,
+  GET_NOTIFICATIONS_BEGIN,
+  GET_NOTIFICATIONS_SUCCESS,
   EDIT_USER_VIEW_RULE_BEGIN,
   EDIT_USER_VIEW_RULE_SUCCESS,
   EDIT_USER_VIEW_RULE_ERROR,
@@ -926,14 +926,14 @@ const reducer = (state, action) => {
   if (action.type === TOGGLE_VALIDASI_MODAL) {
     return {
       ...state,
-      showValidasiModal: !state.showProfileModal,
+      showValidasiModal: !state.showValidasiModal,
     };
   }
 
   if (action.type === TOGGLE_VERIFIKASI_MODAL) {
     return {
       ...state,
-      showVerifikasiModal: !state.showProfileModal,
+      showVerifikasiModal: !state.showVerifikasiModal,
     };
   }
 
@@ -958,7 +958,7 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === GET_NOTIFICATIONS_USERNAME_BEGIN) {
+  if (action.type === GET_NOTIFICATIONS_BEGIN) {
     return {
       ...state,
       isLoading: true,
@@ -969,13 +969,11 @@ const reducer = (state, action) => {
       errorDetail: {},
     };
   }
-  if (action.type === GET_NOTIFICATIONS_USERNAME_SUCCESS) {
+  if (action.type === GET_NOTIFICATIONS_SUCCESS) {
     return {
       ...state,
       isLoading: false,
-      data: action.payload.data,
-      totalData: action.payload.total,
-      numOfPages: action.payload.totalPage,
+      notifications: action.payload.data,
     };
   }
   if (action.type === EDIT_USER_VIEW_RULE_BEGIN) {

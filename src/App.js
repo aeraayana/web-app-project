@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Navigate, Routes, Route, HashRouter } from 'react-router-dom'
 
 import { 
     LandingPage, 
@@ -31,7 +31,7 @@ import UserAdminPage from './pages/user-page/UserAdminPage'
 
 function App() {
     return (
-    <BrowserRouter>
+    <HashRouter>
         <Routes>
             <Route path='/layanan-masyarakat/' 
                 element={
@@ -42,7 +42,7 @@ function App() {
 
                 <Route path='/layanan-masyarakat/admin' element={<UserAdminPage />} />
                 <Route index element={<UserMembershipPage/>}></Route>
-                <Route path='/layanan-masyarakat/downloads' element={<UserHomePage />} />
+                {/* <Route path='/layanan-masyarakat/downloads' element={<UserHomePage />} /> */}
                 {/* <Route path='dashboard-admin' element={<UserAdminPage/>}/> */}
                 {/* <Route path='sign-up-mandatory-2' element={<UserSignUpMandatory2Page/>}/>
                 <Route path='sign-up-mandatory-3' element={<UserSignUpMandatory3Page />}/>
@@ -95,9 +95,9 @@ function App() {
             <Route path='/layanan-masyarakat/reset-password/:serial' element={<ResetPasswordPage />} />
             <Route path='/layanan-masyarakat/verify-register/:serial' element={<VerifyRegisterPage />} />
 
-            <Route path='*' element={<Navigate to="layanan-masyarakat/" />} />
+            <Route path='*' element={<Navigate to="/layanan-masyarakat/" />} />
         </Routes>
-    </BrowserRouter>
+    </HashRouter>
     )
 }
 

@@ -57,10 +57,13 @@ const UserAdminPage = () => {
             <span className="price-tag" style={{ marginLeft: "1rem" }}>REKAPITULASI</span>
             <Spacing height={'0.565rem'} />
             <div className="row-around-start w-full">
-              <PenyerapanDanaCard name={'PENYERAPAN DANA'} height={'140px'} width={'30%'} percent={'4,65'} danaTersalur={'465.094.000'} totalDana={'10.000.000.000'}/>
-              <MembershipSubscriptionCard width={'22%'} bgColor="white" height={'140px'} isBestValue cardName={"PENGAJUAN MASUK"} month={15} sdhi={0} percent={100} tipe={"var(--color-yellow)"} />
-              <MembershipSubscriptionCard width={'22%'} bgColor="white" height={'140px'} isBestValue cardName={"SELESAI"} month={15} sdhi={0} percent={100} tipe={"var(--color-green)"} />
-              <MembershipSubscriptionCard width={'22%'} bgColor="white" height={'140px'} isBestValue cardName={"DIBATALKAN"} month={15} sdhi={0} percent={100} tipe={"var(--color-error)"} />
+              <PenyerapanDanaCard name={'PENYERAPAN DANA'} height={'140px'} width={'150%'} percent={'4,65'} danaTersalur={'465.094.000'} totalDana={'10.000.000.000'}/>
+              <Spacing width={'0.25rem'}/>
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"PENGAJUAN MASUK"} month={15} sdhi={0} percent={100} tipe={"var(--color-yellow)"} />
+              <Spacing width={'0.25rem'}/>
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"SELESAI"} month={15} sdhi={0} percent={100} tipe={"var(--color-green)"} />
+              <Spacing width={'0.25rem'}/>
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"DIBATALKAN"} month={15} sdhi={0} percent={100} tipe={"var(--color-error)"} />
             </div>
         </div>
         

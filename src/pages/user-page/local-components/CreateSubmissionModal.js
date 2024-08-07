@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { HOST_URL, CLIENT_ID, CLIENT_ID_SECRET } from '../../../configs/constants';
 import { CFormCheck, CModalBody, CModalHeader, CModalTitle, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from '@coreui/react';
 import { ButtonOutlined, ButtonSolid, ChoiceBoxStringWithPrompt, ContainerCardSection, InputText, InputTextWithPrompt, InputTextWithPromptPostLabel, Spacing } from "../../../components";
-import React, { useEffect } from "react";
+import React from "react";
 import Pana from "../../../assets/images/landing/pana.png";
 import Papa from "../../../assets/images/landing/papa.png";
 import Amico from "../../../assets/images/landing/amico.png";
@@ -13,6 +14,8 @@ import Trip from "../../../assets/images/landing/trip.png";
 import Sun from "../../../assets/images/landing/sun.png";
 import Planting from "../../../assets/images/landing/planting.png";
 import Water from "../../../assets/images/landing/water.png";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { BrowserView, MobileView } from "react-device-detect";
 import { useAppContext } from "../../../context/appContext";
@@ -20,7 +23,6 @@ import Wrapper from "../../../wrappers/user-page/UserCreateFormWrapper";
 import MobileWrapper from "../../../wrappers/user-page/mobile/UserCreateFormMobileWrapper";
 import InputTextArea from "../../../components/inputs/InputTextArea";
 import axios from "axios";
-import { BsThreeDotsVertical } from "react-icons/bs";
 
 const WrapperChoiceBox = styled(CFormCheck)`
     font-family: var(--font-family-secondary);
@@ -120,11 +122,26 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
         setIndex(index);
     }
 
-    const handleFormClose = () => {
-        toggleFormModal();
+    const handleFormClose = async () => {
+        await axios.get(`${HOST_URL}getNotification`, {
+            headers: {
+                Accept: 'application/json',
+                id: CLIENT_ID,
+                secret: CLIENT_ID_SECRET,
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            }
+        }).then((res) => {
+            toast.success(
+            <div className="col-start-start">
+                <span className="label">{res.data.data[0].data.message_header}</span>
+                <span className="description">{res.data.data[0].data.message_body}</span>
+            </div>, { position: toast.POSITION.TOP_CENTER }
+            );
+        })
+        
         setIndex(1);
     }
-    
+
     const handleChange = (e) => {
         const list = initialState;
         if(e.target.name === 'fileDocument'){
@@ -157,7 +174,6 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
         const r = new RegExp('[.]', 'g')
         list.komponen_rab[n][idx][e.target.name] = e.target.value.replace(r, '');
         setPostData({ ...list.komponen_rab })
-        console.log(postData);
     }
 
     const handleCloseForm = async (e) => {
@@ -201,7 +217,10 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     }
                 }
-            ).then((res) => {setDataForm(res.data.data)})
+            ).then((res) => {
+                setDataForm(res.data.data);
+                setPostData(res.data.data.komponen_rab)
+            })
         } catch (error) {
             setIndex(1);
         }
@@ -638,6 +657,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
             </MobileView>
 
             <BrowserView>
+                <ToastContainer />
                 <Wrapper
                     size="lg"
                     scrollable
@@ -1111,7 +1131,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                         <CTableRow className="inner-row w-full">
                                                             <CTableDataCell align="right">{idx + 1}</CTableDataCell>
                                                             <CTableDataCell>
-                                                                {rowDetails.jenis_komponen_rab?? '-'}
+                                                                {rowDetails.komponen_rab?? '-'}
                                                             </CTableDataCell>
                                                             <CTableDataCell>
                                                                 {rowDetails.satuan?? '-'}
@@ -1178,7 +1198,8 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                         label="Kirim Pengajuan" 
                                         disabled={!confirm}
                                         onClick={() => {
-                                            handleCloseForm()
+                                            handleCloseForm();
+                                            toggleFormModal();
                                         }}
                                         width={'25%'} />  
                                 </section>
