@@ -29,7 +29,7 @@ const ForgotPasswordPage = () => {
 
     const actionCancelClick = (e) => {
         e.preventDefault();
-        navigate('/sign-in');        
+        navigate('layanan-masyarakat/sign-in');        
     }
 
     const actionConfirmClick = async (e) => {

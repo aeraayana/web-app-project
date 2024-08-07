@@ -42,6 +42,7 @@ function App() {
 
                 <Route path='/layanan-masyarakat/admin' element={<UserAdminPage />} />
                 <Route index element={<UserMembershipPage/>}></Route>
+                <Route path='/layanan-masyarakat/downloads' element={<UserHomePage />} />
                 {/* <Route path='dashboard-admin' element={<UserAdminPage/>}/> */}
                 {/* <Route path='sign-up-mandatory-2' element={<UserSignUpMandatory2Page/>}/>
                 <Route path='sign-up-mandatory-3' element={<UserSignUpMandatory3Page />}/>
@@ -93,10 +94,6 @@ function App() {
             <Route path='/layanan-masyarakat/landing' element={<LandingPage />} />
             <Route path='/layanan-masyarakat/reset-password/:serial' element={<ResetPasswordPage />} />
             <Route path='/layanan-masyarakat/verify-register/:serial' element={<VerifyRegisterPage />} />
-
-            {/* <Route path='/home' element={<UserHomePage />} /> */}
-
-
 
             <Route path='*' element={<Error />} />
         </Routes>

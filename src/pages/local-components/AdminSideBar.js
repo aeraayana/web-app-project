@@ -9,6 +9,7 @@ import {
 
 import { Link, Navigate } from 'react-router-dom';
 import LogoHouse from '../../components/logo-icon/LogoHouse';
+import LogoDocument from '../../components/logo-icon/LogoDocument';
 
 const AdminSideBar = () => {
     const sidebarStyle = {
@@ -19,27 +20,32 @@ const AdminSideBar = () => {
         '--cui-sidebar-toggler-hover-bg': 'var(--color-primary)',
     }
     
+    const user = JSON.parse(localStorage.getItem("user_data"));
+
     return (
         <React.Fragment>
             <Wrapper >
                 <CSidebar style={sidebarStyle}>
                     <CSidebarNav>
-                        <CNavItem className=' fs-2'> 
-                            <Link className='nav-link fs-2' to={'/layanan-masyarakat/'}>
-                                <LogoHouse />
-                            </Link>
-                        </CNavItem>
-                        <CNavItem className='fs-6'> 
-                            <Link className='nav-link fs-6' to={'/layanan-masyarakat/admin'}>
-                                <LogoHouse /> 
-                            </Link>
-                        </CNavItem>
-                        {/* <CNavItem className='fs-6'>
-                            <Link className='nav-link fs-6' to={'/admin/create-assessment-test-1'}>
-                                Create Assessment Test 
+                        {user.role === 'verifikator' ? (
+                            <CNavItem className='fs-2'> 
+                                <Link className='nav-link fs-2' to={'/layanan-masyarakat/admin'}>
+                                    <LogoHouse /> 
+                                </Link>
+                            </CNavItem>
+                        ) : (
+                            <CNavItem className='fs-2'> 
+                                <Link className='nav-link fs-2' to={'/layanan-masyarakat/'}>
+                                    <LogoHouse />
+                                </Link>
+                            </CNavItem>
+                        )}
+                        <CNavItem className='fs-2'>
+                            <Link className='nav-link fs-2' to={'/layanan-masyarakat/downloads'}>
+                               <LogoDocument />
                             </Link> 
                         </CNavItem>
-                        <CNavItem className='fs-6'>
+                        {/* <CNavItem className='fs-6'>
                             <Link className='nav-link fs-6' to={'/admin/generate-blast-email'}>
                                 Generate & Blast Email 
                             </Link> 

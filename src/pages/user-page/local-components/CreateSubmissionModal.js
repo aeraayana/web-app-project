@@ -243,7 +243,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                         <>
                                             <div className="row-start-start description-subtitle" style={{ cursor:"pointer" }} onClick={() => handleGetSubTematikData(n, index + 1)}>
                                                 <div style={{ marginRight: "10px" }}>
-                                                    <img src={imgUrls[idx]}></img>
+                                                    <img style={{ width:'120px', height:'90px' }} src={imgUrls[idx]}></img>
                                                 </div>
                                                 <div>
                                                     <span className="subtitle">{n.tematik_kegiatan}</span>
@@ -653,7 +653,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                         <>
                                             <div className="row-start-start description-subtitle" style={{ cursor:"pointer" }} onClick={() => handleGetSubTematikData(n, index + 1)}>
                                                 <div style={{ marginRight: "10px" }}>
-                                                    <img src={imgUrls[idx]}></img>
+                                                    <img style={{ width:'120px', height:'90px' }} src={imgUrls[idx]}></img>
                                                 </div>
                                                 <div>
                                                     <span className="subtitle">{n.tematik_kegiatan}</span>
@@ -1113,7 +1113,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                                     width={'6.65rem'}
                                                                     name={`harga_unit`}
                                                                     defaultValue={new Intl.NumberFormat('id-ID').format(
-                                                                        postData ? postData[n]?.[idx]?.harga_unit : rowDetails.harga_unit,
+                                                                        rowDetails.harga_unit,
                                                                     )?? '-'}
                                                                     onBlur={(e) => handleChangeQty(n, e, idx)}
                                                                 />
@@ -1124,7 +1124,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                                     width={'6.25rem'}
                                                                     name={`qty`}
                                                                     defaultValue={new Intl.NumberFormat('id-ID').format(
-                                                                        postData ? postData[n]?.[idx]?.qty : rowDetails.qty,
+                                                                        rowDetails.qty,
                                                                     )?? '-'}
                                                                     onBlur={(e) => handleChangeQty(n, e, idx)}
                                                                 />

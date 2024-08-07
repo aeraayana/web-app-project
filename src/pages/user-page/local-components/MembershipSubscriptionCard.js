@@ -13,7 +13,7 @@ import React from "react";
 import DetailKegiatanModal from "./DetailKegiatanModal";
 
 const ProgressValue = {
-  "Dalam Proses Laporan Pasca Kegiatan": 6,
+  "Dalam Proses Verifikasi": 6,
 }
 
 const MembershipSubscriptionCard = ({

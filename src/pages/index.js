@@ -16,6 +16,7 @@ import VerifyRegisterPage from './auth/VerifyRegisterPage'
 import UserMembershipPage from './user-page/UserMembershipPage'
 import UserNotificationPage from './user-page/UserNotificationPage'
 import UserLayoutPage from './user-page/UserLayoutPage'
+import UserHomePage from './user-page/UserHomePage'
 
 export { 
     LandingPage, 
@@ -34,4 +35,5 @@ export {
     UserMembershipPage,
     UserNotificationPage,
     UserLayoutPage,
+    UserHomePage,
 }

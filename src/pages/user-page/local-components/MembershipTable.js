@@ -64,8 +64,8 @@ const MembershipTable = () => {
 
     const { dataRiwayat, getDataRiwayatPengajuan } = useAppContext();
 
-    // React.useEffect(() => {getDataRiwayatPengajuan()}, []);
-    // console.log(dataRiwayat);
+    React.useEffect(() => {getDataRiwayatPengajuan()}, []);
+    console.log(dataRiwayat);
 
     if (isMobile){
         return (
@@ -84,32 +84,39 @@ const MembershipTable = () => {
                         </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                        <CTableRow >
-                            <CTableDataCell className="sticky-col" style={{ position:"-webkit-sticky"}} width={'20%'}>
-                                {'Sosialisasi: 20 Orang'}
-                            </CTableDataCell>
-                            <CTableDataCell width={'5%'}>
-                                {'6%'}
-                            </CTableDataCell>
-                            <CTableDataCell>
-                                <JobInfo icon={<ArrowRotate />} text={"Dalam Proses"}/>
-                            </CTableDataCell>
-                            <CTableDataCell width={'20%'}>
-                                {'Rp3.750.000'}
-                            </CTableDataCell>
-                            <CTableDataCell >
-                                {'Rp15.000.000'}
-                            </CTableDataCell>
-                            <CTableDataCell width={'13%'}>
-                                {'03 Jun 2024'}
-                            </CTableDataCell>
-                            <CTableDataCell width={'2%'}>
-                                {'3 Hari'}
-                            </CTableDataCell>
-                            <CTableDataCell width={'20%'}>
-                                <Hyperlink small={'14px'} label={'Lihat Detail'}/>
-                            </CTableDataCell>
-                        </CTableRow>
+                        {dataRiwayat.length === 0 ? (
+                            <> </>
+                        ) : dataRiwayat.data.map((n) => (
+                            <CTableRow>
+                                <CTableDataCell className="sticky-col" style={{ position:"-webkit-sticky"}} width={'20%'}>
+                                    {n.nomor_pengajuan}
+                                </CTableDataCell>
+                                <CTableDataCell width={'5%'}>
+                                    {n.jenis_kegiatan}: {n.jumlah}
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                    {n.persentase_pengajuan} %
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                    <JobInfo icon={<ArrowRotate />} text={n.tahapan_pengajuan}/>
+                                </CTableDataCell>
+                                <CTableDataCell width={'20%'}>
+                                    {n.dana_yang_dicairkan}
+                                </CTableDataCell>
+                                <CTableDataCell >
+                                    {n.dana_yang_disetujui}
+                                </CTableDataCell>
+                                <CTableDataCell width={'13%'}>
+                                    {n.tanggal_kegiatan}
+                                </CTableDataCell>
+                                <CTableDataCell width={'2%'}>
+                                    {'1 Hari'}
+                                </CTableDataCell>
+                                <CTableDataCell width={'20%'}>
+                                    <Hyperlink small={'14px'} label={'Lihat Detail'}/>
+                                </CTableDataCell>
+                            </CTableRow>
+                        ))}
                     </CTableBody>
                 </CTable>
             </Wrapper>
@@ -133,35 +140,39 @@ const MembershipTable = () => {
                         </CTableRow>
                     </CTableHead>
                     <CTableBody>
-                        <CTableRow >
-                            {/* <CTableDataCell width={"12%"}>
-                                {'130192847'}
-                            </CTableDataCell>
-                            <CTableDataCell width={'17%'}>
-                                {'Sosialisasi: 20 Orang'}
-                            </CTableDataCell>
-                            <CTableDataCell width={'4%'}>
-                                {'6%'}
-                            </CTableDataCell>
-                            <CTableDataCell>
-                                <JobInfo icon={<ArrowRotate />} text={"Dalam Proses"}/>
-                            </CTableDataCell>
-                            <CTableDataCell width={'17%'}>
-                                {'Rp3.750.000'}
-                            </CTableDataCell>
-                            <CTableDataCell >
-                                {'Rp15.000.000'}
-                            </CTableDataCell>
-                            <CTableDataCell width={'14%'}>
-                                {'03 Jun 2024'}
-                            </CTableDataCell>
-                            <CTableDataCell width={'2%'}>
-                                {'3 Hari'}
-                            </CTableDataCell>
-                            <CTableDataCell width={'17%'}>
-                                <Hyperlink small={'14px'} label={'Lihat Detail'}/>
-                            </CTableDataCell> */}
-                        </CTableRow>
+                        {dataRiwayat.length === 0 ? (
+                            <> </>
+                        ) : dataRiwayat.data.map((n) => (
+                            <CTableRow>
+                                <CTableDataCell className="sticky-col" style={{ position:"-webkit-sticky"}} width={'20%'}>
+                                    {n.nomor_pengajuan}
+                                </CTableDataCell>
+                                <CTableDataCell width={'5%'}>
+                                    {n.jenis_kegiatan}: {n.jumlah}
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                    {n.persentase_pengajuan} %
+                                </CTableDataCell>
+                                <CTableDataCell>
+                                    <JobInfo icon={<ArrowRotate />} text={n.tahapan_pengajuan}/>
+                                </CTableDataCell>
+                                <CTableDataCell width={'20%'}>
+                                    {n.dana_yang_dicairkan}
+                                </CTableDataCell>
+                                <CTableDataCell >
+                                    {n.dana_yang_disetujui}
+                                </CTableDataCell>
+                                <CTableDataCell width={'13%'}>
+                                    {n.tanggal_kegiatan}
+                                </CTableDataCell>
+                                <CTableDataCell width={'2%'}>
+                                    {'1 Hari'}
+                                </CTableDataCell>
+                                <CTableDataCell width={'20%'}>
+                                    <Hyperlink small={'14px'} label={'Lihat Detail'}/>
+                                </CTableDataCell>
+                            </CTableRow>
+                        ))}
                         {/* {isLoading?<CSpinner color="info" /> : users.map((n) => (
                             <>
                                 <AdminMyHockeyUserListRowDetails 
