@@ -621,7 +621,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             iconPre={<FaArrowLeft/>} />
 
                                         <ButtonSolid 
-                                            onClick={() => handlePostForm(initialState, index + 1)}
+                                            onClick={() => { handlePostForm(initialState, 1); toggleFormModal(); }}
                                             label="Kirim Pengajuan" 
                                             bgColor={'var(--color-primary-dark)'}
                                             width={'47%'}
@@ -1052,7 +1052,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                         <ButtonSolid 
                                             label="Berikutnya" 
                                             iconPost={<FaArrowRight/>} 
-                                            onClick={() => { handlePostForm(initialState, 1); toggleFormModal(); }}
+                                            onClick={() => { handlePostForm(initialState, index + 1) }}
                                             width={'47%'} />  
                                     </section>
 
