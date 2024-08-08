@@ -58,6 +58,13 @@ const Wrapper = styled.main`
         background-color: #0F182B80;
         height: 0.0625rem;
     }
+
+    .toast-message{
+        width: 50vh;
+        background-color: var(--color-disable-light);
+        padding: 20px 20px;
+        --toastify-color-progress-light: red;
+    }
 `
 
 export default Wrapper

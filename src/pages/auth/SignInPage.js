@@ -14,6 +14,8 @@ import {
 import { FaArrowLeft } from 'react-icons/fa';
 import { BrowserView, MobileView } from 'react-device-detect';
 import MobileWrapper from '../../wrappers/auth/mobile/SignInPageWrapper';
+import { toast, ToastContainer } from 'react-toastify';
+import { RECAPTCHA_SITE_KEY } from '../../configs/constants';
 
 
 const initialState = {
@@ -23,15 +25,30 @@ const initialState = {
 
 const SignInPage = () => {
     document.body.style = 'background-image: linear-gradient(145deg, var(--color-primary-dark), var(--color-primary-light));';
-
+    
     const { token, loginUser, isLoading, errorDetail } = useAppContext();
     const navigate = useNavigate();
     const [values, setValues] = useState( initialState );
+    const [validate, setValidate] = useState(null);
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value});
-        //console.log(values);
     } 
+
+    const handleLoaded = _ => {
+        window.grecaptcha.ready(_ => {
+            window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "login" }).then(token => {
+                setValidate(token);
+            })
+        })
+    }
+      
+    useEffect(() => {
+        const script = document.createElement("script")
+        script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`
+        script.addEventListener("load", handleLoaded)
+        document.body.appendChild(script)
+    }, [])
 
     const actionCreateAccountClick = () => {
         navigate("/layanan-masyarakat/create-account");        
@@ -39,12 +56,27 @@ const SignInPage = () => {
 
     const actionSignInClick = async (e) => {
         e.preventDefault();
-        await loginUser({ email: values.email, password: values.password });
-        if(JSON.parse(localStorage.getItem('user_data')).role_user === 'verifikator'){
-            navigate('/layanan-masyarakat/admin')            
-        }else{
-            navigate('/layanan-masyarakat/')
-        }
+        // if(new Date() < new Date('2024-08-09')){
+        //     toast(
+        //         <div className='col-start-start'>
+        //             <span className='title-sub'>Layanan mulai dapat di akses setelah launching festival LIKE 2</span>
+        //             <Spacing height={'2.25rem'}/>
+        //             <span className='title-sub'>Terima kasih</span> 
+        //         </div>, {
+        //         position: toast.POSITION.TOP_LEFT,
+        //         className: 'toast-message',
+        //         hideProgressBar: false,
+        //         closeOnClick: true,
+        //         autoClose: false,
+        //     })
+        // }else{
+            await loginUser({ email: values.email, password: values.password });
+            if(JSON.parse(localStorage.getItem('user_data')).role_user === 'verifikator'){
+                navigate('/layanan-masyarakat/admin')            
+            }else{
+                navigate('/layanan-masyarakat/')
+            }
+        // }
     }
 
     const actionLandingPageClick = () => {
@@ -59,6 +91,7 @@ const SignInPage = () => {
         <React.Fragment>
             <MobileView>
                 <MobileWrapper>
+                    <ToastContainer />
                     <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
                         <span className='row-between-start'>
                             <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' small={'14px'} label="Kembali ke BPLDH.ID" onClick={actionLandingPageClick} />
@@ -105,7 +138,7 @@ const SignInPage = () => {
                                         label="Login" 
                                         color={'white'}
                                         hoverColor={'white'}
-                                        disabled={isLoading}
+                                        disabled={isLoading && !validate}
                                         onClick={actionSignInClick} />
                                     <Spacing height="1.25rem" />   {/* 20px */}
                                 </form>
@@ -117,12 +150,21 @@ const SignInPage = () => {
                             <p className='description-subtitle' style={{ textAlign: "center" }}>
                                 Belum Punya Akun? <Hyperlink label="Daftar Sini" small={'14px'} onClick={actionCreateAccountClick} />
                             </p>
+                            <Spacing height="1rem" />   {/* 16px */}
+                            <p className='description' style={{ textAlign: "center" }}>
+                               Kontak kami: layanandanamasyarakat@bpdlh.id
+                            </p>
+                            <Spacing height={'0.25rem'}/>
+                            <p>
+                                Jam layanan: Senin - Jumat  08.00 - 17.00
+                            </p>
                         </article>
                     </section>
                 </MobileWrapper>
             </MobileView>
             <BrowserView>
                 <Wrapper className='d-flex justify-content-center w-full'>
+                    <ToastContainer />
                     <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
                         <span className='row-between-start'>
                             <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' small={'14px'} label="Kembali ke BPLDH.ID" onClick={actionLandingPageClick} />
@@ -165,11 +207,13 @@ const SignInPage = () => {
                                         <Hyperlink label="Lupa Sandi" small={'14px'} onClick={actionForgotPasswordClick} />
                                     </div>
                                     <Spacing height="1.25rem" />
+                                    
+                                    
                                     <ButtonSolid className="w-full" 
                                         label="Login" 
                                         color={'white'}
                                         hoverColor={'white'}
-                                        disabled={isLoading}
+                                        disabled={isLoading && !validate}
                                         onClick={actionSignInClick} />
                                     <Spacing height="1.25rem" />   {/* 20px */}
                                 </form>
@@ -181,8 +225,16 @@ const SignInPage = () => {
                             <p className='description-subtitle' style={{ textAlign: "center" }}>
                                 Belum Punya Akun? <Hyperlink label="Daftar Sini" small={'14px'} onClick={actionCreateAccountClick} />
                             </p>
+                            <Spacing height="1rem" />   {/* 16px */}
+                            <p className='description-subtitle' style={{ fontWeight:'bold', textAlign: "center" }}>
+                               Kontak kami: layanandanamasyarakat@bpdlh.id
+                            </p>
+                            <span>
+                                Jam layanan: Senin - Jumat  08.00 - 17.00
+                            </span>
                         </article>
                     </section>
+                    
                 </Wrapper>
             </BrowserView>
             {/* {token && <Navigate to='/' />} */}

@@ -178,7 +178,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
     const handleCloseForm = async (e) => {
         axios.put(
-            `https://uat.bpdlh.id/aksesdanalh/public/api/pengajuanKegiatan/${dataForm.id_pengajuan}`,
+            `${HOST_URL}pengajuanKegiatan/${dataForm.id_pengajuan}`,
             { "komponen_rab": Object.values(postData).flat() },
             {
                 headers: {
@@ -207,7 +207,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
             formData.append('judul_pengajuan_kegiatan', e.title);
 
             axios.post(
-                'https://uat.bpdlh.id/aksesdanalh/public/api/pengajuanKegiatan',
+                `${HOST_URL}pengajuanKegiatan`,
                 formData,
                 {
                     headers: {

@@ -14,6 +14,8 @@ import {
 import RadioChoiceBoxWithPrompt from '../../components/choicebox/RadioChoiceBoxWithPrompt';
 import { BrowserView, MobileView } from 'react-device-detect';
 import MobileWrapper from '../../wrappers/auth/mobile/CreateAccountPageWrapperMobile';
+import { toast, ToastContainer } from 'react-toastify';
+import { WarningAmberOutlined, WarningOutlined } from '@mui/icons-material';
 
 const roleOptions = ['Pilih Jenis Kelompok', '','','',''];
 const idOptions = ['KTP', 'SIM', 'Kartu Mahasiswa']
@@ -64,6 +66,22 @@ const CreateAccountPage = () => {
             category: namaKelompokMasyarakat, email: email, name: nama, identity_type: jenisId, identity_number: userId, phone_number: noTelp });
         if( success ){
             navigate("/layanan-masyarakat/sign-in");        
+        }else{
+            toast(
+            <div className='col-center-center w-full'>
+                <WarningAmberOutlined sx={{ color: 'red' }} />
+                <span className='description-subtitle'>Mohon maaf. Kelompok anda</span>
+                <br></br>
+                <span className='description-subtitle'>belum terdaftar sebagai calon penerima.</span>
+                <br></br>
+                <span className='description-subtitle'>Untuk informasi lebih lanjut hubungi</span>
+                <br></br>
+                <span className='description-subtitle'><b>layanandanamasyarakat@bpdlh.id</b></span>
+            </div>, {
+                position: toast.POSITION.TOP_CENTER,
+                className: 'toast-message',
+                autoClose: false,
+            });
         }
     }
 
@@ -77,6 +95,7 @@ const CreateAccountPage = () => {
             <MobileView>
             {/* {token && <Navigate to='/' />} */}
                 <MobileWrapper className='d-flex justify-content-center w-full'> 
+                    <ToastContainer className={"col-center-center w-full"}/>
                     <section className='input-container rounded col-center w-1/4' style={{ backgroundColor:"white", margin:"2.025rem" }}>
                         <div className='col-center-center'>
                             <h1 className='title' style={{ color:"var(--color-primary)", width:"80%" }}>Daftar Akun</h1>
@@ -167,6 +186,7 @@ const CreateAccountPage = () => {
             <BrowserView>
                 {/* {token && <Navigate to='/' />} */}
                 <Wrapper className='d-flex justify-content-center w-full'> 
+                    <ToastContainer className={"col-center-center w-full"}/>
                     <section className='input-container rounded col-center w-1/4' style={{ backgroundColor:"white", margin:"2.025rem" }}>
                         <div className='col-center-center'>
                             <h1 className='title' style={{ color:"var(--color-primary)", width:"80%" }}>Daftar Akun</h1>

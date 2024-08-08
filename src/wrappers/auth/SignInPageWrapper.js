@@ -50,6 +50,15 @@ const Wrapper = styled.main`
         width: 100%;
         height: 100%;
     }
+
+    .toast-message{
+        width: 90vh;
+        height: 40vh;
+        background-color: var(--color-disable-light);
+        margin-top: 30vh;
+        margin-left: 46.25vh;
+        padding: 20px 20px;
+    }
 `
 
 export default Wrapper
