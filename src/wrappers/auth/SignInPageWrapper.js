@@ -41,6 +41,14 @@ const Wrapper = styled.main`
         padding: 1.875rem 1.8125rem 3.875rem 1.8125rem;  
     }
 
+    .hyperlink{
+        font-family: var(--font-family-secondary);
+        font-weight: var(--font-weight-semibold);
+        font-size: var(--font-size-normal);
+        color: var(--color-primary);
+        text-decoration: none;
+    }
+
     .image-container{
         width: 95%;
     }

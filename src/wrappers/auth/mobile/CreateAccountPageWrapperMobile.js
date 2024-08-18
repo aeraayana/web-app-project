@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const MobileWrapper = styled.main`
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: 0rem 0rem 0rem 0rem;
     background-color: var(--color-white);
 
     img {

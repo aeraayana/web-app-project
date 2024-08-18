@@ -50,6 +50,8 @@ const numFormat = (number) => {
 	return new Intl.NumberFormat("id-ID", { style: "decimal" }).format(number);
 };
 
+const r = new RegExp('[.]', 'g')
+
 const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
     const [initialState, setInitialState] = React.useState({
         nama_paket_kegiatan: '',
@@ -135,7 +137,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
             <div className="col-start-start">
                 <span className="label">{res.data.data[0].data.message_header}</span>
                 <span className="description">{res.data.data[0].data.message_body}</span>
-            </div>, { position: toast.POSITION.TOP_CENTER }
+            </div>, { position: toast.POSITION.TOP_CENTER, className:'toast-message' }
             );
         })
         
@@ -171,8 +173,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
     const handleChangeQty = async (n, e, idx) => {
         let list = dataForm;
-        const r = new RegExp('[.]', 'g')
-        list.komponen_rab[n][idx][e.target.name] = e.target.value.replace(r, '');
+        list.komponen_rab[n][idx][e.target.name] = parseInt(e.target.value.replace(r, ''));
         setPostData({ ...list.komponen_rab })
     }
 
@@ -1141,10 +1142,8 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                                     inputHeight={'1.75rem'}
                                                                     width={'6.65rem'}
                                                                     name={`harga_unit`}
-                                                                    defaultValue={new Intl.NumberFormat('id-ID').format(
-                                                                        rowDetails.harga_unit,
-                                                                    )?? '-'}
-                                                                    onBlur={(e) => handleChangeQty(n, e, idx)}
+                                                                    value={numFormat(parseInt(rowDetails.harga_unit))?? '-'}
+                                                                    onChange={(e) => handleChangeQty(n, e, idx)}
                                                                 />
                                                             </CTableDataCell>
                                                             <CTableDataCell>
@@ -1152,10 +1151,9 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                                     inputHeight={'1.75rem'}
                                                                     width={'6.25rem'}
                                                                     name={`qty`}
-                                                                    defaultValue={new Intl.NumberFormat('id-ID').format(
-                                                                        rowDetails.qty,
-                                                                    )?? '-'}
-                                                                    onBlur={(e) => handleChangeQty(n, e, idx)}
+                                                                    value={numFormat(parseInt(rowDetails.qty))?? '-'}
+                                                                    disabled={!!(i >= 3)}
+                                                                    onChange={(e) => handleChangeQty(n, e, idx)}
                                                                 />
                                                             </CTableDataCell>
                                                             <CTableDataCell>

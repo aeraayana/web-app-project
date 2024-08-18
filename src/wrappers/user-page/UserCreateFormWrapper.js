@@ -120,6 +120,7 @@ const Wrapper = styled(CModal)`
         font-weight: var(--font-weight-normal);
         font-size: var(--font-size-normal);
         color: var(--color-semiblack);
+        text-wrap: balance;
     }
 
     .subtitle{
@@ -227,6 +228,14 @@ const Wrapper = styled(CModal)`
         border: 0.1rem solid var(--color-disable);
         border-radius: 0.15em;
         background-color: var(--color-primary);
+    }
+
+    .toast-message{
+        width: 90vh;
+        height: 22vh;
+        margin-left: 40vh;
+        margin-top: 40px;
+        padding: 20px 20px;
     }
 `
 

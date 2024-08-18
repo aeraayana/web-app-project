@@ -65,6 +65,7 @@ const CreateAccountPage = () => {
         const success = await registerUser({ 
             category: namaKelompokMasyarakat, email: email, name: nama, identity_type: jenisId, identity_number: userId, phone_number: noTelp });
         if( success ){
+            console.log(success)
             navigate("/layanan-masyarakat/sign-in");        
         }else{
             toast(
@@ -98,25 +99,29 @@ const CreateAccountPage = () => {
                     <ToastContainer className={"col-center-center w-full"}/>
                     <section className='input-container rounded col-center w-1/4' style={{ backgroundColor:"white", margin:"2.025rem" }}>
                         <div className='col-center-center'>
-                            <h1 className='title' style={{ color:"var(--color-primary)", width:"80%" }}>Daftar Akun</h1>
+                            <h1 className='title' style={{ color:"var(--color-primary)", width:"100%" }}>Daftar Akun</h1>
                         </div>
                         <article className='col-center-center w-full h-1/4'>
                             <Spacing height="0.01rem" />
                             <Spacing height="2.5rem" />   {/* 16px */}
-                            <form className='col-start-start' style={{ width: "80%" }}>
+                            <form className='col-start-start' style={{ width: "100%" }}>
                                 <ChoiceBoxStringWithPrompt
                                     className="w-full"
                                     id="jenis_kelompok_masyarakat"
                                     name="jenisKelompokMasyarakat"
                                     prompt="Jenis Kelompok Masyarakat"
+                                    width={"100%"}
+                                    height={"2.25rem"}
                                     options={kelompokMasyarakat.data}
                                     onChange={handleJenisChange} />
                                 <Spacing height="1.25rem" />   {/* 20px */}
                                 <ChoiceBoxStringWithPrompt
                                     className="w-full"
-                                    id="jenis_kelompok_masyarakat"
-                                    name="jenisKelompokMasyarakat"
-                                    prompt="Jenis Kelompok Masyarakat"
+                                    id="kelompok_masyarakat"
+                                    name="namaKelompokMasyarakat"
+                                    prompt="Nama Kelompok Masyarakat"
+                                    width={"100%"}
+                                    height={"2.25rem"}
                                     options={namaKelompokMasyarakat.data}
                                     onChange={handleChange} />
                                 <Spacing height="1.25rem" />   {/* 20px */}
@@ -124,6 +129,8 @@ const CreateAccountPage = () => {
                                     type="nama"
                                     prompt="Nama Penanggung Jawab"
                                     id="nama"
+                                    width={"100%"}
+                                    inputHeight={"2.25rem"}
                                     placeholder='contoh: Budi Hendrawan'
                                     name="nama"
                                     onChange={handleChange}
@@ -135,6 +142,8 @@ const CreateAccountPage = () => {
                                     onChange={handleChange}
                                     prompt='Jenis Identitas'
                                     className='w-full'
+                                    width={"100%"}
+                                    height={"2.25rem"}
                                     color={'var(--color-primary-dark)'}
                                     value={values?.jenisId}
                                     />
@@ -144,6 +153,8 @@ const CreateAccountPage = () => {
                                     prompt="Nomor Identitas"
                                     id="userId"
                                     name="userId"
+                                    width={"100%"}
+                                    inputHeight={"2.25rem"}
                                     placeholder="Masukkan 16 Digit Angka"
                                     onChange={handleChange}
                                     className="w-full"/>
@@ -153,6 +164,8 @@ const CreateAccountPage = () => {
                                     prompt="Nomor HP"
                                     id="noTelp"
                                     name="noTelp"
+                                    width={"100%"}
+                                    inputHeight={"2.25rem"}
                                     placeholder='contoh: 08128128121'
                                     onChange={handleChange}
                                     className="w-full"/>
@@ -161,6 +174,8 @@ const CreateAccountPage = () => {
                                     type="email"
                                     prompt="Email"
                                     id="email"
+                                    width={"100%"}
+                                    inputHeight={"2.25rem"}
                                     placeholder='contoh: budihen@gmail.com'
                                     name="email"
                                     onChange={handleChange}
@@ -170,6 +185,8 @@ const CreateAccountPage = () => {
                                     label="Register"
                                     hoverColor={'white'}
                                     color={'white'} 
+                                    width={"100%"}
+                                    height={"2.25rem"}
                                     disabled={isLoading}
                                     onClick={actionCreateAccountClick} />
                             </form>

@@ -39,7 +39,7 @@ const Wrapper = styled.div`
 `;
 
 
-const InputTextWithPrompt = ({ onInput, defaultValue, prompt, id, type, name, errorMessage, placeholder, className, onChange, width, inputHeight, value, onBlur, onKeyDown }) => {
+const InputTextWithPrompt = ({ onInput, disabled, defaultValue, prompt, id, type, name, errorMessage, placeholder, className, onChange, width, inputHeight, value, onBlur, onKeyDown }) => {
 
     const isError = errorMessage && errorMessage.length>0;
 
@@ -54,6 +54,7 @@ const InputTextWithPrompt = ({ onInput, defaultValue, prompt, id, type, name, er
                 placeholder={placeholder? placeholder : ""} 
                 className={className} 
                 onChange={onChange}
+                disabled={disabled}
                 onChangeCapture={onInput}
                 defaultValue={defaultValue}
                 value={value}
@@ -62,8 +63,8 @@ const InputTextWithPrompt = ({ onInput, defaultValue, prompt, id, type, name, er
                 style={{
                     width: width,
                     height: inputHeight,
-                    backgroundColor: `${ isError? 'var(--color-error-light)' : 'white' }`,
-                    border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : 'var(--color-black)'}`,
+                    backgroundColor: `${ disabled? 'var(--color-light-gray)' : 'white' }`,
+                    border: `0.0925rem solid ${ disabled? 'var(--color-semiblack)' : 'var(--color-black)'}`,
                 }} >
             </WrapperInputText>
             {errorMessage && <label className="label-error">{errorMessage}</label> }

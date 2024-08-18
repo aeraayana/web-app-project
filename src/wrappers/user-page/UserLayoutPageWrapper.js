@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const Wrapper = styled.main`
-    background-color: var(--color-light-gray);
+    background-color: var(--color-white);
 
     .modal-profile {
         border-radius: 1rem;    // 16px 

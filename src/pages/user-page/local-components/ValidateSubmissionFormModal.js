@@ -5,10 +5,43 @@ import { useAppContext } from "../../../context/appContext";
 import Wrapper from "../../../wrappers/user-page/UserCreateFormWrapper";
 import InputTextArea from "../../../components/inputs/InputTextArea";
 import FeaturedIcon from "../../../../src/assets/images/Featured icon.png"
+import FileType from "../../../../src/assets/images/file type.png"
 import { CAvatar, CModalBody, CModalHeader } from "@coreui/react";
 import { FaChevronDown } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { MoreVertOutlined } from "@mui/icons-material";
+import ExcelExport from "../export-items/ExportExcelFromData";
+import axios from "axios";
+import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from "../../../configs/constants";
 
 const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
+    const [dataForm, setDataForm] = React.useState(null);
+
+    React.useEffect(() => {
+        if(show){
+            axios.get(`${HOST_URL}getDataRab/${selectedData.id}`, {
+                headers: {
+                    Accept: 'application/json',
+                    id: CLIENT_ID,
+                    secret: CLIENT_ID_SECRET,
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                }
+            }).then((res) => {
+                setDataForm(res.data.data);
+            })
+        }
+    }, [selectedData])
+
+    const handleDownloadPdf = () => {
+        const newWindow = window.open('/#/layanan-masyarakat/laporan-pdf', '_blank', 'noopener,noreferrer');
+        if (newWindow) newWindow.opener = null;
+        localStorage.setItem('data', JSON.stringify(selectedData));
+    }
+
+    const handleDownloadRab = () => {
+        const newWindow = window.open(`/#/layanan-masyarakat/laporan-rab/${selectedData.id}`, '_blank', 'noopener,noreferrer');
+        if (newWindow) newWindow.opener = null;
+    }
     
     const [initialState, setInitialState] = React.useState([]);
     const { postVerifikasiFormProposal, toggleVerifikasiModal } = useAppContext();
@@ -26,8 +59,6 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
         setInitialState({ ...list, [e.target.name]: e.target.value });
     }
     
-    // console.log(initialState);
-    // console.log(show);
     return (
         <>
             <BrowserView>
@@ -61,12 +92,12 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                         </div>
                         <Spacing height="1.25rem" />
 
-                        <span className="sublabel">Paket diajukan: </span>
+                        <span className="description">Paket diajukan: </span>
                         <Spacing height="1.25rem" />
 
                         <div className="row-start-start">
                             <div className="col-start-start w-full">
-                                <span className="sublabel">Tema</span>
+                                <span className='description' style={{ fontWeight: 'bold' }}>Tema</span>
                                 <span className="label" style={{ fontWeight:'bold' }}>
                                     {`${selectedData?.tematik_kegiatan} ${selectedData?.sub_tematik_kegiatan}`}
                                 </span>
@@ -123,19 +154,20 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                         color={'var(--color-semiblack)'}
                                         height={'1.85rem'}
                                         width={'30%'}
-                                        disabled
+                                        onClick={() => handleDownloadPdf()}
                                         label={'Buka'}
                                     />
-                                    
-                                    <Spacing width="2.5rem" />
+                                        
+                                    <Spacing width={'3rem'} />
 
-                                    <ButtonOutlined 
+                                    <ButtonOutlined
                                         color={'var(--color-semiblack)'}
                                         height={'1.85rem'}
                                         width={'30%'}
-                                        disabled
-                                        label={'Simpan'}
+                                        onClick={() => handleDownloadPdf()}
+                                        label={'Buka'}
                                     />
+
                                 </div>
                             </ContainerCardSection>
                         </div>
@@ -153,32 +185,31 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                         color={'var(--color-semiblack)'}
                                         height={'1.85rem'}
                                         width={'30%'}
-                                        disabled
+                                        onClick={() => handleDownloadRab()}
                                         label={'Buka'}
                                     />
-                                    
-                                    <Spacing width="2.5rem" />
 
-                                    <ButtonOutlined 
-                                        color={'var(--color-semiblack)'}
-                                        height={'1.85rem'}
-                                        width={'30%'}
-                                        disabled
-                                        label={'Simpan'}
-                                    />
+                                    <Spacing width={'3rem'} />
+
+                                    {dataForm && (
+                                        <ExcelExport data={Object.entries(dataForm.komponen_rab)}/>
+                                    )}
                                 </div>
                             </ContainerCardSection>
                         </div>
                         <Spacing height="1.5rem" />
                         <div>
-                            <span className="label"> <FaChevronDown width={'12px'} /> Attachment </span>
+                            <span className="label"> <FaChevronDown width={'12px'} /> Unggahan </span>
                             <Spacing height="0.95rem" />
-                            <div className="row-start-center w-full">
-                                <img src={FeaturedIcon} width={'40px'}></img>
-                                <span className="description" style={{ fontWeight:'bold', marginLeft:'0.5rem' }}>{selectedData?.document[0]?.file_name}</span>
+                            <div className="col-center-center w-full" style={{ width:'30%', border: '1px solid var(--color-disable)', borderRadius: '5px', padding: '20px 0px', textWrap: "balance" }}>
+                                <img src={FileType} height={'60px'} width={'60px'}></img>
+                                <div className="row-around-center">
+                                    <span className="description" style={{ width: '60%', fontWeight:'bold', marginTop:'1.25rem', textWrap: "balance" }}>{selectedData?.document[0]?.file_name}</span>
+                                    <MoreVertOutlined />
+                                </div>
                             </div>
                             <hr></hr>
-                            <span className="description" style={{ fontWeight:'bold' }}> Catatan </span>
+                            <span className="description" style={{ fontWeight:'bold' }}> Comments </span>
                             <Spacing height="0.5rem" />
                             <InputTextArea 
                                 placeholder={'Enter a description...'}
@@ -187,12 +218,12 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                 onBlur={(e) => handleChange(e)}
                             />
                         </div>
-                        <Spacing height="6.5rem" />
+                        <Spacing height="2.5rem" />
                         <div className="row-between-start w-full">
                             <ButtonOutlined 
                                 label={'Tolak'} 
                                 className={'w-full'} 
-                                width={'25%'} 
+                                width={'19%'} 
                                 height={'2.75rem'} 
                                 fontSize={'12px'}
                                 onClick={() => {
@@ -206,7 +237,7 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                             <ButtonSolid 
                                 label={'Setujui'} 
                                 className={'w-full'} 
-                                width={'25%'} 
+                                width={'19%'} 
                                 onClick={() => {
                                     handleSetuju();
                                     toggleVerifikasiModal();

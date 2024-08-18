@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const MobileWrapper = styled.main`
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: 0.15rem 0.15rem 0.15rem 0.15rem;
     background-color: var(--color-white);
 
     img {
@@ -29,6 +29,14 @@ const MobileWrapper = styled.main`
         font-weight: var(--font-weight-normal);
         font-size: var(--font-size-small-2);
         color: var(--color-semiblack);
+    }
+
+    .hyperlink{
+        font-family: var(--font-family-primary);
+        font-weight: var(--font-weight-normal);
+        font-size: var(--font-size-small-2);
+        color: var(--color-primary);
+        text-decoration: none;
     }
 
     .price-tag {

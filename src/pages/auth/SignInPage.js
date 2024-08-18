@@ -3,6 +3,7 @@ import { useAppContext } from '../../context/appContext';
 import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
 import { generateErrorMessage } from "../../configs/globalfunctions"
+import DOCPanduan from '../../assets/Draft 3-User Guide Aplikasi Dana Masyarakat.pdf'
 
 import {
     ButtonSolid,
@@ -56,27 +57,18 @@ const SignInPage = () => {
 
     const actionSignInClick = async (e) => {
         e.preventDefault();
-        // if(new Date() < new Date('2024-08-09')){
-        //     toast(
-        //         <div className='col-start-start'>
-        //             <span className='title-sub'>Layanan mulai dapat di akses setelah launching festival LIKE 2</span>
-        //             <Spacing height={'2.25rem'}/>
-        //             <span className='title-sub'>Terima kasih</span> 
-        //         </div>, {
-        //         position: toast.POSITION.TOP_LEFT,
-        //         className: 'toast-message',
-        //         hideProgressBar: false,
-        //         closeOnClick: true,
-        //         autoClose: false,
-        //     })
-        // }else{
-            await loginUser({ email: values.email, password: values.password });
+        const response = await loginUser({ email: values.email, password: values.password });
+        console.log(response);
+        if( response ){
             if(JSON.parse(localStorage.getItem('user_data')).role_user === 'verifikator'){
                 navigate('/layanan-masyarakat/admin')            
             }else{
                 navigate('/layanan-masyarakat/')
             }
-        // }
+        }else{
+            // toast.error('username dan password salah, mohon periksa lagi', { position: toast.POSITION.TOP_CENTER })
+            console.log(response);
+        }
     }
 
     const actionLandingPageClick = () => {
@@ -92,13 +84,13 @@ const SignInPage = () => {
             <MobileView>
                 <MobileWrapper>
                     <ToastContainer />
-                    <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
-                        <span className='row-between-start'>
+                    <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"1.025rem" }}>
+                        <span className='row-between-center'>
                             <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' small={'14px'} label="Kembali ke BPLDH.ID" onClick={actionLandingPageClick} />
                             <Logo />
                         </span>
                         <article className='col-center w-full'>
-                            <div className='col-start-center'>
+                            <div className='col-start-center w-full'>
                                 <Spacing height="3.25rem" />
                                 <div className='col-start-start'>    
                                     <p className='col-start-start title-sub'>Selamat Datang di</p>
@@ -107,13 +99,14 @@ const SignInPage = () => {
                                 <Spacing height="5.525rem" />   {/* 34px */}
                                 <h1 className='text-center title' style={{ color: "var(--color-primary-dark)" }}>Log In</h1>
                                 <Spacing height="0.5rem" />
-                                <form className='col-start-start' style={{ width: "80%" }}>
+                                <form className='col-start-start w-full' style={{ width: "100%" }}>
                                     <InputTextWithPrompt
                                         type="email"
                                         prompt="Email"
                                         id="email"
                                         name="email"
                                         placeholder='masukkan email'
+                                        inputHeight={"2.25rem"}
                                         // errorMessage={errorDetail && generateErrorMessage(errorDetail.email) }
                                         value={ values.email }
                                         onChange={handleChange}
@@ -124,6 +117,7 @@ const SignInPage = () => {
                                         prompt="Sandi"
                                         id="password"
                                         name="password"
+                                        inputHeight={"2.25rem"}
                                         placeholder='masukkan password'
                                         // errorMessage={errorDetail && generateErrorMessage(errorDetail.password) }
                                         value={ values.password }
@@ -137,6 +131,7 @@ const SignInPage = () => {
                                     <ButtonSolid className="w-full" 
                                         label="Login" 
                                         color={'white'}
+                                        height={'2.25rem'}
                                         hoverColor={'white'}
                                         disabled={isLoading && !validate}
                                         onClick={actionSignInClick} />
@@ -151,13 +146,15 @@ const SignInPage = () => {
                                 Belum Punya Akun? <Hyperlink label="Daftar Sini" small={'14px'} onClick={actionCreateAccountClick} />
                             </p>
                             <Spacing height="1rem" />   {/* 16px */}
-                            <p className='description' style={{ textAlign: "center" }}>
+                            <span className='description' style={{ textAlign: "center" }}>
                                Kontak kami: layanandanamasyarakat@bpdlh.id
-                            </p>
-                            <Spacing height={'0.25rem'}/>
-                            <p>
+                            </span>
+                            <span className='description'>
                                 Jam layanan: Senin - Jumat  08.00 - 17.00
-                            </p>
+                            </span>
+                            <span className='description'>
+                                untuk unduh panduan aplikasi bagi masyarakat<a className='hyperlink' href={DOCPanduan} > klik di sini</a>
+                            </span>
                         </article>
                     </section>
                 </MobileWrapper>
@@ -215,22 +212,26 @@ const SignInPage = () => {
                                         hoverColor={'white'}
                                         disabled={isLoading && !validate}
                                         onClick={actionSignInClick} />
-                                    <Spacing height="1.25rem" />   {/* 20px */}
+                                    <Spacing height="0.25rem" />   {/* 20px */}
                                 </form>
                             </div>
                         </article>
-                        <Spacing height="2.75rem" />   {/* 44px */}
+                        <Spacing height="1.05rem" />   {/* 44px */}
                         <article className='col-center-center w-full'>
                             <Spacing height="1rem" />   {/* 16px */}
                             <p className='description-subtitle' style={{ textAlign: "center" }}>
                                 Belum Punya Akun? <Hyperlink label="Daftar Sini" small={'14px'} onClick={actionCreateAccountClick} />
                             </p>
-                            <Spacing height="1rem" />   {/* 16px */}
-                            <p className='description-subtitle' style={{ fontWeight:'bold', textAlign: "center" }}>
+                            <Spacing height="6.5rem" />   {/* 16px */}
+                            <span className='description' style={{ fontWeight:'bold', textAlign: "center" }}>
                                Kontak kami: layanandanamasyarakat@bpdlh.id
-                            </p>
-                            <span>
+                            </span>
+                            <span className='description'>
                                 Jam layanan: Senin - Jumat  08.00 - 17.00
+                            </span >
+                            <Spacing height="1.025rem" />
+                            <span className='description'>
+                                untuk unduh panduan aplikasi bagi masyarakat <a className='hyperlink' href={DOCPanduan} >klik di sini</a>
                             </span>
                         </article>
                     </section>

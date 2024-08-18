@@ -22,6 +22,9 @@ import {
 
 import ProtectedUserEditRoute from './pages/ProtectedUserEditRoute'
 import UserAdminPage from './pages/user-page/UserAdminPage'
+import BasicDocument from './pages/user-page/export-items/DownloadProposal';
+import DocumentRab from './pages/user-page/export-items/DownloadRAB';
+
 
 
 {/* <ProtectedRoute>
@@ -42,8 +45,9 @@ function App() {
 
                 <Route path='/layanan-masyarakat/admin' element={<UserAdminPage />} />
                 <Route index element={<UserMembershipPage/>}></Route>
-                {/* <Route path='/layanan-masyarakat/downloads' element={<UserHomePage />} /> */}
-                {/* <Route path='dashboard-admin' element={<UserAdminPage/>}/> */}
+                <Route path='/layanan-masyarakat/downloads' element={<UserHomePage />} />
+                <Route path='/layanan-masyarakat/laporan-pdf' element={<BasicDocument />}/>
+                <Route path='/layanan-masyarakat/laporan-rab/:id' element={<DocumentRab />}/>
                 {/* <Route path='sign-up-mandatory-2' element={<UserSignUpMandatory2Page/>}/>
                 <Route path='sign-up-mandatory-3' element={<UserSignUpMandatory3Page />}/>
                 <Route path='sign-up-mandatory-4' element={<UserSignUpMandatory4Page />}/>

@@ -182,6 +182,14 @@ const MobileWrapper = styled(CModal)`
         border-radius: 0.15em;
         background-color: var(--color-primary);
     }
+
+    .toast-message{
+        width: 90vh;
+        height: 22vh;
+        margin-left: 40vh;
+        margin-top: 40px;
+        padding: 20px 20px;
+    }
 `
 
 export default MobileWrapper;

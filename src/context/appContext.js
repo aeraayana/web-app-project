@@ -160,22 +160,23 @@ const AppProvider = ({ children }) => {
         { email_pic: email, password: password }
       );
       const { data, message } = response.data;
-      // const user = data;
       const token_access = data.token;
-      // console.log(token_access);
 
       dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: { message: message, token: token_access },
       });
       addUserToLocalStorage({ token: token_access, user_data: data });
+      return response;
+
     } catch (error) {
-      //console.log(error);
-      const { message, data } = error.response;
+      const { message, data } = error;
       dispatch({
         type: LOGIN_USER_ERROR,
         payload: { message: message, data: data },
       });
+
+      return false;
     }
   };
 
