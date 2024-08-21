@@ -98,6 +98,8 @@ const MembershipSubscriptionCard = ({
 
   React.useEffect(() => {getDataProgressKegiatan()}, [])
 
+
+  console.log(dataProgress)
   return (
     <>
     
@@ -134,7 +136,7 @@ const MembershipSubscriptionCard = ({
           {isBestValue && <Spacing height="0.5rem" />}
           {!isBestValue && 
             <div className="row-center-start price-tag w-full" style={{ cursor:'pointer' }} onClick={onClick}>
-              {dataProgress?.length === 0 ? (
+              {dataProgress?.data?.length === 0 || dataProgress?.length === 0 ? (
                 <>
                   <Spacing height="1.7rem" />
                   <span>Tidak ada {name.toLowerCase()}</span>

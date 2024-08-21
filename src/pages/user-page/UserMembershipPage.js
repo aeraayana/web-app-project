@@ -22,7 +22,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from '../../configs/constants';
 
-
 const UserMembershipPage = () => {
 
     const [time, setTime] = useState(new Date());
@@ -39,7 +38,26 @@ const UserMembershipPage = () => {
 
     useEffect(() => {
         getDataProgressKegiatan();
-    }, [])
+    }, []);
+
+    //UNCOMMENT WHEN BUILDING FOR PRODUCTION
+    const handleOpenModal = () => {
+        if(dataProgress?.data?.length === 0 || dataProgress?.length === 0){
+            toggleFormModal(!showFormModal);
+            console.log("tidak ada isi");
+        }else{
+            console.log("ada isi");
+            toast.error(
+                <div className='col-center-center'>
+                    <span style={{ fontSize: 'var(--font-size-big)' }} className="label">Menu Dinonaktifkan</span>
+                    <span style={{ fontSize: 'var(--font-size-big)'}} className="description">Anda masih memiliki kegiatan yang berlangsung</span>
+                </div>, { position: toast.POSITION.TOP_LEFT, className: 'toast-message' }
+            )
+        }
+    }
+    // const handleOpenModal = () => {
+    //     toggleFormModal(!showFormModal);
+    // }
 
     useEffect(() => {
         axios.get(`${HOST_URL}getNotification`, {
@@ -50,12 +68,16 @@ const UserMembershipPage = () => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             }
         }).then((res) => {
-            toast.success(
-                <div className="col-start-start w-full">
-                    <span style={{ fontSize: 'var(--font-size-bigger)' }} className="label">{res.data.data[0].data.message_header}</span>
-                    <span style={{ fontSize: 'var(--font-size-big)'}} className="description">{res.data.data[0].data.message_body}</span>
-                </div>, { position: toast.POSITION.TOP_LEFT, className: 'toast-message' }
-            )
+            if(res.data && res.data.data){
+                toast.success(
+                    <div className="col-start-start w-full">
+                        <span style={{ fontSize: 22 }} className="label">{res.data.data[0].data.message_header}</span>
+                        <span style={{ fontSize: 20 }} className="description">{res.data.data[0].data.message_body}</span>
+                    </div>, { position: toast.POSITION.TOP_LEFT, className: 'toast-message' }
+                )
+            }else{
+                <></>
+            }
         })
     }, [])
 
@@ -105,7 +127,7 @@ const UserMembershipPage = () => {
                     </div>
                     <Spacing height="0.5rem"/>
                     <div className='w-full'>
-                        <ButtonSolid onClick={toggleFormModal} hoverColor={'var(--color-primary-dark)'} 
+                        <ButtonSolid onClick={() => handleOpenModal()} hoverColor={'var(--color-primary-dark)'} 
                             thickness='0.0625rem' borderColor={'var(--color-disable)'} 
                             label={"Buat Pengajuan"} height={'70px'} width={'100%'} color="grey" 
                             iconPre={<img src={circlePlusSmallIcon} />} bgColor={"var(--color-disable-light)"} />
@@ -177,7 +199,7 @@ const UserMembershipPage = () => {
                         
                         <Spacing width={'1.3rem'}/>
                         
-                        <ButtonSolid onClick={toggleFormModal} hoverColor={'var(--color-primary-dark)'} 
+                        <ButtonSolid onClick={() => handleOpenModal()} hoverColor={'var(--color-primary-dark)'} 
                             thickness='0.0625rem' borderColor={'var(--color-disable)'} 
                             borderRadius={'20px'}
                             label={"Buat Pengajuan"} height={'255px'} width={'25%'} color="grey" 

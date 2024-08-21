@@ -11,6 +11,8 @@
 # production
 /build
 /build*.zip
+/prod_build*.zip
+/uat_build*.zip
 
 # misc
 .DS_Store

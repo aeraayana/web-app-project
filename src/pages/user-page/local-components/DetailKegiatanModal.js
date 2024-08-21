@@ -42,10 +42,10 @@ const DetailKegiatanModal = ({ show, onClose, data }) => {
                                     <span className="page-number">PAKET KEGIATAN</span>
                                     <span className="title-thin" style={{ color:'var(--color-primary-dark)' }}>{data?.data[0]?.tematik_kegiatan}</span>
                                     <Spacing height={'0.75rem'}/>
-                                    <span className="title" style={{ color:'var(--color-primary-dark)' }}>{data?.data[0]?.sub_tematik_kegiatan} {data.data[0].jumlah}</span>
+                                    <span className="title" style={{ color:'var(--color-primary-dark)' }}>{data?.data[0]?.sub_tematik_kegiatan} {data?.data[0]?.jumlah}</span>
                                 </div>
                                 <Spacing height={'0.25rem'}/>
-                                <span className="label" style={{ fontSize:'var(--font-size-normal)' }}>No. {data?.data[0].nomor_pengajuan}</span>
+                                <span className="label" style={{ fontSize:'var(--font-size-normal)' }}>No. {data?.data[0]?.nomor_pengajuan}</span>
                                 <Spacing height={'2.25rem'} />
 
                                 <div className="col-start-start">
@@ -115,10 +115,10 @@ const DetailKegiatanModal = ({ show, onClose, data }) => {
                                     <span className="page-number">PAKET KEGIATAN</span>
                                     <span className="title-thin" style={{ color:'var(--color-primary-dark)' }}>{data?.data[0]?.tematik_kegiatan}</span>
                                     <Spacing height={'0.75rem'}/>
-                                    <span className="title" style={{ color:'var(--color-primary-dark)' }}>{data?.data[0]?.sub_tematik_kegiatan} {data.data[0].jumlah}</span>
+                                    <span className="title" style={{ color:'var(--color-primary-dark)' }}>{data?.data[0]?.sub_tematik_kegiatan} {data?.data[0]?.jumlah}</span>
                                 </div>
                                 <Spacing height={'0.25rem'}/>
-                                <span className="label" style={{ fontSize:'var(--font-size-normal)' }}>No. {data?.data[0].nomor_pengajuan}</span>
+                                <span className="label" style={{ fontSize:'var(--font-size-normal)' }}>No. {data?.data[0]?.nomor_pengajuan}</span>
                                 <Spacing height={'2.25rem'} />
 
                                 <div className="col-start-start">

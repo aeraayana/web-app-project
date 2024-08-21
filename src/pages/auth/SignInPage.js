@@ -58,7 +58,7 @@ const SignInPage = () => {
     const actionSignInClick = async (e) => {
         e.preventDefault();
         const response = await loginUser({ email: values.email, password: values.password });
-        console.log(response);
+        // console.log(response);
         if( response ){
             if(JSON.parse(localStorage.getItem('user_data')).role_user === 'verifikator'){
                 navigate('/layanan-masyarakat/admin')            
@@ -66,8 +66,8 @@ const SignInPage = () => {
                 navigate('/layanan-masyarakat/')
             }
         }else{
-            // toast.error('username dan password salah, mohon periksa lagi', { position: toast.POSITION.TOP_CENTER })
-            console.log(response);
+            toast.error('username dan password salah, mohon periksa lagi', { position: toast.POSITION.TOP_CENTER })
+            // console.log(response);
         }
     }
 
@@ -133,7 +133,7 @@ const SignInPage = () => {
                                         color={'white'}
                                         height={'2.25rem'}
                                         hoverColor={'white'}
-                                        disabled={isLoading && !validate}
+                                        disabled={isLoading}
                                         onClick={actionSignInClick} />
                                     <Spacing height="1.25rem" />   {/* 20px */}
                                 </form>

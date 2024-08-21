@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { HOST_URL, CLIENT_ID, CLIENT_ID_SECRET } from '../../../configs/constants';
-import { CFormCheck, CModalBody, CModalHeader, CModalTitle, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from '@coreui/react';
+import { CFormCheck, CModalBody, CModalHeader, CModalTitle, CSpinner, CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from '@coreui/react';
 import { ButtonOutlined, ButtonSolid, ChoiceBoxStringWithPrompt, ContainerCardSection, InputText, InputTextWithPrompt, InputTextWithPromptPostLabel, Spacing } from "../../../components";
 import React from "react";
 import Pana from "../../../assets/images/landing/pana.png";
@@ -46,6 +46,8 @@ const imgUrlPage2 = [
     Health,
 ]
 
+const editables = ["Perlengkapan", "Sewa Ruangan", "Lain-lain", "Alat Peralatan"];
+
 const numFormat = (number) => {
 	return new Intl.NumberFormat("id-ID", { style: "decimal" }).format(number);
 };
@@ -78,6 +80,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
     const formData = new FormData();
 
     const { 
+        isLoading,
         tematikKegiatan, 
         getTematikKegiatan, 
         getSubTematikKegiatan, 
@@ -139,6 +142,14 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                 <span className="description">{res.data.data[0].data.message_body}</span>
             </div>, { position: toast.POSITION.TOP_CENTER, className:'toast-message' }
             );
+        }).catch((error) => {
+            if(error){
+                toast.error(
+                    <div className="col-start-start">
+                        <span className="label">Terdapat kendala jaringan, silakan dicoba kembali beberapa saat ke depan.</span>
+                    </div>, { position: toast.POSITION.TOP_CENTER, className:'toast-message' }
+                )
+            }
         })
         
         setIndex(1);
@@ -189,43 +200,55 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 }
             }
-        ).then(handleFormClose());
+        ).then(handleFormClose())
+        .finally(window.location.reload());
     }
 
     const handlePostForm = (e, index) => {
-        try {
-            formData.append('paket_kegiatan_id', e.paket_kegiatan_id);
-            formData.append('ruang_lingkup_kegiatan', e.ruang_lingkup_kegiatan);
-            formData.append('tujuan_kegiatan', e.tujuan_kegiatan);
-            formData.append('proposal_kegiatan', e.proposal_kegiatan);
-            formData.append('waktu_kegiatan', e.start_time.concat(` - ${e.end_time}`));
-            formData.append('tanggal_kegiatan', `${e.tanggal_kegiatan} - ${e.tanggal_kegiatan}`);
-            formData.append('alamat_kegiatan', e.alamat_kegiatan.concat(` ${e.alamat_kegiatan_ext}`));
-            formData.append('kabupaten_kegiatan', e.kota_code);
-            formData.append('kelurahan_kegiatan', e.kelurahan_code?? 1);
-            formData.append('kecamatan_kegiatan', e.kecamatan_code);
-            formData.append('provinsi_kegiatan', e.province_code);
-            formData.append('judul_pengajuan_kegiatan', e.title);
+        formData.append('paket_kegiatan_id', e.paket_kegiatan_id);
+        formData.append('ruang_lingkup_kegiatan', e.ruang_lingkup_kegiatan);
+        formData.append('tujuan_kegiatan', e.tujuan_kegiatan);
+        formData.append('proposal_kegiatan', e.proposal_kegiatan);
+        formData.append('waktu_kegiatan', e.start_time.concat(` - ${e.end_time}`));
+        formData.append('tanggal_kegiatan', `${e.tanggal_kegiatan} - ${e.tanggal_kegiatan}`);
+        formData.append('alamat_kegiatan', e.alamat_kegiatan.concat(` ${e.alamat_kegiatan_ext}`));
+        formData.append('kabupaten_kegiatan', e.kota_code);
+        formData.append('kelurahan_kegiatan', e.kelurahan_code?? 1);
+        formData.append('kecamatan_kegiatan', e.kecamatan_code);
+        formData.append('provinsi_kegiatan', e.province_code);
+        formData.append('judul_pengajuan_kegiatan', e.title);
 
-            axios.post(
-                `${HOST_URL}pengajuanKegiatan`,
-                formData,
-                {
-                    headers: {
-                        Accept: 'multipart/form-data',
-                        id: '6684d93e8cb88',
-                        secret: 'vc8U5EaZ3bUKV9ka4PsNLrpVGWZVVpyZsAhmnRWO',
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    }
+        axios.post(
+            `${HOST_URL}pengajuanKegiatan`,
+            formData,
+            {
+                headers: {
+                    Accept: 'multipart/form-data',
+                    id: '6684d93e8cb88',
+                    secret: 'vc8U5EaZ3bUKV9ka4PsNLrpVGWZVVpyZsAhmnRWO',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
                 }
-            ).then((res) => {
-                setDataForm(res.data.data);
-                setPostData(res.data.data.komponen_rab)
-            })
-        } catch (error) {
-            setIndex(1);
-        }
-        setIndex(index);
+            }
+        ).then((res) => {
+            setDataForm(res.data.data);
+            setPostData(res.data.data.komponen_rab);
+            setIndex(index);
+        }).catch((error) => {
+            if(error.response){
+                toast.error(
+                    <div>
+                        <span className="title">Data yang diisi tidak lengkap / belum sesuai, mohon periksa kembali</span>
+                    </div>, { position: toast.POSITION.TOP_LEFT, className: 'toast-message' }
+                );
+                setIndex(4);
+            } else {
+                toast.error(
+                    <div className="col-start-start">
+                        <span className="label">Terdapat kendala jaringan, silakan dicoba kembali beberapa saat ke depan.</span>
+                    </div>, { position: toast.POSITION.TOP_CENTER, className:'toast-message' }
+                )
+            }
+        })
     }
     
     const handleCheck = (e) => {
@@ -1085,124 +1108,131 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
                     {index === 6 && (
                         <>
-                            <CModalHeader>
-                                <CModalTitle className="title-description">
-                                    <FaArrowLeft style={{ cursor: "pointer" }} onClick={() => setIndex(index - 1)}/> ISI FORM PROPOSAL 
-                                </CModalTitle>
-                            </CModalHeader>
-                            <CModalBody>
-                                <div className="col-start-start">
-                                    <span className='page-number'>HALAMAN 3 DARI 3</span>
-                                    <span className='subtitle'>Rencana Anggaran Biaya</span>
-                                    <span className="description">{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${kategori.jenis_kegiatan === "Penanaman Pohon" && kategori.jenis_kegiatan ? 'Hectare' : 'Orang'}`}</span>
-                                </div>
-                                
-                                <Spacing height="2.25rem" />   
-                                
-                                <CTable borderless>
-                                    <CTableHead>
-                                        <CTableRow className="table-head">
-                                            <CTableHeaderCell>No.</CTableHeaderCell>
-                                            <CTableHeaderCell>Deskripsi</CTableHeaderCell>
-                                            <CTableHeaderCell>Satuan</CTableHeaderCell>
-                                            <CTableHeaderCell>Harga Unit</CTableHeaderCell>
-                                            <CTableHeaderCell>Jumlah</CTableHeaderCell>
-                                            {kategori.jenis_kegiatan === 'Pelatihan' && <CTableHeaderCell>Membership</CTableHeaderCell>}
-                                            <CTableHeaderCell>Harga Total</CTableHeaderCell>
-                                        </CTableRow>
-                                    </CTableHead>
-                                    <CTableBody className='position-relative px-5'>
-                                        {dataForm.komponen_rab ? Object.keys(dataForm.komponen_rab).map((n, i) => (
-                                            <>
-                                                <CTableRow className="outer-row">
-                                                    <CTableDataCell>
-                                                        {String.fromCharCode((i + 65))}
-                                                    </CTableDataCell>
-                                                    <CTableDataCell>
-                                                        {n}
-                                                    </CTableDataCell>
-                                                    <CTableDataCell />
-                                                    <CTableDataCell />
-                                                    <CTableDataCell />
-                                                    <CTableDataCell />
-                                                </CTableRow>
-                                                
-                                                {dataForm.komponen_rab[`${n}`].map((rowDetails, idx) => (
-                                                    <>
-                                                        <CTableRow className="inner-row w-full">
-                                                            <CTableDataCell align="right">{idx + 1}</CTableDataCell>
-                                                            <CTableDataCell>
-                                                                {rowDetails.komponen_rab?? '-'}
-                                                            </CTableDataCell>
-                                                            <CTableDataCell>
-                                                                {rowDetails.satuan?? '-'}
-                                                            </CTableDataCell>
-                                                            <CTableDataCell>
-                                                                <InputTextWithPrompt
-                                                                    inputHeight={'1.75rem'}
-                                                                    width={'6.65rem'}
-                                                                    name={`harga_unit`}
-                                                                    value={numFormat(parseInt(rowDetails.harga_unit))?? '-'}
-                                                                    onChange={(e) => handleChangeQty(n, e, idx)}
-                                                                />
-                                                            </CTableDataCell>
-                                                            <CTableDataCell>
-                                                                <InputTextWithPrompt
-                                                                    inputHeight={'1.75rem'}
-                                                                    width={'6.25rem'}
-                                                                    name={`qty`}
-                                                                    value={numFormat(parseInt(rowDetails.qty))?? '-'}
-                                                                    disabled={!!(i >= 3)}
-                                                                    onChange={(e) => handleChangeQty(n, e, idx)}
-                                                                />
-                                                            </CTableDataCell>
-                                                            <CTableDataCell>
-                                                                {new Intl.NumberFormat('id-ID').format(
-                                                                    rowDetails.qty * rowDetails.harga_unit,
-                                                                )?? '-'}
-                                                            </CTableDataCell>
-                                                        </CTableRow>
-                                                    </>
-                                                ))}
-                                            </>
-                                        )) : (
-                                            <></>
-                                        )}
-                                    </CTableBody>
-                                </CTable>
-                                <div 
-                                    style={{ 
-                                        borderTop:'2px solid var(--color-disable)', 
-                                        borderBottom:'2px solid var(--color-disable)',
-                                        padding:'0.225rem',
-                                        backgroundColor: 'var(--color-disable-light)',
-                                    }}
-                                    className="row-end-start w-full" 
-                                >
-                                    <span className="subtitle">TOTAL</span>
-                                    <Spacing width={'4.45rem'}/>
-                                    <span className="subtitle">{getTotal(postData, 'harga_unit', 'qty')}</span>
-                                </div>
-                                <Spacing height="2.5rem" />
-                                
-                                <section className='col-center-center w-full'>
-                                    <div className="row-center-start w-full" style={{ padding:'0 2.25rem' }}>
-                                        <CFormCheck style={{ width: "1.575rem" }} checked={confirm} onClick={() => setConfirm(!confirm)}></CFormCheck>
-                                        <Spacing width={"1.75rem"}/>
-                                        <span className="description">Dengan ini saya menyatakan bahwa informasi yang disampaikan adalah benar dan bahwa kegiatan ini belum didanai oleh program lain</span>
+                        {isLoading ? (
+                            <CSpinner className="m-5" />
+                        ) : (
+                            <>
+                                <CModalHeader>
+                                    <CModalTitle className="title-description">
+                                        <FaArrowLeft style={{ cursor: "pointer" }} onClick={() => setIndex(index - 1)}/> ISI FORM PROPOSAL 
+                                    </CModalTitle>
+                                </CModalHeader>
+                                <CModalBody>
+                                    <div className="col-start-start">
+                                        <span className='page-number'>HALAMAN 3 DARI 3</span>
+                                        <span className='subtitle'>Rencana Anggaran Biaya</span>
+                                        <span className="description">{`${kategori.jenis_kegiatan} ${kategori.paket_kegiatan?.filter((item) => item.id === initialState?.paket_kegiatan_id)[0]?.jumlah_peserta?? ''} ${kategori.jenis_kegiatan === "Penanaman Pohon" && kategori.jenis_kegiatan ? 'Hectare' : 'Orang'}`}</span>
                                     </div>
-                                    <Spacing height={'1.85rem'}/>
-                                    <ButtonSolid 
-                                        label="Kirim Pengajuan" 
-                                        disabled={!confirm}
-                                        onClick={() => {
-                                            handleCloseForm();
-                                            toggleFormModal();
+                                    
+                                    <Spacing height="2.25rem" />   
+                                    
+                                    <CTable borderless>
+                                        <CTableHead>
+                                            <CTableRow className="table-head">
+                                                <CTableHeaderCell>No.</CTableHeaderCell>
+                                                <CTableHeaderCell>Deskripsi</CTableHeaderCell>
+                                                <CTableHeaderCell>Satuan</CTableHeaderCell>
+                                                <CTableHeaderCell>Harga Unit</CTableHeaderCell>
+                                                <CTableHeaderCell>Jumlah</CTableHeaderCell>
+                                                {kategori.jenis_kegiatan === 'Pelatihan' && <CTableHeaderCell>Membership</CTableHeaderCell>}
+                                                <CTableHeaderCell>Harga Total</CTableHeaderCell>
+                                            </CTableRow>
+                                        </CTableHead>
+                                        <CTableBody className='position-relative px-5'>
+                                            {dataForm.komponen_rab ? Object.keys(dataForm.komponen_rab).map((n, i) => (
+                                                <>
+                                                    <CTableRow className="outer-row">
+                                                        <CTableDataCell>
+                                                            {String.fromCharCode((i + 65))}
+                                                        </CTableDataCell>
+                                                        <CTableDataCell>
+                                                            {n}
+                                                        </CTableDataCell>
+                                                        <CTableDataCell />
+                                                        <CTableDataCell />
+                                                        <CTableDataCell />
+                                                        <CTableDataCell />
+                                                    </CTableRow>
+                                                    
+                                                    {dataForm.komponen_rab[`${n}`].map((rowDetails, idx) => (
+                                                        <>
+                                                            <CTableRow className="inner-row w-full">
+                                                                <CTableDataCell align="right">{idx + 1}</CTableDataCell>
+                                                                <CTableDataCell>
+                                                                    {rowDetails.komponen_rab?? '-'}
+                                                                </CTableDataCell>
+                                                                <CTableDataCell>
+                                                                    {rowDetails.satuan?? '-'}
+                                                                </CTableDataCell>
+                                                                <CTableDataCell>
+                                                                    <InputTextWithPrompt
+                                                                        inputHeight={'1.75rem'}
+                                                                        width={'6.65rem'}
+                                                                        name={`harga_unit`}
+                                                                        value={numFormat(parseInt(rowDetails.harga_unit))?? '-'}
+                                                                        onChange={(e) => handleChangeQty(n, e, idx)}
+                                                                    />
+                                                                </CTableDataCell>
+                                                                {console.log(editables.find((item) => item === rowDetails.komponen_rab))}
+                                                                <CTableDataCell>
+                                                                    <InputTextWithPrompt
+                                                                        inputHeight={'1.75rem'}
+                                                                        width={'6.25rem'}
+                                                                        name={`qty`}
+                                                                        value={numFormat(parseInt(rowDetails.qty))?? '-'}
+                                                                        disabled={!!(editables.find((item) => item === rowDetails.komponen_rab))}
+                                                                        onChange={(e) => handleChangeQty(n, e, idx)}
+                                                                    />
+                                                                </CTableDataCell>
+                                                                <CTableDataCell>
+                                                                    {new Intl.NumberFormat('id-ID').format(
+                                                                        rowDetails.qty * rowDetails.harga_unit,
+                                                                    )?? '-'}
+                                                                </CTableDataCell>
+                                                            </CTableRow>
+                                                        </>
+                                                    ))}
+                                                </>
+                                            )) : (
+                                                <></>
+                                            )}
+                                        </CTableBody>
+                                    </CTable>
+                                    <div 
+                                        style={{ 
+                                            borderTop:'2px solid var(--color-disable)', 
+                                            borderBottom:'2px solid var(--color-disable)',
+                                            padding:'0.225rem',
+                                            backgroundColor: 'var(--color-disable-light)',
                                         }}
-                                        width={'25%'} />  
-                                </section>
-                                <Spacing height="2.7rem" />
-                            </CModalBody>
+                                        className="row-end-start w-full" 
+                                    >
+                                        <span className="subtitle">TOTAL</span>
+                                        <Spacing width={'4.45rem'}/>
+                                        <span className="subtitle">{getTotal(postData, 'harga_unit', 'qty')}</span>
+                                    </div>
+                                    <Spacing height="2.5rem" />
+                                    
+                                    <section className='col-center-center w-full'>
+                                        <div className="row-center-start w-full" style={{ padding:'0 2.25rem' }}>
+                                            <CFormCheck style={{ width: "1.575rem" }} checked={confirm} onClick={() => setConfirm(!confirm)}></CFormCheck>
+                                            <Spacing width={"1.75rem"}/>
+                                            <span className="description">Dengan ini saya menyatakan bahwa informasi yang disampaikan adalah benar dan bahwa kegiatan ini belum didanai oleh program lain</span>
+                                        </div>
+                                        <Spacing height={'1.85rem'}/>
+                                        <ButtonSolid 
+                                            label="Kirim Pengajuan" 
+                                            disabled={!confirm}
+                                            onClick={() => {
+                                                handleCloseForm();
+                                                toggleFormModal();
+                                            }}
+                                            width={'25%'} />  
+                                    </section>
+                                    <Spacing height="2.7rem" />
+                                </CModalBody>
+                            </>
+                        )}
                         </>
                     )}
                 </Wrapper>
