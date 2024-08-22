@@ -105,13 +105,19 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
         getTematikKegiatan();
     }, []);
     
-    const handleGetTematikData = async(index) => {
-        getTematikKegiatan();
+    const handleGetTematikData = async (index) => {
+        await getTematikKegiatan();
         setIndex(index);
     }
     
     const handleGetSubTematikData = async (e, index) => {
         await getSubTematikKegiatan({ categoryId: e.id });
+        toast.success(
+            <div className="col-start-start">
+                <span className="description" style={{ fontWeight: 'bold', color:'white' }}>Berhasil</span>
+                <span className="description" style={{ color:'white' }}>GET Request Successful</span>
+            </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
+        )
         setIndex(index);
     }
     
@@ -123,6 +129,12 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
             ]);
         }
         await getPaketKategoriData({ id: e.tematik_kegiatan_id, subId: e.id });
+        toast.success(
+            <div className="col-start-start">
+                <span className="description" style={{ fontWeight: 'bold', color:'white' }}>Berhasil</span>
+                <span className="description" style={{ color:'white' }}>GET Request Successful</span>
+            </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
+        )
         setKategori({ jenis_kegiatan: '' })
         setIndex(index);
     }
@@ -137,10 +149,10 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
             }
         }).then((res) => {
             toast.success(
-            <div className="col-start-start">
-                <span className="label">{res.data.data[0].data.message_header}</span>
-                <span className="description">{res.data.data[0].data.message_body}</span>
-            </div>, { position: toast.POSITION.TOP_CENTER, className:'toast-message' }
+                <div className="col-start-start">
+                    <span className="label">{res.data.data[0].data.message_header}</span>
+                    <span className="description">{res.data.data[0].data.message_body}</span>
+                </div>, { position: toast.POSITION.TOP_CENTER, className:'toast-message' }
             );
         }).catch((error) => {
             if(error){
@@ -168,18 +180,36 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
         const list = initialState;
         setInitialState({ ...list, [e.target.name]: e.target.value });
         await getKota({ id: e.target.value });
+        toast.success(
+            <div className="col-start-start">
+                <span className="description" style={{ fontWeight: 'bold' }}>Berhasil</span>
+                <span className="description" style={{ color:'white' }}>GET Request Successful</span>
+            </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
+        )
     }
 
     const handleChangeKabupaten = async (e) => {
         const list = initialState;
         setInitialState({ ...list, [e.target.name]: e.target.value });
         await getKecamatan({ id: e.target.value });
+        toast.success(
+            <div className="col-start-start">
+                <span className="description" style={{ fontWeight: 'bold', color: 'white' }}>Berhasil</span>
+                <span className="description" style={{ color:'white' }}>GET Request Successful</span>
+            </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
+        )
     }
 
     const handleChangeKecamatan = async (e) => {
         const list = initialState;
         setInitialState({ ...list, [e.target.name]: e.target.value });
         await getKelurahan({ id: e.target.value })
+        toast.success(
+            <div className="col-start-start">
+                <span className="description" style={{ fontWeight: 'bold', color:'white' }}>Berhasil</span>
+                <span className="description" style={{ color:'white' }}>GET Request Successful</span>
+            </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
+        )
     }
 
     const handleChangeQty = async (n, e, idx) => {
@@ -237,14 +267,14 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
             if(error.response){
                 toast.error(
                     <div>
-                        <span className="title">Data yang diisi tidak lengkap / belum sesuai, mohon periksa kembali</span>
+                        <span className="title">Terjadi kendala jaringan. [Parsing data failed]</span>
                     </div>, { position: toast.POSITION.TOP_LEFT, className: 'toast-message' }
                 );
                 setIndex(4);
             } else {
                 toast.error(
                     <div className="col-start-start">
-                        <span className="label">Terdapat kendala jaringan, silakan dicoba kembali beberapa saat ke depan.</span>
+                        <span className="label">Terjadi kendala jaringan. Silakan dicoba beberapa saat lagi. [Get data failed]</span>
                     </div>, { position: toast.POSITION.TOP_CENTER, className:'toast-message' }
                 )
             }
@@ -257,6 +287,12 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
         }else{
             setKategori(e);
         }
+        toast.success(
+            <div className="col-start-start">
+                <span className="description" style={{ fontWeight: 'bold' }}>Berhasil</span>
+                <span className="description" style={{ color:'white' }}>GET Request Successful</span>
+            </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
+        )
     }
 
     return (
@@ -454,6 +490,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             id={"title"} 
                                             inputHeight={'2.25rem'} 
                                             name={"title"} 
+                                            errorMessage={initialState?.title === '' ? 'Judul kegiatan harus diisi' : ''}
                                             defaultValue={initialState?.title} 
                                             onBlur={(e) => handleChange(e)} />    {/* 415px */}
                                         <Spacing height="2.85rem" />   
@@ -521,6 +558,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             inputHeight={'2.25rem'} 
                                             id={"alamat_kegiatan"} 
                                             name={"alamat_kegiatan"} 
+                                            errorMessage={initialState?.alamat_kegiatan === '' ? 'Alamat kegiatan harus diisi' : ''}
                                             defaultValue={initialState?.alamat_kegiatan} 
                                             onBlur={(e) => handleChange(e)} />   
                                         
@@ -545,6 +583,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             inputHeight={'2.25rem'} 
                                             id={"tanggal_kegiatan"} 
                                             name={"tanggal_kegiatan"} 
+                                            errorMessage={initialState?.tanggal_kegiatan === '' ? 'Tanggal kegiatan harus diisi' : ''}
                                             value={initialState?.tanggal_kegiatan} 
                                             onChange={handleChange} />   
 
@@ -557,6 +596,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                 <span>-</span>
                                                 <input type="time" id="end-time" name="end_time" onBlur={(e) => handleChange(e)} defaultValue={initialState?.end_time}/>
                                             </div>
+                                            { (!initialState?.end_time || !initialState?.start_time) && <label className="label-error">Waktu kegiatan harus diisi</label>}
                                         </div>
 
                                         <Spacing height="3.5rem" />
@@ -872,7 +912,8 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             type={"text"} 
                                             id={"title"} 
                                             name={"title"} 
-                                            inputHeight={'2.25rem'} 
+                                            inputHeight={'2.25rem'}
+                                            errorMessage={initialState?.title === '' ? 'Judul kegiatan harus diisi' : ''}
                                             defaultValue={initialState?.title} 
                                             onBlur={(e) => handleChange(e)} />    {/* 415px */}
                                         <Spacing height="2.85rem" />   
@@ -945,6 +986,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             inputHeight={'2.25rem'} 
                                             id={"alamat_kegiatan"} 
                                             name={"alamat_kegiatan"} 
+                                            errorMessage={initialState?.alamat_kegiatan === '' ? 'Alamat kegiatan harus diisi' : ''}
                                             defaultValue={initialState?.alamat_kegiatan} 
                                             onBlur={(e) => handleChange(e)} />   
                                         
@@ -970,6 +1012,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             type={"date"} 
                                             id={"tanggal_kegiatan"} 
                                             name={"tanggal_kegiatan"} 
+                                            errorMessage={initialState?.tanggal_kegiatan === '' ? 'Tanggal kegiatan harus diisi' : ''}
                                             value={initialState?.tanggal_kegiatan} 
                                             onChange={handleChange} />   
 
@@ -982,6 +1025,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                 <span>-</span>
                                                 <input type="time" id="end-time" name="end_time" onBlur={(e) => handleChange(e)} defaultValue={initialState?.end_time}/>
                                             </div>
+                                            { (!initialState?.end_time || !initialState?.start_time) && <label className="label-error">Waktu kegiatan harus diisi</label>}
                                         </div>
                                     </div>
 
@@ -1037,6 +1081,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             subLabel={"Project Background"}
                                             rows={4}
                                             onBlur={(e) => handleChange(e)}
+                                            errorMessage={initialState?.proposal_kegiatan === '' ? 'Proposal kegiatan harus diisi' : ''}
                                             defaultValue={initialState.proposal_kegiatan}
                                             textLimit={"(40 - 250 kata)"} />
                                         <Spacing height="1.85rem" />
@@ -1050,6 +1095,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             subLabel={"Objectives"}
                                             rows={4}
                                             onBlur={(e) => handleChange(e)}
+                                            errorMessage={initialState?.tujuan_kegiatan === '' ? 'Tujuan kegiatan harus diisi' : ''}
                                             defaultValue={initialState.tujuan_kegiatan}
                                             textLimit={"(40 - 250 kata)"} />
                                         <Spacing height="1.85rem" />
@@ -1063,6 +1109,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             subLabel={"Scope of Work"}
                                             rows={4}
                                             onBlur={(e) => handleChange(e)}
+                                            errorMessage={initialState?.ruang_lingkup_kegiatan === '' ? 'Ruang lingkup kegiatan harus diisi' : ''}
                                             defaultValue={initialState.ruang_lingkup_kegiatan}
                                             textLimit={"(40 - 250 kata)"} />
                                         <Spacing height="1.85rem" />
@@ -1139,7 +1186,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             </CTableRow>
                                         </CTableHead>
                                         <CTableBody className='position-relative px-5'>
-                                            {dataForm.komponen_rab ? Object.keys(dataForm.komponen_rab).map((n, i) => (
+                                            {dataForm?.komponen_rab ? Object.keys(dataForm.komponen_rab).map((n, i) => (
                                                 <>
                                                     <CTableRow className="outer-row">
                                                         <CTableDataCell>
@@ -1154,7 +1201,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                         <CTableDataCell />
                                                     </CTableRow>
                                                     
-                                                    {dataForm.komponen_rab[`${n}`].map((rowDetails, idx) => (
+                                                    {dataForm?.komponen_rab[`${n}`].map((rowDetails, idx) => (
                                                         <>
                                                             <CTableRow className="inner-row w-full">
                                                                 <CTableDataCell align="right">{idx + 1}</CTableDataCell>
@@ -1194,7 +1241,11 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                     ))}
                                                 </>
                                             )) : (
-                                                <></>
+                                                <>
+                                                    <span>
+                                                        Tidak ada Data RAB
+                                                    </span>
+                                                </>
                                             )}
                                         </CTableBody>
                                     </CTable>

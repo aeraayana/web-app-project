@@ -13,9 +13,28 @@ import { MoreVertOutlined } from "@mui/icons-material";
 import ExcelExport from "../export-items/ExportExcelFromData";
 import axios from "axios";
 import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from "../../../configs/constants";
+import { Menu, MenuItem } from "@mui/material";
 
 const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
     const [dataForm, setDataForm] = React.useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    
+    const handleDownloadAttached = (e) => {
+        const newWindow = window.open(`/aksesdanalh/public/storage/${e}`, '_blank', 'noopener,noreferrer');
+        if (newWindow) newWindow.opener = null;
+        setAnchorEl(null);
+    }
+
+    console.log(selectedData);
 
     React.useEffect(() => {
         if(show){
@@ -157,17 +176,6 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                         onClick={() => handleDownloadPdf()}
                                         label={'Buka'}
                                     />
-                                        
-                                    <Spacing width={'3rem'} />
-
-                                    <ButtonOutlined
-                                        color={'var(--color-semiblack)'}
-                                        height={'1.85rem'}
-                                        width={'30%'}
-                                        onClick={() => handleDownloadPdf()}
-                                        label={'Buka'}
-                                    />
-
                                 </div>
                             </ContainerCardSection>
                         </div>
@@ -205,7 +213,24 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                 <img src={FileType} height={'60px'} width={'60px'}></img>
                                 <div className="row-around-center">
                                     <span className="description" style={{ width: '60%', fontWeight:'bold', marginTop:'1.25rem', textWrap: "balance" }}>{selectedData?.document[0]?.file_name}</span>
-                                    <MoreVertOutlined />
+                                    <MoreVertOutlined onClick={handleClick}/>
+                                    <Menu
+                                        id="demo-positioned-menu"
+                                        aria-labelledby="demo-positioned-button"
+                                        anchorEl={anchorEl}
+                                        open={open}
+                                        onClose={handleClose}
+                                        anchorOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'left',
+                                        }}
+                                            transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'left',
+                                        }}
+                                    >
+                                        <MenuItem onClick={() => handleDownloadAttached(selectedData.document[0].file_path)}>Download</MenuItem>
+                                    </Menu>
                                 </div>
                             </div>
                             <hr></hr>

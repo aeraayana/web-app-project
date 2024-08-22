@@ -59,11 +59,11 @@ const UserAdminPage = () => {
             <div className="row-around-start w-full">
               <PenyerapanDanaCard name={'PENYERAPAN DANA'} height={'140px'} width={'150%'} percent={'4,65'} danaTersalur={'0'} totalDana={'0'}/>
               <Spacing width={'0.25rem'}/>
-              <MembershipSubscriptionCard width={'0%'} bgColor="white" height={'140px'} isBestValue cardName={"PENGAJUAN MASUK"} month={0} sdhi={0} percent={0} tipe={"var(--color-yellow)"} />
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"PENGAJUAN MASUK"} month={0} sdhi={0} percent={0} tipe={"var(--color-yellow)"} />
               <Spacing width={'0.25rem'}/>
-              <MembershipSubscriptionCard width={'0%'} bgColor="white" height={'140px'} isBestValue cardName={"SELESAI"} month={0} sdhi={0} percent={0} tipe={"var(--color-green)"} />
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"SELESAI"} month={0} sdhi={0} percent={0} tipe={"var(--color-green)"} />
               <Spacing width={'0.25rem'}/>
-              <MembershipSubscriptionCard width={'0%'} bgColor="white" height={'140px'} isBestValue cardName={"DIBATALKAN"} month={0} sdhi={0} percent={0} tipe={"var(--color-error)"} />
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"DIBATALKAN"} month={0} sdhi={0} percent={0} tipe={"var(--color-error)"} />
             </div>
         </div>
         

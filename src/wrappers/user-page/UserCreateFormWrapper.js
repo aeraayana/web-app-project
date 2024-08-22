@@ -27,6 +27,13 @@ const Wrapper = styled(CModal)`
         font-size: var(--font-size-normal);
         padding-bottom: 0.5rem;
     }
+    
+    .label-error{
+        color: var(--color-error);
+        font-family: var(--font-family-primary);
+        font-weight: var(--font-weight-small-2);
+        font-size: var(--font-size-normal);
+    }
 
     .hyperlink{
         color: var(--color-primary);

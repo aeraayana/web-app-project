@@ -226,13 +226,13 @@ const AppProvider = ({ children }) => {
         nohp_pic: phone_number
       }
       );
-      const { message } = response.data;
+      const { message, success } = response.data;
 
       dispatch({
         type: REGISTER_USER_SUCCESS,
         payload: { message: message },
       });
-      return true;
+      return success;
     } catch (error) {
       const { message, data } = error.response;
       dispatch({

@@ -26,10 +26,9 @@ const Wrapper = styled.div`
 
     .label-error{
         color: var(--color-error);
-        font-family: var(--font-family-secondary);
-        font-weight: var(--font-weight-normal);
+        font-family: var(--font-family-primary);
+        font-weight: var(--font-weight-small-2);
         font-size: var(--font-size-normal);
-        padding-top: 0.5rem;
     }
 
     .password{
@@ -39,7 +38,7 @@ const Wrapper = styled.div`
 `;
 
 
-const InputTextWithPrompt = ({ onInput, disabled, defaultValue, prompt, id, type, name, errorMessage, placeholder, className, onChange, width, inputHeight, value, onBlur, onKeyDown }) => {
+const InputTextWithPrompt = ({ onInput, required, disabled, defaultValue, prompt, id, type, name, errorMessage, placeholder, className, onChange, width, inputHeight, value, onBlur, onKeyDown }) => {
 
     const isError = errorMessage && errorMessage.length>0;
 
@@ -64,7 +63,7 @@ const InputTextWithPrompt = ({ onInput, disabled, defaultValue, prompt, id, type
                     width: width,
                     height: inputHeight,
                     backgroundColor: `${ disabled? 'var(--color-light-gray)' : 'white' }`,
-                    border: `0.0925rem solid ${ disabled? 'var(--color-semiblack)' : 'var(--color-black)'}`,
+                    border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : 'var(--color-black)'}`,
                 }} >
             </WrapperInputText>
             {errorMessage && <label className="label-error">{errorMessage}</label> }

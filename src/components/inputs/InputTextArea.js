@@ -56,7 +56,7 @@ const Wrapper = styled.div`
 `;
 
 
-const InputTextArea = ({ rows, defaultValue, subLabel, textLimit, prompt, id, type, name, errorMessage, placeholder, className, onChange, width, inputHeight, value, onBlur, onKeyDown }) => {
+const InputTextArea = ({ rows, defaultValue, disabled, subLabel, textLimit, prompt, id, type, name, errorMessage, placeholder, className, onChange, width, inputHeight, value, onBlur, onKeyDown }) => {
 
     const isError = errorMessage && errorMessage.length>0;
 
@@ -76,6 +76,7 @@ const InputTextArea = ({ rows, defaultValue, subLabel, textLimit, prompt, id, ty
                 placeholder={placeholder? placeholder : ""} 
                 className={className} 
                 rows={rows}
+                disabled={disabled}
                 onChange={onChange}
                 value={value}
                 defaultValue={defaultValue}
@@ -84,7 +85,7 @@ const InputTextArea = ({ rows, defaultValue, subLabel, textLimit, prompt, id, ty
                 style={{
                     width: width,
                     height: inputHeight,
-                    backgroundColor: `${ isError? 'var(--color-error-light)' : 'white' }`,
+                    backgroundColor: `${ disabled? 'var(--color-disable)' : 'white' }`,
                     border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : 'var(--color-black)'}`,
                 }} >
             </WrapperInputText>

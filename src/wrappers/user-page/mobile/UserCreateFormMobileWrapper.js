@@ -12,6 +12,13 @@ const MobileWrapper = styled(CModal)`
         padding-bottom: 0.5rem;
     }
 
+    .label-error{
+        color: var(--color-error);
+        font-family: var(--font-family-primary);
+        font-weight: var(--font-weight-small-2);
+        font-size: var(--font-size-normal);
+    }
+
     .description-label{
         color: var(--color-disable);
         font-family: var(--font-family-primary);
