@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 const Wrapper = styled.main`
+    
     .title{
         font-family: var(--font-family-primary);
         font-weight: var(--font-weight-semibold);

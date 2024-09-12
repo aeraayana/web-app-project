@@ -65,7 +65,7 @@ const CreateAccountPage = () => {
         const success = await registerUser({ 
             category: namaKelompokMasyarakat, email: email, name: nama, identity_type: jenisId, identity_number: userId, phone_number: noTelp });
         if( success ){
-            console.log(success)
+            //console.log(success)
             navigate("/layanan-masyarakat/");
         }else{
             toast(

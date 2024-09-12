@@ -69,7 +69,9 @@ const InputTextArea = ({ rows, defaultValue, disabled, subLabel, textLimit, prom
                     <label className="text-limit" htmlFor={id}> {textLimit}</label>
                 </div> 
             }
-            <WrapperInputText id={id} 
+            <WrapperInputText 
+                id={id} 
+                maxLength={255}
                 name={name} 
                 type={type? type : "text"} 
                 autoComplete="off" 

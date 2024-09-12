@@ -38,7 +38,7 @@ const Wrapper = styled.div`
 `;
 
 
-const InputTextWithPrompt = ({ onInput, required, disabled, defaultValue, prompt, id, type, name, errorMessage, placeholder, className, onChange, width, inputHeight, value, onBlur, onKeyDown }) => {
+const InputTextWithPrompt = ({ onInput, required, textAlign, disabled, defaultValue, prompt, id, type, name, errorMessage, placeholder, className, onChange, width, inputHeight, value, onBlur, onKeyDown }) => {
 
     const isError = errorMessage && errorMessage.length>0;
 
@@ -60,6 +60,7 @@ const InputTextWithPrompt = ({ onInput, required, disabled, defaultValue, prompt
                 onBlur={onBlur}
                 onKeyDown={onKeyDown}
                 style={{
+                    textAlign: textAlign,
                     width: width,
                     height: inputHeight,
                     backgroundColor: `${ disabled? 'var(--color-light-gray)' : 'white' }`,

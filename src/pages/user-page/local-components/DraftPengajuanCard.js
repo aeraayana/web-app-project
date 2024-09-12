@@ -10,6 +10,7 @@ import RekapitulasiPengajuanCard from "./RekapitulasiPengajuanCard";
 import { CProgress, CProgressBar } from "@coreui/react";
 import { useAppContext } from "../../../context/appContext";
 import React from "react";
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 const ProgressValue = {
   "Dalam Proses Laporan Pasca Kegiatan": 6,
@@ -38,6 +39,12 @@ const DraftPengajuanCard = ({
     font-size: var(--font-size-small-2);
     font-weight: var(--font-weight-normal);
     border: var(--color-disabled);
+
+    .subtitle{
+      font-family: var(--font-family-primary);
+      font-size: var(--font-size-normal-2);
+      font-weight: var(--font-weight-normal);
+    }
 
     .membership-tag {
       font-family: var(--font-family-primary);
@@ -97,15 +104,27 @@ const DraftPengajuanCard = ({
       thickness={"0.05rem"}
       className={"col-start-start"}
     >
-      <h1 className="membership-tag">{name}</h1>
-      {isBestValue && <RekapitulasiPengajuanCard Judul={cardName} Bulan={month} Persen={percent} SDHI={sdhi} Tipe={tipe}/>}
-      {isBestValue && <Spacing height="0.5rem" />}
-      <Spacing height="2.7rem" /> {/* 4px */}
-      <div className="row-center-center price-tag w-full">
-        {isEmpty && <span>Tidak ada {name.toLowerCase()}</span>}
+      <div className="col-start-start">
+        <h1 className="membership-tag">{name}</h1>
+        {isBestValue && <RekapitulasiPengajuanCard Judul={cardName} Bulan={month} Persen={percent} SDHI={sdhi} Tipe={tipe}/>}
+        {isBestValue && <Spacing height="0.5rem" />}
+        <div className="row-center-center price-tag w-full">
+          {isEmpty ? (
+            <div className="col-center-center">
+              <Spacing height="3.7rem"/>
+              <span className="subtitle" style={{ letterSpacing: 0 }}>Tidak ada {name.toLowerCase()}</span>
+            </div>
+          ) : (
+            <div className="col-center-center" onClick={onClick} style={{ cursor:'pointer' }}>
+              <Spacing height="1.8rem"/>
+              <EditNoteIcon sx={{ height:'80px', width:'80px' }}/>
+              <span className='subtitle' style={{ letterSpacing: 0 }}>Klik untuk menyelesaikan draft pengajuan</span>
+            </div>
+          )}
+        </div>
+        <Spacing height="0.25rem" />
+        <Spacing height="1rem" />
       </div>
-      <Spacing height="0.25rem" />
-      <Spacing height="1rem" />
     </Wrapper>
   );
 };

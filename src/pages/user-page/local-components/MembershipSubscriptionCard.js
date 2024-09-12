@@ -99,7 +99,7 @@ const MembershipSubscriptionCard = ({
   React.useEffect(() => {getDataProgressKegiatan()}, [])
 
 
-  console.log(dataProgress)
+  //console.log(dataProgress)
   return (
     <>
     

@@ -26,12 +26,13 @@ const ResetPasswordPage = () => {
     const { user, errorDetail, resetPassword, isLoading  } = useAppContext();
     const navigate = useNavigate();
     const [values, setValues] = useState( initialState );
-    const { serial } = useParams();
+    let search = window.location.hash.split('/')[3];
 
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value});        
-    } 
-    
+    }
+    search = search.split('?email=');
+
     const actionResetPasswordClick = async (e) => {
         e.preventDefault();
         const { password, passwordConfirm } = values;
@@ -42,8 +43,7 @@ const ResetPasswordPage = () => {
             setValues({ ...values, passwordNotMatchError: "Password do not match"})
             return;
         }
-
-        const success = await resetPassword({ password: password,  serial: serial});
+        const success = await resetPassword({ password: password, password_confirmation: passwordConfirm, token: search[0], email: search[1].replace('%40', '@') });
         if( success ){
             navigate("/layanan-masyarakat/sign-in");        
         }

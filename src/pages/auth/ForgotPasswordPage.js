@@ -34,12 +34,11 @@ const ForgotPasswordPage = () => {
 
     const actionConfirmClick = async (e) => {
         e.preventDefault();
-        // const { email } = values;
-        // const success = await forgotPassword( {email: email} );
-        // if( success ){
-        //     navigate("/admin/email-sent");
-        // }
-        navigate('/layanan-masyarakat/admin/email-sent');
+        const { email } = values;
+        const success = await forgotPassword({ email: email });
+        if( success ){
+            navigate('/layanan-masyarakat/email-sent');
+        }
     }
 
     return (

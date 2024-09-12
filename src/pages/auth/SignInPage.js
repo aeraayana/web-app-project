@@ -27,7 +27,7 @@ const initialState = {
 const SignInPage = () => {
     document.body.style = 'background-image: linear-gradient(145deg, var(--color-primary-dark), var(--color-primary-light));';
     
-    const { token, loginUser, isLoading, errorDetail } = useAppContext();
+    const { token, loginUser, isLoading, errorDetail, getRangeOpening, validDateRange } = useAppContext();
     const navigate = useNavigate();
     const [values, setValues] = useState( initialState );
     const [validate, setValidate] = useState(null);
@@ -36,6 +36,10 @@ const SignInPage = () => {
         setValues({ ...values, [e.target.name]: e.target.value});
     } 
 
+    useEffect(() => {
+        getRangeOpening();
+    }, [])
+
     const handleLoaded = _ => {
         window.grecaptcha.ready(_ => {
             window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "login" }).then(token => {
@@ -43,7 +47,7 @@ const SignInPage = () => {
             })
         })
     }
-      
+
     useEffect(() => {
         const script = document.createElement("script")
         script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`
@@ -60,7 +64,7 @@ const SignInPage = () => {
         const response = await loginUser({ email: values.email, password: values.password });
         // console.log(response);
         if( response ){
-            if(JSON.parse(localStorage.getItem('user_data')).role_user === 'verifikator'){
+            if(["verifikator", "approver"].find((item) => item === JSON.parse(localStorage.getItem('user_data')).role_user)){
                 navigate('/layanan-masyarakat/admin')            
             }else{
                 navigate('/layanan-masyarakat/')
@@ -86,7 +90,7 @@ const SignInPage = () => {
                     <ToastContainer />
                     <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"1.025rem" }}>
                         <span className='row-between-center'>
-                            <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' small={'14px'} label="Kembali ke BPLDH.ID" onClick={actionLandingPageClick} />
+                            <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' small={'14px'} label="Kembali ke BPDLH.ID" onClick={actionLandingPageClick} />
                             <Logo />
                         </span>
                         <article className='col-center w-full'>
@@ -95,6 +99,18 @@ const SignInPage = () => {
                                 <div className='col-start-start'>    
                                     <p className='col-start-start title-sub'>Selamat Datang di</p>
                                     <h1 className='title'>Layanan Dana Masyarakat untuk Lingkungan</h1>
+                                    <div>
+                                        <span>    
+                                        PENGUMUMAN
+                                        Pengajuan proposal Layanan Dana Masyarakat Batch I telah ditutup dan saat ini dalam proses verifikasi oleh Kementerian Lingkungan Hidup dan Kehutanan (KLHK).
+
+                                        Daftar individu/kelompok yang berhak mengajukan proposal pada Batch I merupakan daftar yang telah terafiliasi dengan KLHK.
+
+                                        Daftar individu/kelompok afiliasi dan proses verifikasi proposal merupakan kewenangan KLHK.
+
+                                        Informasi lebih lanjut dapat menghubungi email layanandanamasyarakat@bpdlh.id 
+                                        </span>
+                                    </div>
                                 </div> 
                                 <Spacing height="5.525rem" />   {/* 34px */}
                                 <h1 className='text-center title' style={{ color: "var(--color-primary-dark)" }}>Log In</h1>
@@ -164,7 +180,7 @@ const SignInPage = () => {
                     <ToastContainer />
                     <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
                         <span className='row-between-start'>
-                            <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' small={'14px'} label="Kembali ke BPLDH.ID" onClick={actionLandingPageClick} />
+                            <Hyperlink iconPre={<FaArrowLeft />} className='description-subtitle' small={'14px'} label="Kembali ke BPDLH.ID" onClick={actionLandingPageClick} />
                             <Logo />
                         </span>
                         <article className='col-center w-full'>
@@ -174,7 +190,20 @@ const SignInPage = () => {
                                     <p className='title-sub'>Selamat Datang di</p>
                                     <h1 className='title'>Layanan Dana Masyarakat untuk Lingkungan</h1>
                                 </div> 
-                                <Spacing height="5.525rem" />   {/* 34px */}
+                                <div className='row-center-center' style={{ borderRadius:'6px', border:'1px solid var(--color-secondary)', padding:'1.5rem', backgroundColor: 'var(--color-secondary-light)', marginTop:'2.25rem', textWrap:'balance' }}>
+                                    <span style={{ color: 'var(--color-secondary-dark)' }}>    
+                                        <b>PENGUMUMAN</b>
+                                        <br></br>
+                                        Pengajuan proposal Layanan Dana Masyarakat Batch I telah ditutup dan saat ini dalam proses verifikasi oleh Kementerian Lingkungan Hidup dan Kehutanan (KLHK).
+                                        <br></br><br></br>
+                                        Daftar individu/kelompok yang berhak mengajukan proposal pada Batch I merupakan daftar yang telah terafiliasi dengan KLHK.
+                                        <br></br><br></br>
+                                        Daftar individu/kelompok afiliasi dan proses verifikasi proposal merupakan kewenangan KLHK.
+                                        <br></br><br></br>
+                                        Informasi lebih lanjut dapat menghubungi email: <b>layanandanamasyarakat@bpdlh.id</b> 
+                                    </span>
+                                </div>
+                                <Spacing height="3.525rem" />   {/* 34px */}
                                 <h1 className='text-center title' style={{ color: "var(--color-primary-dark)" }}>Log In</h1>
                                 <Spacing height="0.5rem" />
                                 <form className='col-start-start' style={{ width: "80%" }}>

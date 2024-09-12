@@ -9,8 +9,10 @@ import hockeyImg from '../../assets/images/auth/hockey.png'
 import {
     LogoStar,
     ButtonSolid,
-    Spacing
+    Spacing,
+    Hyperlink
 } from '../../components'
+import { FaArrowLeft } from 'react-icons/fa';
 
 
 const EmailSentPage = () => {
@@ -25,20 +27,20 @@ const EmailSentPage = () => {
     return (
         <React.Fragment>
             {user && <Navigate to='/' />}
-            <Wrapper className='row-between-start w-full'>
-                <section className='image-container'> 
-                    <img src={hockeyImg} alt='hockey-img' className='image' />                
-                </section>
-                
-                <section className='input-container col-start-start w-full'>
-                    <article className='col-start-start w-full'>                    
-                        <LogoStar/>
-                        <Spacing height="2.75rem" />   {/* 44px */}
-                        <h1 className='title'>E-mail Sent!</h1>
-                        <Spacing height="1rem" />   {/* 16px */}
-                        <p className='description'>An email has been sent to your e-mail with further instructions. kindly check your inbox.</p>
-                        <Spacing height="2.75rem" />   {/* 44px */}
-                        <ButtonSolid className="w-full" label="Confirm" onClick={actionOkayClick}/>
+            <Wrapper className='d-flex justify-content-center w-full'>
+                <section className='input-container rounded col-center' style={{ backgroundColor:"white", margin:"2.025rem" }}>
+                    <span className='row-between-start'>
+                        <Hyperlink iconPre={<FaArrowLeft />} small={'14px'} className='description-subtitle' label="Kembali ke Login Page" onClick={actionOkayClick} />
+                    </span>
+                    <article className='col-center w-full'>
+                        <div className='col-start-center'>
+                            <Spacing height="7.525rem" />   {/* 34px */}
+                            <h1 className='text-center title' style={{ color: "var(--color-primary-dark)" }}>Lupa Password</h1>
+                            <Spacing height="5.25rem" />
+                            <form className='col-start-start' style={{ width: "80%" }}>
+                                <span className='text-center description'>Periksa email untuk link reset password</span>
+                            </form>
+                        </div>
                     </article>
                 </section>
             </Wrapper>

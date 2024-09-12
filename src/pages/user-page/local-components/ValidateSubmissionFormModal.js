@@ -34,7 +34,7 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
         setAnchorEl(null);
     }
 
-    console.log(selectedData);
+    //console.log(selectedData);
 
     React.useEffect(() => {
         if(show){
@@ -52,13 +52,13 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
     }, [selectedData])
 
     const handleDownloadPdf = () => {
-        const newWindow = window.open('/#/layanan-masyarakat/laporan-pdf', '_blank', 'noopener,noreferrer');
+        const newWindow = window.open('#/layanan-masyarakat/laporan-pdf', '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null;
         localStorage.setItem('data', JSON.stringify(selectedData));
     }
 
     const handleDownloadRab = () => {
-        const newWindow = window.open(`/#/layanan-masyarakat/laporan-rab/${selectedData.id}`, '_blank', 'noopener,noreferrer');
+        const newWindow = window.open(`#/layanan-masyarakat/laporan-rab/${selectedData.id}`, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null;
     }
     

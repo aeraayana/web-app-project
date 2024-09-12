@@ -3,7 +3,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from '../../../configs/constants';
 import { CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from '@coreui/react';
-import { InputTextWithPrompt } from '../../../components';
+import { InputTextWithPrompt, Spacing } from '../../../components';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -55,11 +55,25 @@ const Wrapper = styled.div`
         }
     }
 `
+const numFormat = (number) => {
+	return new Intl.NumberFormat("id-ID", { style: "decimal" }).format(number);
+};
 
 const DocumentRab = ({ props }) => {
     const [dataForm, setDataForm] = React.useState([]);
 
     const id = useParams();
+
+    const getTotal = (item, elementName, itemName) => {
+		let sum = 0;
+        for(const [key, value] of Object.entries(item)){
+            for(let i = 0; i < value.length; i += 1){
+                sum += (value[i]?.[`${elementName}`] * value[i]?.[`${itemName}`]);
+            }
+        }
+
+		return numFormat(sum);
+	};
     
     React.useEffect(() => {
         axios.get(`${HOST_URL}getDataRab/${id.id}`, {
@@ -151,6 +165,21 @@ const DocumentRab = ({ props }) => {
                     )}
                 </CTableBody>
             </CTable>
+
+            <div 
+                style={{ 
+                    borderTop:'2px solid var(--color-disable)', 
+                    borderBottom:'2px solid var(--color-disable)',
+                    padding:'0.225rem',
+                    backgroundColor: 'var(--color-disable-light)',
+                }}
+                className="row-end-start w-full" 
+            >
+                <span className="subtitle">TOTAL</span>
+                <Spacing width={'4.45rem'}/>
+                <span className="subtitle">{getTotal(dataForm?.komponen_rab?? 0, 'harga_unit', 'qty')}</span>
+            </div>
+            <Spacing height="2.5rem" />
         </Wrapper>
     )
 }

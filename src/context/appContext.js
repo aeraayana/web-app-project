@@ -58,12 +58,19 @@ import {
   TOGGLE_VALIDASI_MODAL,
   GET_NOTIFICATIONS_SUCCESS,
   GET_NOTIFICATIONS_BEGIN,
+  GET_DATA_DASHBOARD_VERIFIKATOR,
+  GET_DATA_DASHBOARD_VERIFIKATOR_BEGIN,
+  GET_RANGE_OPENING_BEGIN,
+  GET_RANGE_OPENING,
+  GET_DRAFT_PENGAJUAN,
+  GET_DRAFT_PENGAJUAN_BEGIN,
 } from './actions';
 
 const user = localStorage.getItem('token');
 
 const initialState = {
   token: user,
+  validDateRange: [],
   userLoading: false,
   isLoading: false,
   isError: false,
@@ -85,14 +92,16 @@ const initialState = {
   showSidebar: false,
   isEditing: false,
   showProfileModal: false,
-  showFormModal: false,
+  showFormModal: true,
   showVerifikasiModal: false,
   showValidasiModal: false,
-  showDetailProgressModal: false,
+  showDetailProgressModal: true,
   /////////////////////////////////////////////////////////////////////////////////////////
   dataVerifikasi: [],
+  dataDraft: [],
   dataValidasi: [],
   dataRiwayat: [],
+  dataDashboard: [],
   dataProgress: [],
   notifications: [],
 };
@@ -151,6 +160,21 @@ const AppProvider = ({ children }) => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
   };
+
+  const getRangeOpening = async () => {
+    dispatch({ type: GET_RANGE_OPENING_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getRangeOpening`);
+      
+      dispatch({
+        type: GET_RANGE_OPENING,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
 
   const loginUser = async ({ email, password }) => {
     dispatch({ type: LOGIN_USER_BEGIN });
@@ -247,8 +271,8 @@ const AppProvider = ({ children }) => {
     dispatch({ type: FORGOT_PASSWORD_BEGIN });
     try {
       const response = await unAuthFetch.post(
-        `/auth/forgot-password`, {
-        "email": email,
+        `changePassword`, {
+        email: email,
       }
       );
       const { message } = response.data;
@@ -268,13 +292,16 @@ const AppProvider = ({ children }) => {
     return false;
   };
 
-  const resetPassword = async ({ password, serial }) => {
+  const resetPassword = async ({ token, email, password, password_confirmation }) => {
     dispatch({ type: RESET_PASSWORD_BEGIN });
     try {
       const response = await unAuthFetch.post(
-        `/auth/reset-password/${serial}`, {
-        "password": password,
-      }
+        `resetPassword`, {
+          token: token,
+          email: email,
+          password: password,
+          password_confirmation: password_confirmation,
+        }
       );
       const { message } = response.data;
 
@@ -405,6 +432,21 @@ const AppProvider = ({ children }) => {
       
       dispatch({
         type: GET_RIWAYAT_PENGAJUAN,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
+  const getDataDraft = async () => {
+    dispatch({ type: GET_DRAFT_PENGAJUAN_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getDraftPengajuan`);
+      
+      dispatch({
+        type: GET_DRAFT_PENGAJUAN,
         payload: { data: data },
       });
     } catch (error) {
@@ -581,6 +623,21 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
+  const getDataDashboardVerifikator = async () => {
+    dispatch({ type: GET_DATA_DASHBOARD_VERIFIKATOR_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getDataDashboardVerifikator`);
+      
+      dispatch({
+        type: GET_DATA_DASHBOARD_VERIFIKATOR,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
   const getDataVerifikasi = async () => {
     dispatch({ type: GET_DATA_VERIFIKASI_BEGIN });
     try {
@@ -607,7 +664,9 @@ const AppProvider = ({ children }) => {
         resetPassword,
         getNamaKelompokMasyarakat,
         getKelompokMasyarakat,
+        getRangeOpening,
         ///////////////////////////////////////////////
+        getDataDraft,
         getTematikKegiatan,
         getSubTematikKegiatan,
         getPaketKategoriData,
@@ -630,6 +689,7 @@ const AppProvider = ({ children }) => {
         postVerifikasiFormProposal,
         postValidasiFormProposal,
         ///////////////////////////////////////////////
+        getDataDashboardVerifikator,
         getDataValidasi,
         getDataVerifikasi,
       }}

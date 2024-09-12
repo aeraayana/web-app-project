@@ -54,7 +54,8 @@ const numFormat = (number) => {
 
 const r = new RegExp('[.]', 'g')
 
-const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
+const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
+
     const [initialState, setInitialState] = React.useState({
         nama_paket_kegiatan: '',
         proposal_kegiatan: '',
@@ -72,7 +73,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
 		return numFormat(sum);
 	};
-
+    
     const [dataForm, setDataForm] = React.useState([])
     const [confirm, setConfirm] = React.useState(false);
     const [postData, setPostData] = React.useState([]);
@@ -102,8 +103,13 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
     const [kategori, setKategori] = React.useState({ jenis_kegiatan: '' });
 
     React.useEffect(() => { 
-        getTematikKegiatan();
-    }, []);
+        if(dataDraft){
+            setDataForm(dataDraft);
+            setPostData(dataDraft);
+        }else{
+            getTematikKegiatan();
+        }
+    }, [dataDraft]);
     
     const handleGetTematikData = async (index) => {
         await getTematikKegiatan();
@@ -194,7 +200,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
         await getKecamatan({ id: e.target.value });
         toast.success(
             <div className="col-start-start">
-                <span className="description" style={{ fontWeight: 'bold', color: 'white' }}>Berhasil</span>
+                <span className="description" style={{ fontWeight: 'bold' }}>Berhasil</span>
                 <span className="description" style={{ color:'white' }}>GET Request Successful</span>
             </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
         )
@@ -206,7 +212,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
         await getKelurahan({ id: e.target.value })
         toast.success(
             <div className="col-start-start">
-                <span className="description" style={{ fontWeight: 'bold', color:'white' }}>Berhasil</span>
+                <span className="description" style={{ fontWeight: 'bold' }}>Berhasil</span>
                 <span className="description" style={{ color:'white' }}>GET Request Successful</span>
             </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
         )
@@ -214,13 +220,18 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
 
     const handleChangeQty = async (n, e, idx) => {
         let list = dataForm;
-        list.komponen_rab[n][idx][e.target.name] = parseInt(e.target.value.replace(r, ''));
-        setPostData({ ...list.komponen_rab })
+        //console.log(list)
+        if(e.target.value.replace(r, '') > parseInt(dataForm.komponen_rab[n][idx]?.nilai_standar)){
+            toast.error('data tidak boleh lebih dari capping');
+        }else{
+            list.komponen_rab[n][idx][e.target.name] = parseInt(e.target.value.replace(r, ''));
+            setPostData({ ...list.komponen_rab })
+        }
     }
 
     const handleCloseForm = async (e) => {
         axios.put(
-            `${HOST_URL}pengajuanKegiatan/${dataForm.id_pengajuan}`,
+            `${HOST_URL}pengajuanKegiatan/${dataForm.nomor_pengajuan}`,
             { "komponen_rab": Object.values(postData).flat() },
             {
                 headers: {
@@ -302,7 +313,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                     fullscreen
                     scrollable
                     alignment="center"
-                    visible={showFormModal}
+                    visible={!showFormModal}
                     onClose={toggleFormModal}
                 >
                     {index === 1 && 
@@ -726,7 +737,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                     size="lg"
                     scrollable
                     alignment="center"
-                    visible={showFormModal}
+                    visible={!showFormModal}
                     onClose={toggleFormModal}
                 >
                     {index === 1 && 
@@ -931,7 +942,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             id={"name"} 
                                             height={'2.25rem'} 
                                             name={"province_code"} 
-                                            value={parseInt(initialState?.province_code)} 
+                                            value={initialState?.province_code} 
                                             onBlur={(e) => handleChangeProvinsi(e)} />  
                                         
                                         <Spacing width="4.75rem" /> 
@@ -944,7 +955,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             id={"name"} 
                                             height={'2.25rem'} 
                                             name={"kota_code"} 
-                                            value={parseInt(initialState?.kota_code)} 
+                                            value={initialState?.kota_code} 
                                             onChange={(e) => handleChangeKabupaten(e)}  /> 
                                     </div>
                                     
@@ -959,7 +970,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             id={"name"} 
                                             height={'2.25rem'} 
                                             name={"kecamatan_code"} 
-                                            value={parseInt(initialState?.kecamatan_code)} 
+                                            value={initialState?.kecamatan_code} 
                                             onChange={(e) => handleChangeKecamatan(e)} /> 
                                         
                                         <Spacing width="4.75rem" />
@@ -972,7 +983,7 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                             id={"name"} 
                                             height={'2.25rem'} 
                                             name={"kelurahan_code"} 
-                                            value={parseInt(initialState?.kelurahan_code)} 
+                                            value={initialState?.kelurahan_code} 
                                             onChange={(e) => handleChange(e)} />
                                     </div>
 
@@ -1159,11 +1170,11 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                             <CSpinner className="m-5" />
                         ) : (
                             <>
-                                <CModalHeader>
+                                {/* <CModalHeader>
                                     <CModalTitle className="title-description">
                                         <FaArrowLeft style={{ cursor: "pointer" }} onClick={() => setIndex(index - 1)}/> ISI FORM PROPOSAL 
                                     </CModalTitle>
-                                </CModalHeader>
+                                </CModalHeader> */}
                                 <CModalBody>
                                     <div className="col-start-start">
                                         <span className='page-number'>HALAMAN 3 DARI 3</span>
@@ -1215,17 +1226,18 @@ const CreateSubmissionModal = ({ show, onClose, index, setIndex }) => {
                                                                     <InputTextWithPrompt
                                                                         inputHeight={'1.75rem'}
                                                                         width={'6.65rem'}
+                                                                        textAlign={'right'}
                                                                         name={`harga_unit`}
                                                                         value={numFormat(parseInt(rowDetails.harga_unit))?? '-'}
                                                                         onChange={(e) => handleChangeQty(n, e, idx)}
                                                                     />
                                                                 </CTableDataCell>
-                                                                {console.log(editables.find((item) => item === rowDetails.komponen_rab))}
                                                                 <CTableDataCell>
                                                                     <InputTextWithPrompt
                                                                         inputHeight={'1.75rem'}
                                                                         width={'6.25rem'}
                                                                         name={`qty`}
+                                                                        textAlign={'right'}
                                                                         value={numFormat(parseInt(rowDetails.qty))?? '-'}
                                                                         disabled={!!(editables.find((item) => item === rowDetails.komponen_rab))}
                                                                         onChange={(e) => handleChangeQty(n, e, idx)}

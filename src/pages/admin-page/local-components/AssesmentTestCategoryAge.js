@@ -71,7 +71,7 @@ const AdminCreateAssessmentTestAgePage = () => {
 
     // React.useEffect(getRecord, []);
     
-    console.log(data);
+    //console.log(data);
 
     React.useEffect(() => { 
         if(data[1]?.contents){
@@ -126,7 +126,7 @@ const AdminCreateAssessmentTestAgePage = () => {
     }
 
     const renderQuestion = (question, questionIndex) => {
-        console.log(question)
+        //console.log(question)
         return (
             <AssessmentTestQuestion
                 handleAddAnswers={handleAddAnswers}

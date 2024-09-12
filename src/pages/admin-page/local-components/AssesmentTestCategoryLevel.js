@@ -36,7 +36,7 @@ const AdminCreateAssessmentTestLevelPage = () => {
             createData(list, "questions", successText);
             setInputList([]);
         }else{
-            console.log(input);
+            //console.log(input);
             list.category_name = data[0].category_name;
             list._id = data[0]._id;
             updateData(list, "questions", successText, list._id);
@@ -74,7 +74,7 @@ const AdminCreateAssessmentTestLevelPage = () => {
         }
     }, [data])
 
-    console.log(inputList)
+    //console.log(inputList)
 
     const handleAddQuestions = () => {
         setInputList([...inputList, { content: '', options: [{answer: '', point: 0}]}])

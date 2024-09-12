@@ -118,6 +118,13 @@ import {
   POST_FORM_VERIFIKASI_ERROR,
   TOGGLE_VALIDASI_MODAL,
   TOGGLE_VERIFIKASI_MODAL,
+  GET_DATA_DASHBOARD_VERIFIKATOR_BEGIN,
+  GET_DATA_DASHBOARD_VERIFIKATOR,
+  GET_RANGE_OPENING_BEGIN,
+  GET_RANGE_OPENING,
+  GET_DRAFT_PENGAJUAN_ERROR,
+  GET_DRAFT_PENGAJUAN,
+  GET_DRAFT_PENGAJUAN_BEGIN,
 } from './actions';
 
 import { initialState } from './appContext';
@@ -295,6 +302,27 @@ const reducer = (state, action) => {
     return { ...state, isLoading: true };
   }
 
+  if (action.type === GET_DRAFT_PENGAJUAN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
+  if (action.type === GET_DRAFT_PENGAJUAN) {
+    return {
+      ...state,
+      isSuccess: true,
+      isLoading: false,
+      dataDraft: action.payload.data,
+    }
+  }
+  if (action.type === GET_DRAFT_PENGAJUAN_BEGIN){
+    return { ...state, isLoading: true };
+  }
+
   if (action.type === GET_PROVINSI_ERROR) {
     return {
       ...state,
@@ -382,6 +410,19 @@ const reducer = (state, action) => {
             token: action.payload.token,
         };
     }
+
+    if (action.type === GET_RANGE_OPENING_BEGIN) {
+      return { ...state, isLoading: true };
+    }
+    if (action.type === GET_RANGE_OPENING) {
+      return {
+        ...state,
+        isLoading: false,
+        validDateRange: action.payload.data,
+        isLoading: false,
+      };
+    }
+
     if( action.type === LOGIN_USER_ERROR ){
         return {
             ...state, 
@@ -682,6 +723,18 @@ const reducer = (state, action) => {
       dataVerifikasi: action.payload.data,
     };
   }
+
+  if (action.type === GET_DATA_DASHBOARD_VERIFIKATOR_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_DATA_DASHBOARD_VERIFIKATOR) {
+    return {
+      ...state,
+      isLoading: false,
+      dataDashboard: action.payload.data,
+    };
+  }
+
 
 
   if (action.type === SET_EDIT_JOB) {

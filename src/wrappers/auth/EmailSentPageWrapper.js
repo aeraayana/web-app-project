@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 const Wrapper = styled.main`
+    height: 100vh;
+
     .title{
         font-family: var(--font-family-primary);
         font-weight: var(--font-weight-semibold);
@@ -39,16 +41,6 @@ const Wrapper = styled.main`
     .input-container{
         width: 50%;
         padding: 1.875rem 1.8125rem 3.875rem 1.8125rem;  
-    }
-
-    .image-container{
-        width: 95%;
-    }
-
-    .image{
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
     }
 `
 

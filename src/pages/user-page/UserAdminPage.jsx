@@ -12,13 +12,16 @@ import ValidateSubmissionFormModal from "./local-components/ValidateSubmissionFo
 import PenyerapanDanaCard from "./local-components/PenyerapanDanaCard";
 
 const UserAdminPage = () => {
-  const { dataVerifikasi, getDataVerifikasi, toggleVerifikasiModal, showVerifikasiModal } = useAppContext();
+  const { dataVerifikasi, getDataVerifikasi, toggleVerifikasiModal, showVerifikasiModal, dataDashboard, getDataDashboardVerifikator } = useAppContext();
   const [time, setTime] = useState(new Date());
 
   const [selectedData, setSelectedData] = useState(null);
 
   useEffect(() => {
-    getDataVerifikasi();
+    Promise.all([
+      getDataVerifikasi(),
+      getDataDashboardVerifikator(),
+    ])
   }, [])
 
   const handleClick = (data) => {
@@ -57,13 +60,13 @@ const UserAdminPage = () => {
             <span className="price-tag" style={{ marginLeft: "1rem" }}>REKAPITULASI</span>
             <Spacing height={'0.565rem'} />
             <div className="row-around-start w-full">
-              <PenyerapanDanaCard name={'PENYERAPAN DANA'} height={'140px'} width={'150%'} percent={'4,65'} danaTersalur={'0'} totalDana={'0'}/>
+              <PenyerapanDanaCard name={'PENYERAPAN DANA'} height={'140px'} width={'150%'} percent={'0'} danaTersalur={'0'} totalDana={'0'}/>
               <Spacing width={'0.25rem'}/>
-              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"PENGAJUAN MASUK"} month={0} sdhi={0} percent={0} tipe={"var(--color-yellow)"} />
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"PENGAJUAN MASUK"} month={dataDashboard?.jumlahPengajuanBulanIni?? 0} sdhi={dataDashboard?.jumlahPengajuanSdhi?? 0} percent={ Math.floor(dataDashboard?.jumlahPengajuanBulanIni/dataDashboard?.jumlahPengajuanBulanSebelumnya) } tipe={"var(--color-yellow)"} />
               <Spacing width={'0.25rem'}/>
-              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"SELESAI"} month={0} sdhi={0} percent={0} tipe={"var(--color-green)"} />
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"SELESAI"} month={dataDashboard?.jumlahPengajuanSelesaiBulanIni?? 0} sdhi={dataDashboard?.jumlahPengajuanSelesaiSdhi?? 0} percent={ Math.floor(dataDashboard?.jumlahPengajuanSelesaiBulanIni/dataDashboard?.jumlahPengajuanSelesaiBulanSebelumnya) } tipe={"var(--color-green)"} />
               <Spacing width={'0.25rem'}/>
-              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"DIBATALKAN"} month={0} sdhi={0} percent={0} tipe={"var(--color-error)"} />
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"DIBATALKAN"} month={dataDashboard?.jumlahPengajuanDibatalkanBulanIni?? 0} sdhi={dataDashboard?.jumlahPengajuanDibatalkanSdhi?? 0} percent={ Math.floor(dataDashboard?.jumlahPengajuanDibatalkanBulanIni/dataDashboard?.jumlahPengajuanDibatalkanBulanSebelumnya) } tipe={"var(--color-error)"} />
             </div>
         </div>
         
