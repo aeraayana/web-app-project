@@ -56,8 +56,7 @@ const Wrapper = styled.main`
 
     .toast-message{
         width: 90vh;
-        height: 22vh;
-        margin-left: 40vh;
+        margin-left: 50%;
         margin-top: 40px;
         padding: 20px 20px;
     }

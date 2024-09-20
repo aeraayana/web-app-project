@@ -99,7 +99,6 @@ const initialState = {
   /////////////////////////////////////////////////////////////////////////////////////////
   dataVerifikasi: [],
   dataDraft: [],
-  dataValidasi: [],
   dataRiwayat: [],
   dataDashboard: [],
   dataProgress: [],

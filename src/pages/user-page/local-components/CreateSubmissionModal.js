@@ -71,7 +71,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
             }
         }
 
-		return numFormat(sum);
+		return sum;
 	};
     
     const [dataForm, setDataForm] = React.useState([])
@@ -88,6 +88,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
         getPaketKategoriData, 
         paketKategoriData,
         provinsi,
+        validDateRange,
         getProvinsi,
         kecamatan,
         getKecamatan,
@@ -220,13 +221,15 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
 
     const handleChangeQty = async (n, e, idx) => {
         let list = dataForm;
-        //console.log(list)
-        if(e.target.value.replace(r, '') > parseInt(dataForm.komponen_rab[n][idx]?.nilai_standar)){
+        console.log(validDateRange)
+        list.komponen_rab[n][idx][e.target.name] = e.target.value === '' ? 0 : parseInt(e.target.value.replace(r, ''));
+        
+        if( getTotal(postData, 'harga_unit', 'qty') >= parseInt(validDateRange?.data?.batas_pengajuan) ){
             toast.error('data tidak boleh lebih dari capping');
         }else{
-            list.komponen_rab[n][idx][e.target.name] = parseInt(e.target.value.replace(r, ''));
             setPostData({ ...list.komponen_rab })
         }
+        
     }
 
     const handleCloseForm = async (e) => {
@@ -278,8 +281,8 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
             if(error.response){
                 toast.error(
                     <div>
-                        <span className="title">Terjadi kendala jaringan. [Parsing data failed]</span>
-                    </div>, { position: toast.POSITION.TOP_LEFT, className: 'toast-message' }
+                        <span className="label">Terjadi kendala jaringan. [Parsing data failed]</span>
+                    </div>, { position: toast.POSITION.TOP_CENTER, className: 'toast-message' }
                 );
                 setIndex(4);
             } else {
@@ -732,7 +735,6 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
             </MobileView>
 
             <BrowserView>
-                <ToastContainer />
                 <Wrapper
                     size="lg"
                     scrollable
@@ -740,6 +742,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                     visible={!showFormModal}
                     onClose={toggleFormModal}
                 >
+                <ToastContainer />
                     {index === 1 && 
                         <>
                             <CModalHeader>
@@ -1272,7 +1275,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                                     >
                                         <span className="subtitle">TOTAL</span>
                                         <Spacing width={'4.45rem'}/>
-                                        <span className="subtitle">{getTotal(postData, 'harga_unit', 'qty')}</span>
+                                        <span className="subtitle">{numFormat(getTotal(postData, 'harga_unit', 'qty'))}</span>
                                     </div>
                                     <Spacing height="2.5rem" />
                                     

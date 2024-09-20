@@ -99,16 +99,25 @@ const SignInPage = () => {
                                 <div className='col-start-start'>    
                                     <p className='col-start-start title-sub'>Selamat Datang di</p>
                                     <h1 className='title'>Layanan Dana Masyarakat untuk Lingkungan</h1>
-                                    <div>
-                                        <span>    
-                                        PENGUMUMAN
-                                        Pengajuan proposal Layanan Dana Masyarakat Batch I telah ditutup dan saat ini dalam proses verifikasi oleh Kementerian Lingkungan Hidup dan Kehutanan (KLHK).
-
-                                        Daftar individu/kelompok yang berhak mengajukan proposal pada Batch I merupakan daftar yang telah terafiliasi dengan KLHK.
-
-                                        Daftar individu/kelompok afiliasi dan proses verifikasi proposal merupakan kewenangan KLHK.
-
-                                        Informasi lebih lanjut dapat menghubungi email layanandanamasyarakat@bpdlh.id 
+                                    <div style={{ borderRadius:'6px', border:'1px solid #debaba', padding:'0.45rem', backgroundColor: '#f5d3d3', marginTop:'2.25rem', textAlign: 'justify', textJustify: 'inter-word' }}>
+                                        <div style={{ textAlign: 'center', color: '#734040' }}>
+                                            <b>PENGUMUMAN</b>
+                                        </div>
+                                        <Spacing height={'0.75rem'}/>
+                                        <span style={{ color: '#734040' }}>    
+                                            Pengajuan proposal Layanan Dana Masyarakat Batch I telah ditutup dan saat ini dalam proses verifikasi oleh Kementerian Lingkungan Hidup dan Kehutanan (KLHK).
+                                        </span>
+                                        <Spacing height={'0.75rem'}/>
+                                        <span style={{ color: '#734040' }}>
+                                            Daftar individu/kelompok yang berhak mengajukan proposal pada Batch I merupakan daftar yang telah terafiliasi dengan KLHK.
+                                        </span>
+                                        <Spacing height={'0.75rem'}/>
+                                        <span style={{ color: '#734040' }}>
+                                            Daftar individu/kelompok afiliasi dan proses verifikasi proposal merupakan kewenangan KLHK.
+                                        </span>
+                                        <Spacing height={'0.75rem'}/>
+                                        <span style={{ color: '#734040' }}>
+                                            Informasi lebih lanjut dapat menghubungi email: <b>layanandanamasyarakat@bpdlh.id</b> 
                                         </span>
                                     </div>
                                 </div> 
@@ -190,16 +199,32 @@ const SignInPage = () => {
                                     <p className='title-sub'>Selamat Datang di</p>
                                     <h1 className='title'>Layanan Dana Masyarakat untuk Lingkungan</h1>
                                 </div> 
-                                <div className='row-center-center' style={{ borderRadius:'6px', border:'1px solid var(--color-secondary)', padding:'1.5rem', backgroundColor: 'var(--color-secondary-light)', marginTop:'2.25rem', textWrap:'balance' }}>
-                                    <span style={{ color: 'var(--color-secondary-dark)' }}>    
+                                <div style={{ borderRadius:'6px', border:'1px solid #debaba', padding:'1.25rem', backgroundColor: '#f5d3d3', marginTop:'2.25rem', textAlign: 'justify', textJustify: 'inter-word' }}>
+                                    <div style={{ textAlign: 'center', color: '#734040' }}>
                                         <b>PENGUMUMAN</b>
-                                        <br></br>
+                                    </div>
+                                    
+                                    <Spacing height={'1.15rem'}/>
+                                    
+                                    <span style={{ color: '#734040' }}>    
                                         Pengajuan proposal Layanan Dana Masyarakat Batch I telah ditutup dan saat ini dalam proses verifikasi oleh Kementerian Lingkungan Hidup dan Kehutanan (KLHK).
-                                        <br></br><br></br>
+                                    </span>
+                                    
+                                    <Spacing height={'1.15rem'}/>
+                                    
+                                    <span style={{ color: '#734040' }}>
                                         Daftar individu/kelompok yang berhak mengajukan proposal pada Batch I merupakan daftar yang telah terafiliasi dengan KLHK.
-                                        <br></br><br></br>
+                                    </span>
+                                    
+                                    <Spacing height={'1.15rem'}/>
+                                    
+                                    <span style={{ color: '#734040' }}>
                                         Daftar individu/kelompok afiliasi dan proses verifikasi proposal merupakan kewenangan KLHK.
-                                        <br></br><br></br>
+                                    </span>
+                                    
+                                    <Spacing height={'1.15rem'}/>
+                                    
+                                    <span style={{ color: '#734040' }}>
                                         Informasi lebih lanjut dapat menghubungi email: <b>layanandanamasyarakat@bpdlh.id</b> 
                                     </span>
                                 </div>

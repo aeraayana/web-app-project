@@ -14,6 +14,7 @@ import ExcelExport from "../export-items/ExportExcelFromData";
 import axios from "axios";
 import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from "../../../configs/constants";
 import { Menu, MenuItem } from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
 
 const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
     const [dataForm, setDataForm] = React.useState(null);
@@ -63,14 +64,54 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
     }
     
     const [initialState, setInitialState] = React.useState([]);
-    const { postVerifikasiFormProposal, toggleVerifikasiModal } = useAppContext();
+    const { postVerifikasiFormProposal, postValidasiFormProposal, toggleVerifikasiModal } = useAppContext();
 
     const handleTolak = async (e) => {
-        await postVerifikasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 0 });
+        if('approver' === JSON.parse(localStorage.getItem('user_data')).role_user){
+            const response = await postValidasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 0 });
+            if(response) {  toggleVerifikasiModal();  }
+            else{
+                toast.error(
+                    <div>
+                        <span className="label">Terjadi kendala jaringan. [Parsing data failed]</span>
+                    </div>, { position: toast.POSITION.TOP_CENTER, theme: 'colored' }
+                )
+            }
+        }else{
+            const response = await postVerifikasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 0 });
+            if(response) {  toggleVerifikasiModal();  }
+            else{
+                toast.error(
+                    <div>
+                        <span className="label">Terjadi kendala jaringan. [Parsing data failed]</span>
+                    </div>, { position: toast.POSITION.TOP_CENTER, theme: 'colored' }
+                )
+            }
+        }
     }
 
     const handleSetuju = async (e) => {
-        await postVerifikasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 1 });
+        if('approver' === JSON.parse(localStorage.getItem('user_data')).role_user){
+            const response = await postValidasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 1 });
+            if(response) {  toggleVerifikasiModal();  }
+            else{
+                toast.error(
+                    <div>
+                        <span className="label">Terjadi kendala jaringan. [Parsing data failed]</span>
+                    </div>, { position: toast.POSITION.TOP_CENTER, theme: 'colored' }
+                )
+            }
+        }else{
+            const response = await postVerifikasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 1 });
+            if(response) {  toggleVerifikasiModal();  }
+            else{
+                toast.error(
+                    <div>
+                        <span className="label">Terjadi kendala jaringan. [Parsing data failed]</span>
+                    </div>, { position: toast.POSITION.TOP_CENTER, theme: 'colored' }
+                )
+            }
+        }
     }
 
     const handleChange = (e) => {
@@ -81,6 +122,7 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
     return (
         <>
             <BrowserView>
+                <ToastContainer />
                 <Wrapper
                     size="lg"
                     scrollable
@@ -253,7 +295,6 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                 fontSize={'12px'}
                                 onClick={() => {
                                     handleTolak();
-                                    toggleVerifikasiModal();
                                 }}
                                 borderRadius={'9px'}
                                 color={'var(--color-black)'}
@@ -265,7 +306,6 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                                 width={'19%'} 
                                 onClick={() => {
                                     handleSetuju();
-                                    toggleVerifikasiModal();
                                 }}
                                 height={'2.75rem'} 
                                 borderRadius={'9px'}

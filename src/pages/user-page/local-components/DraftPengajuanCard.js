@@ -102,20 +102,20 @@ const DraftPengajuanCard = ({
       bgColor={bgColor}
       borderRadius="0.4rem"
       thickness={"0.05rem"}
-      className={"col-start-start"}
+      className={"col-start-start w-full"}
     >
-      <div className="col-start-start">
+      <div className="col-start-start w-full">
         <h1 className="membership-tag">{name}</h1>
         {isBestValue && <RekapitulasiPengajuanCard Judul={cardName} Bulan={month} Persen={percent} SDHI={sdhi} Tipe={tipe}/>}
         {isBestValue && <Spacing height="0.5rem" />}
         <div className="row-center-center price-tag w-full">
           {isEmpty ? (
-            <div className="col-center-center">
+            <div className="col-center-center w-full">
               <Spacing height="3.7rem"/>
               <span className="subtitle" style={{ letterSpacing: 0 }}>Tidak ada {name.toLowerCase()}</span>
             </div>
           ) : (
-            <div className="col-center-center" onClick={onClick} style={{ cursor:'pointer' }}>
+            <div className="col-center-center w-full" onClick={onClick} style={{ cursor:'pointer' }}>
               <Spacing height="1.8rem"/>
               <EditNoteIcon sx={{ height:'80px', width:'80px' }}/>
               <span className='subtitle' style={{ letterSpacing: 0 }}>Klik untuk menyelesaikan draft pengajuan</span>

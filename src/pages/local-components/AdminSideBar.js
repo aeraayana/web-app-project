@@ -27,7 +27,7 @@ const AdminSideBar = () => {
             <Wrapper >
                 <CSidebar style={sidebarStyle}>
                     <CSidebarNav>
-                        {user.role_user === 'verifikator' ? (
+                        { ['verifikator', 'approver'].find((item) => item === user.role_user) ? (
                             <CNavItem className='fs-2'> 
                                 <Link className='nav-link fs-2' to={'/layanan-masyarakat/admin'}>
                                     <LogoHouse /> 

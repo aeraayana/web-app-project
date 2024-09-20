@@ -109,7 +109,7 @@ const MembershipSubscriptionCard = ({
           bgColor={bgColor}
           borderRadius="0.4rem"
           thickness={"0.05rem"}
-          className={"col-start-start"}
+          className={"col-start-start w-full"}
         >
           <h1 className="membership-tag">{name}</h1>
           {isBestValue && <RekapitulasiPengajuanCard Judul={cardName} Bulan={month} Persen={percent} SDHI={sdhi} Tipe={tipe}/>}
@@ -129,7 +129,7 @@ const MembershipSubscriptionCard = ({
           bgColor={bgColor}
           borderRadius="0.4rem"
           thickness={"0.05rem"}
-          className={"col-start-start"}
+          className={"col-start-start w-full"}
         >
           <h1 className="membership-tag">{name}</h1>
           {isBestValue && <RekapitulasiPengajuanCard Judul={cardName} Bulan={month} Persen={percent} SDHI={sdhi} Tipe={tipe}/>}

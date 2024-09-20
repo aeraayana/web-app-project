@@ -53,7 +53,7 @@ export default function UserAdminContainerCard({ data, BorderColor }) {
                         <p className="card-subtitle">{data.tematik_kegiatan}</p>
                         <Spacing height={"0.35rem"}/>
                         <p className='card-text-content'>{`${data.jenis_kegiatan} ${data.jumlah}`}</p>
-                        <p style={{fontSize: "15px"}} className='fw-bold text-end'>Due: {data.tanggal_akhir_verifikasi}</p>
+                        <p style={{fontSize: "15px"}} className='fw-bold text-end'>Due: {data.tanggal_akhir_verifikasi?? data.tanggal_akhir_validasi}</p>
                     </div>
                 ) : (
                     <></>

@@ -66,27 +66,27 @@ const UserMembershipPage = () => {
     }, []);
 
     //UNCOMMENT WHEN BUILDING ON REGISTRATION DAYS
-    const handleOpenModal = () => {
-        if(dataProgress?.data?.length === 0 || dataProgress?.length === 0){
-            if(!(new Date() > new Date(`${validDateRange.data.tanggal_awal} ${validDateRange.data.jam_awal}`) && new Date() < new Date(`${validDateRange.data.tanggal_akhir} ${validDateRange.data.jam_akhir}`))){
-                toast.error(
-                    <div className='col-center-center'>
-                        <span style={{ fontSize: 'var(--font-size-big)' }} className="label">Menu Dinonaktifkan</span>
-                        <span style={{ fontSize: 'var(--font-size-big)'}} className="description">Diluar tanggal layanan pengajuan dibuka</span>
-                    </div>, { position: toast.POSITION.TOP_LEFT, className: 'toast-message' }
-                )
-            }else{
-                toggleFormModal();
-            }
-        }else{
-            toast.error(
-                <div className='col-center-center'>
-                    <span style={{ fontSize: 'var(--font-size-big)' }} className="label">Menu Dinonaktifkan</span>
-                    <span style={{ fontSize: 'var(--font-size-big)'}} className="description">Anda masih memiliki kegiatan yang berlangsung</span>
-                </div>, { position: toast.POSITION.TOP_LEFT, className: 'toast-message' }
-            )
-        } 
-    }
+    // const handleOpenModal = () => {
+    //     if(dataProgress?.data?.length === 0 || dataProgress?.length === 0){
+    //         if(!(new Date() > new Date(`${validDateRange.data.tanggal_awal} ${validDateRange.data.jam_awal}`) && new Date() < new Date(`${validDateRange.data.tanggal_akhir} ${validDateRange.data.jam_akhir}`))){
+    //             toast.error(
+    //                 <div className='col-center-center'>
+    //                     <span style={{ fontSize: 'var(--font-size-big)' }} className="label">Menu Dinonaktifkan</span>
+    //                     <span style={{ fontSize: 'var(--font-size-big)'}} className="description">Diluar tanggal layanan pengajuan dibuka</span>
+    //                 </div>, { position: toast.POSITION.TOP_LEFT, className: 'toast-message' }
+    //             )
+    //         }else{
+    //             toggleFormModal();
+    //         }
+    //     }else{
+    //         toast.error(
+    //             <div className='col-center-center'>
+    //                 <span style={{ fontSize: 'var(--font-size-big)' }} className="label">Menu Dinonaktifkan</span>
+    //                 <span style={{ fontSize: 'var(--font-size-big)'}} className="description">Anda masih memiliki kegiatan yang berlangsung</span>
+    //             </div>, { position: toast.POSITION.TOP_LEFT, className: 'toast-message' }
+    //         )
+    //     } 
+    // }
 
     const handleOpenMobile = () => {
         toast.error(
@@ -97,9 +97,9 @@ const UserMembershipPage = () => {
         )
     }
     
-    // const handleOpenModal = () => {
-    //     toggleFormModal(!showFormModal);
-    // }
+    const handleOpenModal = () => {
+        toggleFormModal(!showFormModal);
+    }
 
     useEffect(() => {
         axios.get(`${HOST_URL}getNotification`, {

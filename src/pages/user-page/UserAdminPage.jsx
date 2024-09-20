@@ -12,16 +12,23 @@ import ValidateSubmissionFormModal from "./local-components/ValidateSubmissionFo
 import PenyerapanDanaCard from "./local-components/PenyerapanDanaCard";
 
 const UserAdminPage = () => {
-  const { dataVerifikasi, getDataVerifikasi, toggleVerifikasiModal, showVerifikasiModal, dataDashboard, getDataDashboardVerifikator } = useAppContext();
+  const { dataVerifikasi, getDataValidasi, getDataVerifikasi, toggleVerifikasiModal, showVerifikasiModal, dataDashboard, getDataDashboardVerifikator } = useAppContext();
   const [time, setTime] = useState(new Date());
 
   const [selectedData, setSelectedData] = useState(null);
 
   useEffect(() => {
-    Promise.all([
-      getDataVerifikasi(),
-      getDataDashboardVerifikator(),
-    ])
+    if('approver' === JSON.parse(localStorage.getItem('user_data')).role_user){
+      Promise.all([
+        getDataValidasi(),
+//        getDataDashboardValidator(),
+      ])
+    } else {
+      Promise.all([
+        getDataVerifikasi(),
+        getDataDashboardVerifikator(),
+      ])
+    }
   }, [])
 
   const handleClick = (data) => {
@@ -62,11 +69,11 @@ const UserAdminPage = () => {
             <div className="row-around-start w-full">
               <PenyerapanDanaCard name={'PENYERAPAN DANA'} height={'140px'} width={'150%'} percent={'0'} danaTersalur={'0'} totalDana={'0'}/>
               <Spacing width={'0.25rem'}/>
-              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"PENGAJUAN MASUK"} month={dataDashboard?.jumlahPengajuanBulanIni?? 0} sdhi={dataDashboard?.jumlahPengajuanSdhi?? 0} percent={ Math.floor(dataDashboard?.jumlahPengajuanBulanIni/dataDashboard?.jumlahPengajuanBulanSebelumnya) } tipe={"var(--color-yellow)"} />
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"PENGAJUAN MASUK"} month={dataDashboard?.jumlahPengajuanBulanIni?? 0} sdhi={dataDashboard?.jumlahPengajuanSdhi?? 0} percent={ Math.floor(dataDashboard?.jumlahPengajuanBulanIni/dataDashboard?.jumlahPengajuanBulanSebelumnya)?? 0 } tipe={"var(--color-yellow)"} />
               <Spacing width={'0.25rem'}/>
-              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"SELESAI"} month={dataDashboard?.jumlahPengajuanSelesaiBulanIni?? 0} sdhi={dataDashboard?.jumlahPengajuanSelesaiSdhi?? 0} percent={ Math.floor(dataDashboard?.jumlahPengajuanSelesaiBulanIni/dataDashboard?.jumlahPengajuanSelesaiBulanSebelumnya) } tipe={"var(--color-green)"} />
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"SELESAI"} month={dataDashboard?.jumlahPengajuanSelesaiBulanIni?? 0} sdhi={dataDashboard?.jumlahPengajuanSelesaiSdhi?? 0} percent={ Math.floor(dataDashboard?.jumlahPengajuanSelesaiBulanIni/dataDashboard?.jumlahPengajuanSelesaiBulanSebelumnya)?? 0 } tipe={"var(--color-green)"} />
               <Spacing width={'0.25rem'}/>
-              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"DIBATALKAN"} month={dataDashboard?.jumlahPengajuanDibatalkanBulanIni?? 0} sdhi={dataDashboard?.jumlahPengajuanDibatalkanSdhi?? 0} percent={ Math.floor(dataDashboard?.jumlahPengajuanDibatalkanBulanIni/dataDashboard?.jumlahPengajuanDibatalkanBulanSebelumnya) } tipe={"var(--color-error)"} />
+              <MembershipSubscriptionCard width={'100%'} bgColor="white" height={'140px'} isBestValue cardName={"DIBATALKAN"} month={dataDashboard?.jumlahPengajuanDibatalkanBulanIni?? 0} sdhi={dataDashboard?.jumlahPengajuanDibatalkanSdhi?? 0} percent={ Math.floor(dataDashboard?.jumlahPengajuanDibatalkanBulanIni/dataDashboard?.jumlahPengajuanDibatalkanBulanSebelumnya)?? 0 } tipe={"var(--color-error)"} />
             </div>
         </div>
         
@@ -137,7 +144,7 @@ const UserAdminPage = () => {
           
           <Spacing width="6.5rem" />
 
-          <div className=" col-start-start w-full">
+          <div className="col-start-start w-full">
             <h3 className="title-kegiatan" style={{ width:'100%' }}>KEGIATAN</h3>
             <Spacing height="1.25rem" />
 
@@ -172,7 +179,7 @@ const UserAdminPage = () => {
           
           <Spacing width="6.5rem" />
 
-          <div className=" col-start-start w-full">
+          <div className="col-start-start w-full">
             <h3 className="title-pasca-kegiatan" style={{ width:'100%' }}>PASCA KEGIATAN</h3>
             <Spacing height="1.25rem" />
 

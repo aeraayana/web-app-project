@@ -239,8 +239,6 @@ const Wrapper = styled(CModal)`
 
     .toast-message{
         width: 90vh;
-        height: 22vh;
-        margin-left: 40vh;
         margin-top: 40px;
         padding: 20px 20px;
     }

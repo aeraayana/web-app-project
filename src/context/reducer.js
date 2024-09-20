@@ -709,7 +709,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      dataValidasi: action.payload.data,
+      dataVerifikasi: action.payload.data,
     };
   }
 
