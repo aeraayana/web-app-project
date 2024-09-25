@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/layanan-masyarakat/static/css/main.7848e637.css",
-    "main.js": "/layanan-masyarakat/static/js/main.5d6036b8.js",
+    "main.css": "/layanan-masyarakat/static/css/main.7e7e1f5a.css",
+    "main.js": "/layanan-masyarakat/static/js/main.833e817c.js",
     "static/media/Draft 3-User Guide Aplikasi Dana Masyarakat.pdf": "/layanan-masyarakat/static/media/Draft 3-User Guide Aplikasi Dana Masyarakat.55ae43a254938ab49561.pdf",
     "static/media/LDML_Panduan Pengguna Layanan Dana Masyarakat untuk Lingkungan.pdf": "/layanan-masyarakat/static/media/LDML_Panduan Pengguna Layanan Dana Masyarakat untuk Lingkungan.55ae43a254938ab49561.pdf",
     "static/media/hockey.png": "/layanan-masyarakat/static/media/hockey.6a55ebbfa228ec08391c.png",
@@ -77,12 +77,10 @@
     "static/media/logo-star.svg": "/layanan-masyarakat/static/media/logo-star.706920c51e67ce26daebcc03ea71384c.svg",
     "static/media/logo-crown-primary.svg": "/layanan-masyarakat/static/media/logo-crown-primary.16c6562cb3cbe5807a66fa63a3eeb26a.svg",
     "static/media/logo-crown.svg": "/layanan-masyarakat/static/media/logo-crown.95314c3740c0753a9dd0377cdef2718c.svg",
-    "static/media/logo-house.svg": "/layanan-masyarakat/static/media/logo-house.a478cb42e2b761b0254f294bf65a581f.svg",
-    "main.7848e637.css.map": "/layanan-masyarakat/static/css/main.7848e637.css.map",
-    "main.5d6036b8.js.map": "/layanan-masyarakat/static/js/main.5d6036b8.js.map"
+    "static/media/logo-house.svg": "/layanan-masyarakat/static/media/logo-house.a478cb42e2b761b0254f294bf65a581f.svg"
   },
   "entrypoints": [
-    "static/css/main.7848e637.css",
-    "static/js/main.5d6036b8.js"
+    "static/css/main.7e7e1f5a.css",
+    "static/js/main.833e817c.js"
   ]
 }
