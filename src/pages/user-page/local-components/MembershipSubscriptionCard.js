@@ -14,7 +14,18 @@ import DetailKegiatanModal from "./DetailKegiatanModal";
 import { BrowserView, MobileView } from "react-device-detect";
 
 const ProgressValue = {
-  "Dalam Proses Verifikasi": 6,
+  1: 6,
+  2: 6,
+  3: 6,
+  4: 6,
+}
+
+const Dictionary = {
+  0: "Draft",
+  1: "Dalam Proses",
+  2: "Dalam Proses",
+  3: "Dalam Proses",
+  4: "Dalam Proses",
 }
 
 const MembershipSubscriptionCard = ({
@@ -152,7 +163,7 @@ const MembershipSubscriptionCard = ({
                     <div className="col-start-start w-full">
                       <Spacing height="1.45rem" />
                       <div className="row-between-start w-full" style={{ padding:'0rem 0.75rem' }}>
-                        <span className="description-subtitle" style={{ fontWeight:400 }}>{dataProgress?.data[0].tahapan_pengajuan}</span>
+                        <span className="description-subtitle" style={{ fontWeight:400 }}>{Dictionary[dataProgress?.data[0].tahapan_pengajuan]}</span>
                         <span className="label">{ProgressValue[dataProgress?.data[0].tahapan_pengajuan]} %</span>
                       </div>
                       

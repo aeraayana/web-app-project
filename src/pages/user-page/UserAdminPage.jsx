@@ -26,7 +26,7 @@ const UserAdminPage = () => {
     } else {
       Promise.all([
         getDataVerifikasi(),
-        getDataDashboardVerifikator(),
+        // getDataDashboardVerifikator(),
       ])
     }
   }, [])
@@ -88,7 +88,7 @@ const UserAdminPage = () => {
               <span className='page-number'>VERIFIKASI</span>
               <Spacing height="1.25rem" />
 
-              {dataVerifikasi.data ? dataVerifikasi.data.map((n) => (
+              {dataVerifikasi?.data && dataVerifikasi?.data?.length > 0 ? dataVerifikasi.data.map((n) => (
                 <div className="w-full" onClick={() => handleClick(n)}>
                   <UserAdminContainerCard
                     data={n}
@@ -98,7 +98,7 @@ const UserAdminPage = () => {
               )) : (
                 <div className="description-subtitle">
                   <p className="card-title"></p>
-                  <p className="card-subtitle">Belum ada permintaan</p>
+                  <p className="card-subtitle">Belum ada data pengajuan</p>
                   <p className='card-text-content'></p>
                   <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
                 </div>
@@ -117,27 +117,21 @@ const UserAdminPage = () => {
               <span className='page-number'>VERIFIKASI</span>
               <Spacing height="1.25rem" />
               
-              {/* {dataVerifikasi.data ? dataVerifikasi.data.map((n) => (
-                <div className="w-full">
+              {/* {dataVerifikasi?.data && dataVerifikasi?.data?.length > 0 ? dataVerifikasi.data.map((n) => (
+                <div className="w-full" onClick={() => handleClick(n)}>
                   <UserAdminContainerCard
-                    // data={n}
-                    BorderColor={"var(--color-primary-light)"} />
+                    data={n}
+                    BorderColor={"orange"} />
                   <Spacing height={"1.25rem"}/>
                 </div>
-              )) : (
+              )) : ( */}
                 <div className="description-subtitle">
                   <p className="card-title"></p>
-                  <p className="card-subtitle">Belum ada permintaan</p>
+                  <p className="card-subtitle">Belum ada data pengajuan</p>
                   <p className='card-text-content'></p>
                   <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
                 </div>
-              )} */}
-              <div className="description-subtitle">
-                <p className="card-title"></p>
-                <p className="card-subtitle">Belum ada permintaan</p>
-                <p className='card-text-content'></p>
-                <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
-              </div>
+              {/* )} */}
             
             </ContainerCardSection>
           </div>
@@ -152,27 +146,21 @@ const UserAdminPage = () => {
               <span className='page-number'>VERIFIKASI</span>
               <Spacing height="1.25rem" />
 
-              {/* {dataVerifikasi.data ? dataVerifikasi.data.map((n) => (
-                <div className="w-full">
+              {/* {dataVerifikasi?.data && dataVerifikasi?.data?.length > 0 ? dataVerifikasi.data.map((n) => (
+                <div className="w-full" onClick={() => handleClick(n)}>
                   <UserAdminContainerCard
-                    // data={n}
-                    BorderColor={"var(--color-primary)"} />
+                    data={n}
+                    BorderColor={"orange"} />
                   <Spacing height={"1.25rem"}/>
                 </div>
-              )) : (
+              )) : ( */}
                 <div className="description-subtitle">
                   <p className="card-title"></p>
-                  <p className="card-subtitle">Belum ada permintaan</p>
+                  <p className="card-subtitle">Belum ada data pengajuan</p>
                   <p className='card-text-content'></p>
                   <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
                 </div>
-              )} */}
-              <div className="description-subtitle">
-                <p className="card-title"></p>
-                <p className="card-subtitle">Belum ada permintaan</p>
-                <p className='card-text-content'></p>
-                <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
-              </div>
+              {/* )} */}
 
             </ContainerCardSection>
           </div>
@@ -187,27 +175,21 @@ const UserAdminPage = () => {
               <span className='page-number'>VERIFIKASI</span>
               <Spacing height="1.25rem" />
 
-              {/* {dataVerifikasi.data ? dataVerifikasi.data.map((n) => (
-                <div className="w-full">
+              {/* {dataVerifikasi?.data && dataVerifikasi?.data?.length > 0 ? dataVerifikasi.data.map((n) => (
+                <div className="w-full" onClick={() => handleClick(n)}>
                   <UserAdminContainerCard
-                    // data={n}
-                    BorderColor={"var(--color-primary-dark)"} />
+                    data={n}
+                    BorderColor={"orange"} />
                   <Spacing height={"1.25rem"}/>
                 </div>
-              )) : (
+              )) : ( */}
                 <div className="description-subtitle">
                   <p className="card-title"></p>
-                  <p className="card-subtitle">Belum ada permintaan</p>
+                  <p className="card-subtitle">Belum ada data pengajuan</p>
                   <p className='card-text-content'></p>
                   <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
                 </div>
-              )} */}
-              <div className="description-subtitle">
-                <p className="card-title"></p>
-                <p className="card-subtitle">Belum ada permintaan</p>
-                <p className='card-text-content'></p>
-                <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
-              </div>
+              {/* )} */}
 
             </ContainerCardSection>
           </div>

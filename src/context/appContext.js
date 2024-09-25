@@ -5,70 +5,97 @@ import axios from 'axios';
 import {
   DISPLAY_ALERT,
   CLEAR_ALERT,
+  
   LOGOUT_USER,
+  
   LOGIN_USER_BEGIN,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
+  
   GET_CURRENT_USER_BEGIN,
   GET_CURRENT_USER_SUCCESS,
   GET_CURRENT_USER_FAILED,
+  
   REGISTER_USER_BEGIN,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  
   FORGOT_PASSWORD_BEGIN,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_ERROR,
+
   RESET_PASSWORD_BEGIN,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_ERROR,
+  
   TOGGLE_PROFILE_MODAL,
   /////////////////////////////////////////////////////////////////////////////////////////
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
+
   GET_PAKET_KATEGORI_DATA,
   GET_PAKET_KATEGORI_DATA_BEGIN,
+
   GET_TEMATIK_KEGIATAN,
   GET_TEMATIK_KEGIATAN_BEGIN,
+
   GET_SUB_TEMATIK_KEGIATAN,
   GET_SUB_TEMATIK_KEGIATAN_BEGIN,
+
   GET_KECAMATAN,
   GET_KECAMATAN_BEGIN,
+
   GET_KELURAHAN,
   GET_KELURAHAN_BEGIN,
   GET_KOTA,
   GET_KOTA_BEGIN,
+
   GET_KELOMPOK_MASYARAKAT,
   GET_KELOMPOK_MASYARAKAT_BEGIN,
-  POST_FORM_PENGAJUAN_BEGIN,
-  POST_FORM_PENGAJUAN,
-  POST_FORM_PENGAJUAN_ERROR,
+
   GET_PROVINSI_BEGIN,
   GET_PROVINSI,
+
   GET_DATA_VERIFIKASI_BEGIN,
   GET_DATA_VERIFIKASI,
+
   GET_DATA_VALIDASI_BEGIN,
   GET_DATA_VALIDASI,
-  TOGGLE_FORM_MODAL,
+
+  GET_RIWAYAT_PENGAJUAN_BEGIN,
   GET_PROGRESS_KEGIATAN,
   GET_PROGRESS_KEGIATAN_BEGIN,
+
   GET_RIWAYAT_PENGAJUAN,
-  GET_RIWAYAT_PENGAJUAN_BEGIN,
+  
+  GET_NOTIFICATIONS_SUCCESS,
+  GET_NOTIFICATIONS_BEGIN,
+  
+  GET_DATA_DASHBOARD_VERIFIKATOR,
+  GET_DATA_DASHBOARD_VERIFIKATOR_BEGIN,
+ 
+  GET_RANGE_OPENING_BEGIN,
+  GET_RANGE_OPENING,
+  
+  GET_DRAFT_PENGAJUAN,
+  GET_DRAFT_PENGAJUAN_BEGIN,
+  /////////////////////////////////////////////////////////////////////////////////////////
+  TOGGLE_FORM_MODAL,
   TOGGLE_DETAIL_PROGRESS_MODAL,
   TOGGLE_VERIFIKASI_MODAL,
   TOGGLE_VALIDASI_MODAL,
-  GET_NOTIFICATIONS_SUCCESS,
-  GET_NOTIFICATIONS_BEGIN,
-  GET_DATA_DASHBOARD_VERIFIKATOR,
-  GET_DATA_DASHBOARD_VERIFIKATOR_BEGIN,
-  GET_RANGE_OPENING_BEGIN,
-  GET_RANGE_OPENING,
-  GET_DRAFT_PENGAJUAN,
-  GET_DRAFT_PENGAJUAN_BEGIN,
+  TOGGLE_SURAT_KERJA_MODAL,
+  ////////////////////////////////////////////////////////////////////////////////////////
+  POST_FORM_PENGAJUAN_BEGIN,
+  POST_FORM_PENGAJUAN,
+  POST_FORM_PENGAJUAN_ERROR,
+  TOGGLE_PROPOSAL_MODAL,
 } from './actions';
 
 const user = localStorage.getItem('token');
 
 const initialState = {
+
   token: user,
   validDateRange: [],
   userLoading: false,
@@ -76,7 +103,9 @@ const initialState = {
   isError: false,
   isSuccess: false,
   successMessage: '',
+
   /////////////////////////////////////////////////////////////////////////////////////////
+
   kelompokMasyarakat: [],
   namaKelompokMasyarakat: [],
   tematikKegiatan: [],
@@ -87,16 +116,19 @@ const initialState = {
   bidangFolu: [],
   kelurahan: [],
   kecamatan: [],
+
   /////////////////////////////////////////////////////////////////////////////////////////
-  showAlert: false,
-  showSidebar: false,
-  isEditing: false,
+
   showProfileModal: false,
+  showProposalModal: false,
   showFormModal: true,
+  suratKerjaModal: false,
   showVerifikasiModal: false,
   showValidasiModal: false,
   showDetailProgressModal: true,
+
   /////////////////////////////////////////////////////////////////////////////////////////
+
   dataVerifikasi: [],
   dataDraft: [],
   dataRiwayat: [],
@@ -535,6 +567,14 @@ const AppProvider = ({ children }) => {
     dispatch({ type: TOGGLE_PROFILE_MODAL });
   };
 
+  const toggleProposalModal = () => {
+    dispatch({ type: TOGGLE_PROPOSAL_MODAL });
+  };
+
+  const toggleSuratKerjaModal = () => {
+    dispatch({ type: TOGGLE_SURAT_KERJA_MODAL });
+  };
+
   const toggleFormModal = () => {
     dispatch({ type: TOGGLE_FORM_MODAL });
   };
@@ -568,25 +608,29 @@ const AppProvider = ({ children }) => {
         type: POST_FORM_PENGAJUAN,
         payload: { message: message },
       });
-      return true;
+      return response;
     } catch (error) {
       const { message, data } = error.response;
       dispatch({
         type: POST_FORM_PENGAJUAN_ERROR,
         payload: { message: message, data: data },
       });
+      return false;
     }
-    return false;
   };
 
-  const postValidasiFormProposal = async ({ catatan_log, status, id }) => {
+  const postValidasiFormProposal = async ({ formData, id }) => {
     dispatch({ type: POST_FORM_PENGAJUAN_BEGIN });
     try {
-      const response = await authFetch.put(
-        `validasiPengajuanKegiatan/${id}`, {
-          catatan_log, 
-          status, 
-      }
+      const response = await axios.post(
+        `${HOST_URL}validasiPengajuanKegiatan/${id}`, formData, {
+          headers: {
+              Accept: 'multipart/form-data',
+              id: '6684d93e8cb88',
+              secret: 'vc8U5EaZ3bUKV9ka4PsNLrpVGWZVVpyZsAhmnRWO',
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+          }
+        }
       );
       const { message } = response.data;
 
@@ -594,15 +638,15 @@ const AppProvider = ({ children }) => {
         type: POST_FORM_PENGAJUAN,
         payload: { message: message },
       });
-      return true;
+      return response;
     } catch (error) {
       const { message, data } = error.response;
       dispatch({
         type: POST_FORM_PENGAJUAN_ERROR,
         payload: { message: message, data: data },
       });
+      return false;
     }
-    return false;
   };
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -684,6 +728,8 @@ const AppProvider = ({ children }) => {
         toggleDetailProgressModal,
         toggleValidasiModal,
         toggleVerifikasiModal,
+        toggleSuratKerjaModal,
+        toggleProposalModal,
         ///////////////////////////////////////////////
         postVerifikasiFormProposal,
         postValidasiFormProposal,

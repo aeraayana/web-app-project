@@ -149,6 +149,8 @@ export const TOGGLE_FORM_MODAL = 'TOGGLE_FORM_MODAL';
 export const TOGGLE_DETAIL_PROGRESS_MODAL = 'TOGGLE_DETAIL_PROGRESS_MODAL';
 export const TOGGLE_VALIDASI_MODAL = 'TOGGLE_VALIDASI_MODAL';
 export const TOGGLE_VERIFIKASI_MODAL = 'TOGGLE_VERIFIKASI_MODAL';
+export const TOGGLE_SURAT_KERJA_MODAL = 'TOGGLE_SURAT_KERJA_MODAL';
+export const TOGGLE_PROPOSAL_MODAL = 'TOGGLE_PROPOSAL_MODAL';
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

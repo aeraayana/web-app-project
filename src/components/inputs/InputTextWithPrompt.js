@@ -44,7 +44,7 @@ const InputTextWithPrompt = ({ onInput, required, textAlign, disabled, defaultVa
 
     return (
         <Wrapper className={`col-start-start ${className}`} >
-            {prompt && <label className="label" htmlFor={id} >{prompt}</label> }
+            {prompt && <label className="label" style={{ color:`${!disabled? 'var(--color-black)' : 'var(--color-disable)'}` }} htmlFor={id} >{prompt}</label> }
             <WrapperInputText id={id} 
                 // accept="image/png, image/jpeg, application/pdf, image/png"
                 name={name} 
@@ -63,8 +63,9 @@ const InputTextWithPrompt = ({ onInput, required, textAlign, disabled, defaultVa
                     textAlign: textAlign,
                     width: width,
                     height: inputHeight,
-                    backgroundColor: `${ disabled? 'var(--color-light-gray)' : 'white' }`,
-                    border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : 'var(--color-black)'}`,
+                    color: `${ disabled? 'var(--color-disable)' : 'black'}`,
+                    backgroundColor: `${ disabled? 'var(--color-disable-light)' : 'white' }`,
+                    border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : !disabled? 'var(--color-black)' : 'var(--color-light-gray)'}`,
                 }} >
             </WrapperInputText>
             {errorMessage && <label className="label-error">{errorMessage}</label> }

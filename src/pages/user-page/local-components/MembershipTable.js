@@ -1,17 +1,22 @@
 import styled from "styled-components";
 import {
     ContainerCardSection,
-    Spacing,
-    ButtonSolid,
     Hyperlink
 } from "../../../components";
 import { CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from "@coreui/react";
 import JobInfo from "../../../components/JobInfo";
-import { FaArrowsAltH, FaFontAwesome } from "react-icons/fa";
 import ArrowRotate from "../../../components/logo-icon/ArrowRotate";
-import { isMobile, MobileView } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 import { useAppContext } from "../../../context/appContext";
 import React from "react";
+  
+const Dictionary = {
+    0: "Draft",
+    1: "Dalam Proses",
+    2: "Dalam Proses",
+    3: "Dalam Proses",
+    4: "Dalam Proses",
+}
 
 const MembershipTable = () => {
 
@@ -153,7 +158,7 @@ const MembershipTable = () => {
                                     {n.persentase_pengajuan} %
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                    <JobInfo icon={<ArrowRotate />} text={n.tahapan_pengajuan}/>
+                                    <JobInfo icon={<ArrowRotate />} text={Dictionary[n.tahapan_pengajuan]}/>
                                 </CTableDataCell>
                                 <CTableDataCell width={'20%'}>
                                     {n.dana_yang_dicairkan}

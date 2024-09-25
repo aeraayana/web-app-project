@@ -62,21 +62,8 @@ const Wrapper = styled.section`
     }
 `;
 
-const ProfileModal = ({ show, imageSource }) => {
-    const { user, toggleProfileModal, logoutUser, } = useAppContext()
-    const navigate = useNavigate();
-
-    const getDisplayName = () => {
-        const name = user.username ?? user.email
-        if (name.length > 17)
-            return name.slice(0, 17) + '...'
-        return name
-    }
-
-    const navigateToProfile = () => {
-        navigate("/profile/" + user._id);  
-        toggleProfileModal();
-    }
+const ProfileModal = ({ show }) => {
+    const { logoutUser } = useAppContext()
 
     const handleLogout = () => {
         logoutUser();
@@ -86,22 +73,6 @@ const ProfileModal = ({ show, imageSource }) => {
     return (
         <MobileOnlyView>
             <Wrapper style={{ display: show? "block" : "none" }} >
-                {/* <article className="row-center-center">
-                    <CAvatar src={null} 
-                        size='xl'
-                        style={{ 
-                            backgroundColor: 'rgb(179, 190, 204)', 
-                            width: '3.75rem',  
-                            height: '3.75rem'  
-                        }} />
-                    <Spacing width="0.75rem" /> 
-                    <div className="col-start-start profile">
-                        <h1>{ getDisplayName() }</h1>
-                        <Spacing height="0.25rem" />
-                        <span>Ross Sheppard High School</span>
-                        <span>Junior Player at Peterborough Petes</span>
-                    </div>
-                </article> */}
                 <Spacing height="1.25rem" />    {/* 20px */}
                 <ButtonOutlined className="w-full" label="Logout" height="2rem" onClick={() => handleLogout()}/>
             </Wrapper>

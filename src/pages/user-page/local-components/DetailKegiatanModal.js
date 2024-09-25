@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect } from "react";
 import {
     TimelineConnector,
@@ -5,16 +6,57 @@ import {
     TimelineDot,
     TimelineItem,
     TimelineSeparator,
-  } from '@mui/lab';
+} from '@mui/lab';
+import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from "../../../configs/constants";
 import { BrowserView, MobileView } from "react-device-detect";
 import MobileWrapper from "../../../wrappers/user-page/mobile/UserCreateFormMobileWrapper";
 import Wrapper from "../../../wrappers/user-page/UserCreateFormWrapper";
 import { CModalBody, CModalHeader, CModalTitle } from "@coreui/react";
 import { ButtonSolid, Hyperlink, Loading, Spacing } from "../../../components";
 import moment from "moment";
+import { useAppContext } from "../../../context/appContext";
+import SuratKerjaModal from "./UploadSuratKerjaModal";
+import ViewProposalModal from "./ViewProposalModal";
 
 const DetailKegiatanModal = ({ show, onClose, data }) => {
     
+    const [dataForm, setDataForm] = React.useState([]);
+
+    const { 
+        dataProgress, 
+        toggleSuratKerjaModal, 
+        suratKerjaModal, 
+        toggleDetailProgressModal, 
+        toggleProposalModal, 
+        showProposalModal,
+    } = useAppContext();
+
+    React.useEffect(() => {
+        if(show){
+            axios.get(`${HOST_URL}getDataValidasiPengajuanById/${data.data[0].id}`, {
+                headers: {
+                    Accept: 'application/json',
+                    id: CLIENT_ID,
+                    secret: CLIENT_ID_SECRET,
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                }
+            }).then((res) => {
+                console.log(res.data);
+                setDataForm(res.data.data);
+            })
+        }
+    }, [show]);
+
+    const handleOpen = () => {
+        toggleSuratKerjaModal();
+        toggleDetailProgressModal();
+    }
+
+    const handleProposal = () => {
+        toggleDetailProgressModal();
+        toggleProposalModal();
+    }
+
     if(data.length === 0){
         return(
             <Loading/>
@@ -97,6 +139,8 @@ const DetailKegiatanModal = ({ show, onClose, data }) => {
                 </MobileWrapper>
             </MobileView>
             <BrowserView>
+                <ViewProposalModal show={showProposalModal} onClose={toggleProposalModal} selectedData={dataForm} />
+                <SuratKerjaModal show={suratKerjaModal} onClose={toggleSuratKerjaModal} />
                 <Wrapper
                     size="lg"
                     scrollable
@@ -141,9 +185,9 @@ const DetailKegiatanModal = ({ show, onClose, data }) => {
                             <div id="progress-bar" className="row-start-start w-full">
                                 <TimelineItem >
                                     <TimelineSeparator>
-                                        <TimelineDot style={{ width:'40px', height:'40px', backgroundColor:'var(--color-black)' }} />
+                                        <TimelineDot style={{ width:'40px', height:'40px', backgroundColor:`${dataProgress?.data[0]?.tahapan_pengajuan === '3' ? 'var(--color-primary)' : 'var(--color-black)'}` }} />
                                         <TimelineConnector className="connector" />
-                                        <TimelineDot style={{ width:'40px', height:'40px' }} />
+                                        <TimelineDot style={{ width:'40px', height:'40px', backgroundColor:`${dataProgress?.data[0]?.tahapan_pengajuan > '3' ? 'var(--color-primary)' : 'var(--color-black)'}` }} />
                                     </TimelineSeparator>
                                 </TimelineItem>
                                 
@@ -153,14 +197,14 @@ const DetailKegiatanModal = ({ show, onClose, data }) => {
                                     <div className="col-start-start">
                                         <span className="page-number">TAHAP 1</span>
                                         <span className="subtitle">Verifikasi dan Validasi</span>
-                                        <Hyperlink className='hyperlink' label={'Lihat Proposal'}/>
-                                        <span className="sublabel">Dalam proses</span>
+                                        <Hyperlink className='hyperlink' onClick={() => handleProposal()} label={'Lihat Proposal'}/>
+                                        { (dataProgress?.data[0]?.tahapan_pengajuan !== '3') && ( <span className="sublabel">Dalam proses</span> )}
                                     </div>
                                     <Spacing height={'2.25rem'}/>
                                     <div className="col-start-start">
                                         <span className="page-number">TAHAP 2</span>
                                         <span className="subtitle">Informasi pencairan dana</span>
-                                        <ButtonSolid height={'2.25rem'} disabled label={'Form Pencairan Dana'} width={'12rem'}/>
+                                        <ButtonSolid height={'2.25rem'} onClick={() => handleOpen()} disabled={(dataProgress?.data[0]?.tahapan_pengajuan !== '3')} label={'Form Pencairan Dana'} width={'12rem'}/>
                                     </div>
                                 </div>
                             </div>

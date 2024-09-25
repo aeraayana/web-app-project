@@ -8,18 +8,20 @@ import FeaturedIcon from "../../../../src/assets/images/Featured icon.png"
 import FileType from "../../../../src/assets/images/file type.png"
 import { CAvatar, CModalBody, CModalHeader } from "@coreui/react";
 import { FaChevronDown } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import { MoreVertOutlined } from "@mui/icons-material";
 import ExcelExport from "../export-items/ExportExcelFromData";
 import axios from "axios";
 import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from "../../../configs/constants";
 import { Menu, MenuItem } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
+import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 
-const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
+const ValidateSubmissionFormModal = ({ show, selectedData }) => {
     const [dataForm, setDataForm] = React.useState(null);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+
+    const role = JSON.parse(localStorage.getItem("user_data")).role_user;
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -28,14 +30,14 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    
+
+    const formData = new FormData();
+
     const handleDownloadAttached = (e) => {
         const newWindow = window.open(`/aksesdanalh/public/storage/${e}`, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null;
         setAnchorEl(null);
     }
-
-    //console.log(selectedData);
 
     React.useEffect(() => {
         if(show){
@@ -63,14 +65,43 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
         if (newWindow) newWindow.opener = null;
     }
     
-    const [initialState, setInitialState] = React.useState([]);
-    const { postVerifikasiFormProposal, postValidasiFormProposal, toggleVerifikasiModal } = useAppContext();
+    let initialState = [];
+    const { postVerifikasiFormProposal, postValidasiFormProposal, toggleVerifikasiModal, showVerifikasiModal } = useAppContext();
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+    const handleChange = (e) => {
+        let list = initialState;
+        if(e.target.name === 'fileDocument'){
+
+            const [file] = e.target.files;
+            
+            console.log(file);
+            
+            const { name: fileName, size } = file;
+            const fileSize = (size / 1000).toFixed(2);
+            const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+            document.querySelector('.file-name').textContent = fileNameAndSize;
+            
+            formData.append('file_sk', e.target.files[0]);
+            console.log('a');
+        } else {
+            list[e.target.name] = e.target.value;
+        }
+    }
 
     const handleTolak = async (e) => {
         if('approver' === JSON.parse(localStorage.getItem('user_data')).role_user){
             const response = await postValidasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 0 });
-            if(response) {  toggleVerifikasiModal();  }
-            else{
+            if(response) {  
+                toast.success(
+                    <div className="col-start-start">
+                        <span className="description" style={{ fontWeight: 'bold', color:'white' }}>Berhasil</span>
+                        <span className="description" style={{ color:'white' }}>GET Request Successful</span>
+                    </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
+                )  
+                window.location.reload();
+            }else{
                 toast.error(
                     <div>
                         <span className="label">Terjadi kendala jaringan. [Parsing data failed]</span>
@@ -79,8 +110,15 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
             }
         }else{
             const response = await postVerifikasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 0 });
-            if(response) {  toggleVerifikasiModal();  }
-            else{
+            if(response) {  
+                toast.success(
+                    <div className="col-start-start">
+                        <span className="description" style={{ fontWeight: 'bold', color:'white' }}>Berhasil</span>
+                        <span className="description" style={{ color:'white' }}>GET Request Successful</span>
+                    </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
+                )
+                window.location.reload();
+            }else{
                 toast.error(
                     <div>
                         <span className="label">Terjadi kendala jaringan. [Parsing data failed]</span>
@@ -92,8 +130,20 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
 
     const handleSetuju = async (e) => {
         if('approver' === JSON.parse(localStorage.getItem('user_data')).role_user){
-            const response = await postValidasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 1 });
-            if(response) {  toggleVerifikasiModal();  }
+            formData.append('catatan_log', initialState.catatan_log);
+            formData.append('_method', "PUT");
+            formData.append('status', 1);
+
+            const response = await postValidasiFormProposal({ id: selectedData?.id, formData });
+            if(response) {  
+                toast.success(
+                    <div className="col-start-start">
+                        <span className="description" style={{ fontWeight: 'bold', color:'white' }}>Berhasil</span>
+                        <span className="description" style={{ color:'white' }}>GET Request Successful</span>
+                    </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
+                )
+                window.location.reload();  
+            }
             else{
                 toast.error(
                     <div>
@@ -103,20 +153,23 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
             }
         }else{
             const response = await postVerifikasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 1 });
-            if(response) {  toggleVerifikasiModal();  }
+            if(response) {  
+                toast.success(
+                    <div className="col-start-start">
+                        <span className="description" style={{ fontWeight: 'bold', color:'white' }}>Berhasil</span>
+                        <span className="description" style={{ color:'white' }}>GET Request Successful</span>
+                    </div>, { position: toast.POSITION.TOP_RIGHT, theme: 'colored' }
+                )  
+                window.location.reload();
+            }
             else{
                 toast.error(
                     <div>
-                        <span className="label">Terjadi kendala jaringan. [Parsing data failed]</span>
+                        <span className="label">Catatan wajib di isi saat menolak pengajuan. [Parsing data failed]</span>
                     </div>, { position: toast.POSITION.TOP_CENTER, theme: 'colored' }
                 )
             }
         }
-    }
-
-    const handleChange = (e) => {
-        const list = initialState;
-        setInitialState({ ...list, [e.target.name]: e.target.value });
     }
     
     return (
@@ -127,14 +180,14 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                     size="lg"
                     scrollable
                     alignment="center"
-                    visible={show}
-                    onClose={onClose}
+                    visible={showVerifikasiModal}
+                    onClose={toggleVerifikasiModal}
                 >
                     <CModalHeader>
                     </CModalHeader>
                     <CModalBody>
                         <div className="col-start-start w-full">
-                            <span className='title'>VERIFIKASI</span>
+                            <span className='title'>{role === 'approver' ? 'VERIFIKASI' : 'VALIDASI'}</span>
                             <span className='title-description'>PERMINTAAN BARU</span>
                         </div>
                         <Spacing height={"2.25rem"}/>
@@ -166,13 +219,13 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                             <div className="col-start-start w-full">
                                 <span className='description' style={{ fontWeight: 'bold' }}>Tanggal Kegiatan</span>
                                 <span className='description'>
-                                    {selectedData?.tanggal_akhir_verifikasi}
+                                    {selectedData?.tanggal_pengajuan}
                                 </span>
                             </div>
                             <div className="col-start-start w-full">
                                 <span className='description' style={{ fontWeight: 'bold' }}>Rencana Kegiatan</span>
                                 <span className='description'>
-                                    {selectedData?.tanggal_pengajuan}
+                                    {selectedData?.rencana_kegiatan}
                                 </span>
                             </div>
                         </div>
@@ -251,31 +304,79 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                         <div>
                             <span className="label"> <FaChevronDown width={'12px'} /> Unggahan </span>
                             <Spacing height="0.95rem" />
-                            <div className="col-center-center w-full" style={{ width:'30%', border: '1px solid var(--color-disable)', borderRadius: '5px', padding: '20px 0px', textWrap: "balance" }}>
-                                <img src={FileType} height={'60px'} width={'60px'}></img>
-                                <div className="row-around-center">
-                                    <span className="description" style={{ width: '60%', fontWeight:'bold', marginTop:'1.25rem', textWrap: "balance" }}>{selectedData?.document[0]?.file_name}</span>
-                                    <MoreVertOutlined onClick={handleClick}/>
-                                    <Menu
-                                        id="demo-positioned-menu"
-                                        aria-labelledby="demo-positioned-button"
-                                        anchorEl={anchorEl}
-                                        open={open}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'left',
-                                        }}
-                                            transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'left',
-                                        }}
-                                    >
-                                        <MenuItem onClick={() => handleDownloadAttached(selectedData.document[0].file_path)}>Download</MenuItem>
-                                    </Menu>
+                            {selectedData?.document[0] && (
+                                <div className="col-center-center w-full" style={{ width:'30%', border: '1px solid var(--color-disable)', borderRadius: '5px', padding: '20px 0px', textWrap: "balance" }}>
+                                    <img src={FileType} height={'60px'} width={'60px'}></img>
+                                    <div className="row-around-center">
+                                        <span className="description" style={{ width: '60%', fontWeight:'bold', marginTop:'1.25rem', textWrap: "balance" }}>{selectedData?.document[0]?.file_name}</span>
+                                        <MoreVertOutlined onClick={handleClick}/>
+                                        <Menu
+                                            id="demo-positioned-menu"
+                                            aria-labelledby="demo-positioned-button"
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            onClose={handleClose}
+                                            anchorOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'left',
+                                            }}
+                                                transformOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'left',
+                                            }}
+                                        >
+                                            <MenuItem onClick={() => handleDownloadAttached(selectedData.document[0].file_path)}>Download</MenuItem>
+                                        </Menu>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
+
+                            {role === 'approver' && (
+                                <div>
+                                    <Spacing height={"2.25rem"}/>
+                                    <span className="subtitle">Diverifikasi oleh:</span>
+                                    <Spacing height={"0.75rem"}/>
+                                    
+                                    <div className="row-between-start">
+                                        <div className="row-start-start">
+                                            <CAvatar style={{ width:'3.15rem', height:'3.15rem', backgroundColor: 'rgb(179, 190, 204)' }} />
+                                            <Spacing width={"1.25rem"}/>
+                                            
+                                            <div className="col-start-start">
+                                                <span className="subtitle">{selectedData?.kelompok_masyarakat}</span>
+                                                <span className="description">Pemilik Kegiatan 1</span>
+                                            </div>
+                                        </div>
+                                        <div className="col-start-start">
+                                            <span className="subtitle">Tanggal Verifikasi</span>
+                                            <span className="description">{selectedData?.tanggal_verifikasi}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
                             <hr></hr>
+                            <span className="subtitle">Unggah SK</span>
+                            <Spacing height={'0.45rem'} />
+                            {role === 'approver' && (
+                                <div class="file-input">
+                                    <input onChange={handleChange} type="file" style={{ opacity:'0', position:'absolute' }} id="fileDocument" class="file" name='fileDocument' accept="application/pdf"/>
+                                    <div className="col-start-start w-full" style={{ marginLeft:'1.25rem' }}>
+                                        <div 
+                                            className="row-start-start" 
+                                            style={{ border:'1px solid var(--color-semiblack)', borderRadius:'6px', padding: '0.45rem 1.25rem' }}
+                                        >
+                                            <CloudUploadOutlinedIcon />
+                                            <Spacing width={'0.45rem'} />
+                                            <label for="file">Unggah File</label>
+                                        </div>
+                                        <span class="description-label file-name"></span>
+                                        <span className="description-label">File format PDF max. 5MB</span>
+                                    </div>
+                                </div>
+                            )}
+
+                            <Spacing height="1.5rem" />
                             <span className="description" style={{ fontWeight:'bold' }}> Comments </span>
                             <Spacing height="0.5rem" />
                             <InputTextArea 

@@ -1,14 +1,9 @@
 import styled from "styled-components";
 import {
-  // LogoCrown,
-  // IconCheck,
-  // IconUnCheck,
   ContainerCardArticle,
   Spacing,
 } from "../../../components";
 import RekapitulasiPengajuanCard from "./RekapitulasiPengajuanCard";
-import { CProgress, CProgressBar } from "@coreui/react";
-import { useAppContext } from "../../../context/appContext";
 import React from "react";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 

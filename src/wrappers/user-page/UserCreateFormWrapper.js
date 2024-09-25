@@ -179,12 +179,44 @@ const Wrapper = styled(CModal)`
         }
     }
 
+    .time-disabled {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--color-disable);
+        padding: 0.7rem;
+        font-family: var(--font-family-primary);
+        font-size: var(--font-size-normal);
+        font-weight: var(--font-weight-normal);
+        border-radius: 0.3125rem;
+        background-color: var(--color-disable-light);
+        &:focus{
+            outline: none !important;
+            border:1px solid var(--color-primary-dark);
+            box-shadow: 0 0 10px var(--color-primary);
+        }
+    }
+
+    .time-disabled input[type="time"] {
+        border: none;
+        outline: none;
+    }
+
+    .time-disabled span {
+        padding: 0 5px;
+    }
+
     .time-range input[type="time"] {
         border: none;
         outline: none;
     }
+
     .time-range span {
         padding: 0 5px;
+    }
+
+    .form-check-input:checked {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
     }
 
     .break {
@@ -242,6 +274,41 @@ const Wrapper = styled(CModal)`
         margin-top: 40px;
         padding: 20px 20px;
     }
+
+
+    .drop-container {
+        position: relative;
+        display: flex;
+        gap: 10px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 100px;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px dashed var(--color-disable);
+        color: #444;
+        cursor: pointer;
+        transition: background .2s ease-in-out, border .2s ease-in-out;
+    }
+
+    .drop-container:hover {
+        background: #eee;
+        border-color: #111;
+    }
+
+    .drop-container:hover .drop-title {
+        color: #222;
+    }
+
+    .drop-title {
+        color: #444;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        transition: color .2s ease-in-out;
+    }
+
 `
 
 export default Wrapper

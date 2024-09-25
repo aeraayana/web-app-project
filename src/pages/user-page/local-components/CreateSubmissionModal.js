@@ -663,7 +663,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                                             name={"proposal_kegiatan"}
                                             subLabel={"Project Background"}
                                             rows={4}
-                                            textLimit={"(40 - 250 kata)"} />
+                                            textLimit={"(40 - 250 karakter)"} />
                                         <Spacing height="1.45rem" />
                                     </div>                                    
 
@@ -674,7 +674,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                                             name={"tujuan_kegiatan"}
                                             subLabel={"Objectives"}
                                             rows={4}
-                                            textLimit={"(40 - 250 kata)"} />
+                                            textLimit={"(40 - 250 karakter)"} />
                                         <Spacing height="1.45rem" />
                                     </div>
                                     
@@ -686,7 +686,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                                             rows={4}
                                             className={'col-start-start w-full'}
                                             subLabel={"Scope of Work"}
-                                            textLimit={"(40 - 250 kata)"} />
+                                            textLimit={"(40 - 250 karakter)"} />
                                         <Spacing height="1.15rem" />
                                     </div>
 
@@ -1097,7 +1097,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                                             onBlur={(e) => handleChange(e)}
                                             errorMessage={initialState?.proposal_kegiatan === '' ? 'Proposal kegiatan harus diisi' : ''}
                                             defaultValue={initialState.proposal_kegiatan}
-                                            textLimit={"(40 - 250 kata)"} />
+                                            textLimit={"(40 - 250 karakter)"} />
                                         <Spacing height="1.85rem" />
                                     </div>                                    
 
@@ -1111,7 +1111,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                                             onBlur={(e) => handleChange(e)}
                                             errorMessage={initialState?.tujuan_kegiatan === '' ? 'Tujuan kegiatan harus diisi' : ''}
                                             defaultValue={initialState.tujuan_kegiatan}
-                                            textLimit={"(40 - 250 kata)"} />
+                                            textLimit={"(40 - 250 karakter)"} />
                                         <Spacing height="1.85rem" />
                                     </div>
                                     
@@ -1125,7 +1125,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                                             onBlur={(e) => handleChange(e)}
                                             errorMessage={initialState?.ruang_lingkup_kegiatan === '' ? 'Ruang lingkup kegiatan harus diisi' : ''}
                                             defaultValue={initialState.ruang_lingkup_kegiatan}
-                                            textLimit={"(40 - 250 kata)"} />
+                                            textLimit={"(40 - 250 karakter)"} />
                                         <Spacing height="1.85rem" />
                                     </div>
 
