@@ -33,7 +33,7 @@ const DetailKegiatanModal = ({ show, onClose, data }) => {
 
     React.useEffect(() => {
         if(show){
-            axios.get(`${HOST_URL}getDataValidasiPengajuanById/${data.data[0].id}`, {
+            axios.get(`${HOST_URL}getDataValidasiPengajuanById/${data?.data[0]?.id}`, {
                 headers: {
                     Accept: 'application/json',
                     id: CLIENT_ID,
@@ -41,7 +41,7 @@ const DetailKegiatanModal = ({ show, onClose, data }) => {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 }
             }).then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setDataForm(res.data.data);
             })
         }
@@ -197,8 +197,11 @@ const DetailKegiatanModal = ({ show, onClose, data }) => {
                                     <div className="col-start-start">
                                         <span className="page-number">TAHAP 1</span>
                                         <span className="subtitle">Verifikasi dan Validasi</span>
-                                        <Hyperlink className='hyperlink' onClick={() => handleProposal()} label={'Lihat Proposal'}/>
-                                        { (dataProgress?.data[0]?.tahapan_pengajuan !== '3') && ( <span className="sublabel">Dalam proses</span> )}
+                                        {(parseInt(dataProgress?.data[0]?.tahapan_pengajuan) >= 2) && ( 
+                                            <>
+                                                <Hyperlink className='hyperlink' onClick={() => handleProposal()} label={'Lihat Proposal'}/>
+                                                <span className="sublabel">Dalam proses</span> 
+                                            </> )}
                                     </div>
                                     <Spacing height={'2.25rem'}/>
                                     <div className="col-start-start">

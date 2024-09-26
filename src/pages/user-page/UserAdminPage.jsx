@@ -21,12 +21,12 @@ const UserAdminPage = () => {
     if('approver' === JSON.parse(localStorage.getItem('user_data')).role_user){
       Promise.all([
         getDataValidasi(),
-//        getDataDashboardValidator(),
+        // getDataDashboardValidator(),
       ])
     } else {
       Promise.all([
         getDataVerifikasi(),
-        // getDataDashboardVerifikator(),
+        getDataDashboardVerifikator(),
       ])
     }
   }, [])

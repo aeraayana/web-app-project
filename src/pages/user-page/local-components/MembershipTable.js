@@ -10,6 +10,14 @@ import { isMobile } from "react-device-detect";
 import { useAppContext } from "../../../context/appContext";
 import React from "react";
   
+const ProgressValue = {
+    0: 0,
+    1: 6,
+    2: 6,
+    3: 21,
+    4: 21,
+}  
+
 const Dictionary = {
     0: "Draft",
     1: "Dalam Proses",
@@ -155,7 +163,7 @@ const MembershipTable = () => {
                                     {n.jenis_kegiatan}: {n.jumlah}
                                 </CTableDataCell>
                                 <CTableDataCell>
-                                    {n.persentase_pengajuan} %
+                                    {ProgressValue[n.tahapan_pengajuan]} %
                                 </CTableDataCell>
                                 <CTableDataCell>
                                     <JobInfo icon={<ArrowRotate />} text={Dictionary[n.tahapan_pengajuan]}/>

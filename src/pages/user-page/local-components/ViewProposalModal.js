@@ -16,19 +16,28 @@ import { Menu, MenuItem } from "@mui/material";
 const ViewProposalModal = ({ show, selectedData }) => {
     const [dataForm, setDataForm] = React.useState(null);
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
+    const [anchorAttach, setAnchorAttach] = React.useState(null);
+    
+    const openSk = Boolean(anchorEl);
+    const openAttach = Boolean(anchorAttach);
 
-    console.log(selectedData)
-
-    const handleClick = (event) => {
+    const handleClickSk = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+
+    const handleClickAttach = (event) => {
+        setAnchorAttach(event.currentTarget);
+    }
 
     const handleDownloadAttached = (e) => {
+        console.log(e);
+        const newWindow = window.open(`/aksesdanalh/public/storage/${e}`, '_blank', 'noopener,noreferrer');
+        if (newWindow) newWindow.opener = null;
+        setAnchorEl(null);
+    }
+
+    const handleDownloadSk = (e) => {
+        console.log(e);
         const newWindow = window.open(`/aksesdanalh/public/storage/${e}`, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null;
         setAnchorEl(null);
@@ -173,13 +182,13 @@ const ViewProposalModal = ({ show, selectedData }) => {
                                     <img src={FileType} height={'60px'} width={'60px'}></img>
                                     <div className="row-around-center">
                                         <span className="description" style={{ width: '60%', fontWeight:'bold', marginTop:'1.25rem', textWrap: "balance" }}>{selectedData?.document.find((item) => item.group === 'document')?.file_name}</span>
-                                        <MoreVertOutlined onClick={handleClick}/>
+                                        <MoreVertOutlined onClick={handleClickAttach}/>
                                         <Menu
-                                            id="demo-positioned-menu"
-                                            aria-labelledby="demo-positioned-button"
-                                            anchorEl={anchorEl}
-                                            open={open}
-                                            onClose={handleClose}
+                                            id="demo-menu"
+                                            aria-labelledby="demo-button"
+                                            anchorEl={anchorAttach}
+                                            open={openAttach}
+                                            onClose={() => setAnchorAttach(null)}
                                             anchorOrigin={{
                                                 vertical: 'top',
                                                 horizontal: 'left',
@@ -211,13 +220,13 @@ const ViewProposalModal = ({ show, selectedData }) => {
                                 <img src={FileType} height={'60px'} width={'60px'}></img>
                                 <div className="row-around-center">
                                     <span className="description" style={{ width: '60%', fontWeight:'bold', marginTop:'1.25rem', textWrap: "balance" }}>{selectedData?.document.find((item) => item.group === 'document_sk')?.file_name}</span>
-                                    <MoreVertOutlined onClick={handleClick}/>
+                                    <MoreVertOutlined onClick={handleClickSk}/>
                                     <Menu
                                         id="demo-positioned-menu"
                                         aria-labelledby="demo-positioned-button"
                                         anchorEl={anchorEl}
-                                        open={open}
-                                        onClose={handleClose}
+                                        open={openSk}
+                                        onClose={() => setAnchorEl(null)}
                                         anchorOrigin={{
                                             vertical: 'top',
                                             horizontal: 'left',
@@ -227,7 +236,7 @@ const ViewProposalModal = ({ show, selectedData }) => {
                                             horizontal: 'left',
                                         }}
                                     >
-                                        <MenuItem onClick={() => handleDownloadAttached(selectedData?.document.find((item) => item.group === 'document_sk')?.file_path)}>Download</MenuItem>
+                                        <MenuItem onClick={() => handleDownloadSk(selectedData?.document.find((item) => item.group === 'document_sk')?.file_path)}>Download</MenuItem>
                                     </Menu>
                                 </div>
                             </div>

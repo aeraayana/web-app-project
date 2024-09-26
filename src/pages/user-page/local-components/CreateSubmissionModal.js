@@ -78,6 +78,8 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
     const [confirm, setConfirm] = React.useState(false);
     const [postData, setPostData] = React.useState([]);
 
+    // console.log(dataDraft);
+
     const formData = new FormData();
 
     const { 
@@ -106,7 +108,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
     React.useEffect(() => { 
         if(dataDraft){
             setDataForm(dataDraft);
-            setPostData(dataDraft);
+            setPostData(dataDraft.komponen_rab);
         }else{
             getTematikKegiatan();
         }
@@ -255,7 +257,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
         formData.append('proposal_kegiatan', e.proposal_kegiatan);
         formData.append('waktu_kegiatan', e.start_time.concat(` - ${e.end_time}`));
         formData.append('tanggal_kegiatan', `${e.tanggal_kegiatan} - ${e.tanggal_kegiatan}`);
-        formData.append('alamat_kegiatan', e.alamat_kegiatan.concat(` ${e.alamat_kegiatan_ext}`));
+        formData.append('alamat_kegiatan', e.alamat_kegiatan.concat(` ${e.alamat_kegiatan_ext?? ''}`));
         formData.append('kabupaten_kegiatan', e.kota_code);
         formData.append('kelurahan_kegiatan', e.kelurahan_code?? 1);
         formData.append('kecamatan_kegiatan', e.kecamatan_code);
@@ -1173,11 +1175,10 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                             <CSpinner className="m-5" />
                         ) : (
                             <>
-                                {/* <CModalHeader>
-                                    <CModalTitle className="title-description">
-                                        <FaArrowLeft style={{ cursor: "pointer" }} onClick={() => setIndex(index - 1)}/> ISI FORM PROPOSAL 
+                                <CModalHeader>
+                                    <CModalTitle>
                                     </CModalTitle>
-                                </CModalHeader> */}
+                                </CModalHeader>
                                 <CModalBody>
                                     <div className="col-start-start">
                                         <span className='page-number'>HALAMAN 3 DARI 3</span>

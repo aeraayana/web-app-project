@@ -187,7 +187,7 @@ const ValidateSubmissionFormModal = ({ show, selectedData }) => {
                     </CModalHeader>
                     <CModalBody>
                         <div className="col-start-start w-full">
-                            <span className='title'>{role === 'approver' ? 'VERIFIKASI' : 'VALIDASI'}</span>
+                            <span className='title'>{role === 'approver' ? 'VALIDASI' : 'VERIFIKASI'}</span>
                             <span className='title-description'>PERMINTAAN BARU</span>
                         </div>
                         <Spacing height={"2.25rem"}/>
@@ -343,7 +343,7 @@ const ValidateSubmissionFormModal = ({ show, selectedData }) => {
                                             <Spacing width={"1.25rem"}/>
                                             
                                             <div className="col-start-start">
-                                                <span className="subtitle">{selectedData?.kelompok_masyarakat}</span>
+                                                <span className="subtitle">{selectedData?.nama_verifikator}</span>
                                                 <span className="description">Pemilik Kegiatan 1</span>
                                             </div>
                                         </div>
@@ -356,24 +356,26 @@ const ValidateSubmissionFormModal = ({ show, selectedData }) => {
                             )}
 
                             <hr></hr>
-                            <span className="subtitle">Unggah SK</span>
-                            <Spacing height={'0.45rem'} />
                             {role === 'approver' && (
-                                <div class="file-input">
-                                    <input onChange={handleChange} type="file" style={{ opacity:'0', position:'absolute' }} id="fileDocument" class="file" name='fileDocument' accept="application/pdf"/>
-                                    <div className="col-start-start w-full" style={{ marginLeft:'1.25rem' }}>
-                                        <div 
-                                            className="row-start-start" 
-                                            style={{ border:'1px solid var(--color-semiblack)', borderRadius:'6px', padding: '0.45rem 1.25rem' }}
-                                        >
-                                            <CloudUploadOutlinedIcon />
-                                            <Spacing width={'0.45rem'} />
-                                            <label for="file">Unggah File</label>
+                                <>
+                                    <span className="subtitle">Unggah SK</span>
+                                    <Spacing height={'0.45rem'} />
+                                    <div class="file-input">
+                                        <input onChange={handleChange} type="file" style={{ opacity:'0', position:'absolute' }} id="fileDocument" class="file" name='fileDocument' accept="application/pdf"/>
+                                        <div className="col-start-start w-full" style={{ marginLeft:'1.25rem' }}>
+                                            <div 
+                                                className="row-start-start" 
+                                                style={{ border:'1px solid var(--color-semiblack)', borderRadius:'6px', padding: '0.45rem 1.25rem' }}
+                                            >
+                                                <CloudUploadOutlinedIcon />
+                                                <Spacing width={'0.45rem'} />
+                                                <label for="file">Unggah File</label>
+                                            </div>
+                                            <span class="description-label file-name"></span>
+                                            <span className="description-label">File format PDF max. 5MB</span>
                                         </div>
-                                        <span class="description-label file-name"></span>
-                                        <span className="description-label">File format PDF max. 5MB</span>
                                     </div>
-                                </div>
+                                </>
                             )}
 
                             <Spacing height="1.5rem" />

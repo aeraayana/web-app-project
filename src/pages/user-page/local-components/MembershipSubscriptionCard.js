@@ -14,10 +14,11 @@ import DetailKegiatanModal from "./DetailKegiatanModal";
 import { BrowserView, MobileView } from "react-device-detect";
 
 const ProgressValue = {
+  0: 0,
   1: 6,
   2: 6,
-  3: 6,
-  4: 6,
+  3: 21,
+  4: 21,
 }
 
 const Dictionary = {

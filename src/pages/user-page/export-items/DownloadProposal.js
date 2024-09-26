@@ -132,8 +132,8 @@ const BasicDocument = () => {
                     </View>
                     <View style={[styles.title, { marginTop: '20px' }]}>
                         <Text style={{ padding: '0px 5px 0px 5px', fontWeight: 'bold' }}>3. </Text>
-                        <Text style={{ marginLeft: '10px' }}>Durasi Pelaksanaan</Text>
-                        <Text style={{ fontWeight: 'normal' }}>: ...bulan</Text>
+                        <Text style={{ marginLeft: '10px' }}>Nomor Proposal</Text>
+                        <Text style={{ fontWeight: 'normal' }}>: {data.nomor_pengajuan}</Text>
                     </View>
                     <View style={[styles.title, { marginTop: '20px' }]}>
                         <Text style={{ padding: '0px 5px 0px 5px', fontWeight: 'bold' }}>4. </Text>
@@ -145,22 +145,21 @@ const BasicDocument = () => {
                         <Text wrap>II. </Text> <Text style={{ marginLeft: '20px', fontWeight: "bold" }}> JUSTIFIKASI</Text>
                     </View>
                     
-                    <View style={[styles.title, { marginTop: '10px' }]}>
-                        <Text style={{ padding: '0px 5px 0px 5px', fontWeight: 'normal' }}>5. &nbsp; &nbsp;Keterkaitan Program FOLU Net Sink 2030 (beri tanda centang yang
-                            sesuai, dan dapat pilih lebih dari satu)</Text>
-                    </View>
-                    <View style={styles.content}>
-                        <Text style={{ padding: '0px 5px 0px 30px' }}>Bahasa Indonesia: ...</Text>
-                        <Text style={{ padding: '0px 5px 0px 30px' }}> </Text>
-                        <Text style={{ padding: '0px 5px 0px 30px' }}> </Text>
-                        <Text style={{ padding: '0px 5px 0px 30px' }}> </Text>
-                    </View>
-                    
                     <View style={[styles.title, { marginTop: '20px' }]}>
-                        <Text style={{ padding: '0px 5px 0px 5px', fontWeight: 'normal' }}>6. &nbsp; &nbsp;Latar Belakang Kegiatan/Project Background (Maksimal 250 kata)</Text>
+                        <Text style={{ padding: '0px 5px 0px 5px', fontWeight: 'normal' }}>5. &nbsp; &nbsp;Latar Belakang Kegiatan/Project Background (Maksimal 250 kata)</Text>
                     </View>
                     <View style={styles.content}>
-                        <Text style={{ padding: '0px 5px 0px 30px' }}>Bahasa Indonesia: ...</Text>
+                        <Text style={{ padding: '0px 5px 0px 30px' }}>Bahasa Indonesia: {data.proposal_kegiatan}</Text>
+                        <Text style={{ padding: '0px 5px 0px 30px' }}> </Text>
+                        <Text style={{ padding: '0px 5px 0px 30px' }}> </Text>
+                        <Text style={{ padding: '0px 5px 0px 30px' }}> </Text>
+                    </View>
+
+                    <View style={[styles.title, { marginTop: '10px' }]}>
+                        <Text style={{ padding: '0px 5px 0px 5px', fontWeight: 'normal' }}>6. &nbsp; &nbsp;Tujuan Kegiatan (Maksimal 250 kata)</Text>
+                    </View>
+                    <View style={styles.content}>
+                        <Text style={{ padding: '0px 5px 0px 30px' }}>Bahasa Indonesia: {data.tujuan_kegiatan}</Text>
                         <Text style={{ padding: '0px 5px 0px 30px' }}> </Text>
                         <Text style={{ padding: '0px 5px 0px 30px' }}> </Text>
                         <Text style={{ padding: '0px 5px 0px 30px' }}> </Text>
@@ -170,19 +169,19 @@ const BasicDocument = () => {
                         <Text style={{ padding: '0px 5px 0px 5px', fontWeight: 'normal' }}>7. &nbsp; &nbsp;Ruang Lingkup Kegiatan/Scope of Work (Maksimal 250 kata)</Text>
                     </View>
                     <View style={styles.content}>
-                        <Text style={{ padding: '0px 5px 0px 27px' }}>Bahasa Indonesia: ...</Text>
+                        <Text style={{ padding: '0px 5px 0px 27px' }}>Bahasa Indonesia: {data.ruang_lingkup_kegiatan}</Text>
                         <Text style={{ padding: '0px 5px 0px 27px' }}> </Text>
                         <Text style={{ padding: '0px 5px 0px 27px' }}> </Text>
                         <Text style={{ padding: '0px 5px 0px 27px' }}> </Text>
                     </View>
                     <View style={[styles.footer, { marginTop: '10px' }]}>
-                        <Text>Tanggal .....</Text>
+                        <Text>Tanggal {data.tanggal_pengajuan}</Text>
                         <Text>Penanggung Jawab Usulan</Text>
                     </View>
                     <View style={styles.footer}>
                         <Text style={{ marginTop: '40px' }}>(tanda tangan dan stempel)</Text>
-                        <Text style={{ marginTop: '15px', textDecoration: "underline" }}>(Nama Lengkap)</Text>
-                        <Text>(Kelompok Masyarakat)</Text>
+                        <Text style={{ marginTop: '15px', textDecoration: "underline" }}>({data.nama_pic})</Text>
+                        <Text>({data.kelompok_masyarakat})</Text>
                     </View>
                 </Page>
             </Document>
