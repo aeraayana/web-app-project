@@ -16,6 +16,7 @@ const ProgressValue = {
     2: 6,
     3: 21,
     4: 21,
+    20: 0
 }  
 
 const Dictionary = {
@@ -24,9 +25,10 @@ const Dictionary = {
     2: "Dalam Proses",
     3: "Dalam Proses",
     4: "Dalam Proses",
+    20: "Selesai Ditolak",
 }
 
-const MembershipTable = () => {
+const MembershipTable = ({ setSelectedData, selectedData }) => {
 
     const Wrapper = styled(ContainerCardSection)`
         height: 30rem;
@@ -75,7 +77,12 @@ const MembershipTable = () => {
         }
     `;
 
-    const { dataRiwayat, getDataRiwayatPengajuan } = useAppContext();
+    const { dataRiwayat, getDataRiwayatPengajuan, toggleRiwayatTableModal } = useAppContext();
+
+    const handleClick = (e) => {
+        setSelectedData({data: [e]});
+        toggleRiwayatTableModal();
+    }
 
     React.useEffect(() => {getDataRiwayatPengajuan()}, []);
 
@@ -181,7 +188,7 @@ const MembershipTable = () => {
                                     {'1 Hari'}
                                 </CTableDataCell>
                                 <CTableDataCell width={'20%'}>
-                                    <Hyperlink small={'14px'} label={'Lihat Detail'}/>
+                                    <Hyperlink small={'14px'} label={'Lihat Detail'} onClick={() => handleClick(n)}/>
                                 </CTableDataCell>
                             </CTableRow>
                         ))}

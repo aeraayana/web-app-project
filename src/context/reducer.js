@@ -107,6 +107,12 @@ import {
   POST_FORM_VERIFIKASI,
   POST_FORM_VERIFIKASI_ERROR,
   TOGGLE_PROPOSAL_MODAL,
+  GET_DATA_PENCAIRAN_BEGIN,
+  GET_DATA_PENCAIRAN,
+  TOGGLE_RIWAYAT_TABLE_MODAL,
+  GET_DATA_BANK_BEGIN,
+  GET_DATA_BANK,
+  GET_DATA_BANK_ERROR,
 } from './actions';
 
 import { initialState } from './appContext';
@@ -239,6 +245,27 @@ const reducer = (state, action) => {
     }
   }
   if (action.type === GET_KELURAHAN_BEGIN){
+    return { ...state, isLoading: true };
+  }
+
+  if (action.type === GET_DATA_BANK_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      isError: true,
+      errorMessage: action.payload.message,
+      errorDetail: action.payload.data,
+    };
+  }
+  if (action.type === GET_DATA_BANK) {
+    return {
+      ...state,
+      isSuccess: true,
+      isLoading: false,
+      bank: action.payload.data,
+    }
+  }
+  if (action.type === GET_DATA_BANK_BEGIN){
     return { ...state, isLoading: true };
   }
 
@@ -606,6 +633,17 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === GET_DATA_PENCAIRAN_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_DATA_PENCAIRAN) {
+    return {
+      ...state,
+      isLoading: false,
+      dataPencairan: action.payload.data,
+    };
+  }
+
   if (action.type === GET_DATA_DASHBOARD_VERIFIKATOR_BEGIN) {
     return { ...state, isLoading: true, showAlert: false };
   }
@@ -651,6 +689,13 @@ const reducer = (state, action) => {
     return {
       ...state,
       showDetailProgressModal: !state.showDetailProgressModal,
+    };
+  }
+
+  if (action.type === TOGGLE_RIWAYAT_TABLE_MODAL) {
+    return {
+      ...state,
+      showRiwayatTableModal: !state.showRiwayatTableModal,
     };
   }
 

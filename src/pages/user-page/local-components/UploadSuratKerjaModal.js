@@ -5,16 +5,19 @@ import Wrapper from "../../../wrappers/user-page/UserCreateFormWrapper";
 import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from "../../../configs/constants";
 import { CFormCheck, CModalBody, CModalHeader, CModalTitle } from "@coreui/react";
 import { useAppContext } from "../../../context/appContext";
+import DOCTanggungJawab from '../../../assets/DRAFT SURAT PERNYATAAN PENERIMA LAYANAN DANA MASYARAKAT 18092024 - Clean + safeguard REV (2).docx';
 import { FaArrowLeft } from "react-icons/fa";
 import { ButtonOutlined, ButtonSolid, InputTextWithPrompt, Spacing } from "../../../components";
 import { CloudUploadOutlined } from "@mui/icons-material";
 import { toast } from "react-toastify";
 
 
-const SuratKerjaModal = ({ show, onClose }) => {
+const SuratKerjaModal = ({ show, onClose, data }) => {
     
-    const { dataProgress, dataRiwayat, toggleDetailProgressModal, toggleSuratKerjaModal } = useAppContext();
-    const dateComparison = dataProgress?.data[0]?.tanggal_kegiatan < new Date();
+    const { toggleDetailProgressModal, toggleSuratKerjaModal, toggleRiwayatTableModal } = useAppContext();
+    const dateComparison = data?.data[0]?.tanggal_kegiatan < new Date();
+
+    // console.log(data);
     
     const [options, setOptions] = React.useState(+ dateComparison);
     const [picture, setPicture] = React.useState([]);
@@ -50,7 +53,7 @@ const SuratKerjaModal = ({ show, onClose }) => {
         // console.log(initialState);
         try {
             const response = await axios.post(
-                `${HOST_URL}informasiPencairanDana/${dataRiwayat?.data[dataRiwayat?.data?.length - 1].id}`, formData, {
+                `${HOST_URL}informasiPencairanDana/${data?.data[0]?.id}`, formData, {
                 headers: {
                     Accept: 'application/json',
                     id: CLIENT_ID,
@@ -113,16 +116,11 @@ const SuratKerjaModal = ({ show, onClose }) => {
                 <div style={{ padding:'0.45rem' }}>
                     <div className="col-start-start">
                         <span className="label">Unggah Kontrak Perjanjian Kerja Sama yang sudah dimaterai dan ditandatangani</span>
-                        <span className="sublabel">Unduh <a style={{ color:'var(--color-primary)'}} href="#/layanan-masyarakat">template perjanjian kerja sama.docx</a></span>
+                        <span className="sublabel">Unduh <a style={{ color:'var(--color-primary)'}} href={DOCTanggungJawab}>template perjanjian/ surat pernyataan.docx</a></span>
                     </div>
                 </div>
                 
                 <Spacing height={"2.25rem"}/>
-                {/* <label for="images" class="drop-container" id="dropcontainer">
-                    <span class="drop-title">Drop files here</span>
-                    or
-                    <input type="file" id="images" accept="image/*" required/>
-                </label> */}
 
                 <label for="fileDocument" class="drop-container" id="dropcontainer" style={{ marginLeft:'1.25rem' }}>
                     <span class='drop-title' style={{ border: '1px solid var(--color-disable)', borderRadius: '6px', padding:'0.45rem' }}>
@@ -147,7 +145,7 @@ const SuratKerjaModal = ({ show, onClose }) => {
                     <div className="col-start-start">
                         <span className="label">Unggah Kontrak Perjanjian Kerja Sama yang sudah dimaterai dan ditandatangani</span>
                         <Spacing height={"0.55rem"}/>
-                        <span className="sublabel">Tanggal Kegiatan yang diajukan : &nbsp;<b>{moment(new Date(dataProgress?.data[0]?.tanggal_kegiatan)).format("DD MMMM yyyy")}</b></span>
+                        <span className="sublabel">Tanggal Kegiatan yang diajukan : &nbsp;<b>{moment(new Date(data?.data[0]?.tanggal_kegiatan)).format("DD MMMM yyyy")}</b></span>
                         {dateComparison && <span className="sublabel" style={{ fontStyle:'italic', color:'var(--color-error)' }}>Tanggal Kegiatan yang sebelumnya diajukan tidak valid. Mohon ubah tanggal kegiatan.</span>}
                     </div>
 

@@ -22,8 +22,9 @@ const InputTextWrapper = styled(CFormInput)`
     }
 `
 
-const InputTextSearch = ({ icon, id, name, placeholder, className, onChange, width, height, onKeyDown }) => {
+const InputTextSearch = ({ icon, id, name, placeholder, className, onChange, width, height, onKeyDown, errorMessage, disabled }) => {
     const navigate = useNavigate();
+    const isError = errorMessage && errorMessage.length>0;
 
     return (
         <Wrapper>
@@ -47,6 +48,7 @@ const InputTextSearch = ({ icon, id, name, placeholder, className, onChange, wid
                 style={{
                     width: width,
                     height: height,
+                    border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : !disabled? 'var(--color-black)' : 'var(--color-light-gray)'}`,
                 }} />
         </Wrapper>
     )

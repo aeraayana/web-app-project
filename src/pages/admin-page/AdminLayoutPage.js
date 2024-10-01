@@ -10,14 +10,12 @@ const AdminLayoutPage = () => {
     return (
         <Wrapper>
             <div>
-                <div className='w-full position-fixed' style={{zIndex: 2}}>
-                    <ProfileModal show={showProfileModal} />
-                    <Navbar isLoggedIn={true} isUser={true} />
-                </div>
+                <Navbar isLoggedIn={true} isUser={true} />
                 <div className='d-flex w-full' >
                     <AdminSideBar />
                     <div className='dashboard-page w-full'>
                         <Outlet />
+                        <ProfileModal show={showProfileModal} />
                     </div>
                 </div>
             </div>

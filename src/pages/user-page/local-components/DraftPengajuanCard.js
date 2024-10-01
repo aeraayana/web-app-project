@@ -7,10 +7,6 @@ import RekapitulasiPengajuanCard from "./RekapitulasiPengajuanCard";
 import React from "react";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 
-const ProgressValue = {
-  "Dalam Proses Laporan Pasca Kegiatan": 6,
-}
-
 const DraftPengajuanCard = ({
   name,
   isBestValue,

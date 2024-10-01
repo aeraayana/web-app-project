@@ -1,7 +1,6 @@
 import { CSpinner } from "@coreui/react";
 import React from "react";
 import styled from "styled-components";
-import { useAppContext } from "../../../context/appContext";
 
 function RekapitulasiPengajuanCard({ tipe, judul, data, value }) {
 

@@ -1,13 +1,18 @@
 import styled from 'styled-components'
 
 const Wrapper = styled.main`
-    background-color: var(--color-light-gray);
+    background-color: var(--color-white);
 
-    .dashboard-page{
-        padding: 1.75rem;    //28px
-        overflow-y: auto;
-        padding-left: calc(25% + 1.75rem);
-        padding-top: calc(5.75rem + 1px);
+    .modal-profile {
+        border-radius: 1rem;    // 16px 
+        width: 21.875rem;    // 350px
+        padding: 1.25rem;    // 20px
+        position: absolute;
+        top: 4.75rem;    // 76px
+        right: 2rem;    // 32px
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1;
     }
 `
 

@@ -92,7 +92,11 @@ const ValidateSubmissionFormModal = ({ show, selectedData }) => {
 
     const handleTolak = async (e) => {
         if('approver' === JSON.parse(localStorage.getItem('user_data')).role_user){
-            const response = await postValidasiFormProposal({ id: selectedData?.id, catatan_log: initialState.catatan_log, status: 0 });
+            formData.append('catatan_log', initialState.catatan_log);
+            formData.append('_method', "PUT");
+            formData.append('status', 0);
+            
+            const response = await postValidasiFormProposal({ id: selectedData?.id, formData: formData });
             if(response) {  
                 toast.success(
                     <div className="col-start-start">

@@ -77,6 +77,8 @@ import {
   GET_RANGE_OPENING_BEGIN,
   GET_RANGE_OPENING,
   
+  GET_DATA_PENCAIRAN_BEGIN,
+  GET_DATA_PENCAIRAN,
   GET_DRAFT_PENGAJUAN,
   GET_DRAFT_PENGAJUAN_BEGIN,
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -90,6 +92,9 @@ import {
   POST_FORM_PENGAJUAN,
   POST_FORM_PENGAJUAN_ERROR,
   TOGGLE_PROPOSAL_MODAL,
+  TOGGLE_RIWAYAT_TABLE_MODAL,
+  GET_DATA_BANK_BEGIN,
+  GET_DATA_BANK,
 } from './actions';
 
 const user = localStorage.getItem('token');
@@ -116,6 +121,7 @@ const initialState = {
   bidangFolu: [],
   kelurahan: [],
   kecamatan: [],
+  bank: [],
 
   /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -126,11 +132,13 @@ const initialState = {
   showVerifikasiModal: false,
   showValidasiModal: false,
   showDetailProgressModal: true,
+  showRiwayatTableModal: true,
 
   /////////////////////////////////////////////////////////////////////////////////////////
 
   dataVerifikasi: [],
   dataDraft: [],
+  dataPencairan: [],
   dataRiwayat: [],
   dataDashboard: [],
   dataProgress: [],
@@ -503,6 +511,21 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
+  const getDataBank = async () => {
+    dispatch({ type: GET_DATA_BANK_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getDataBank`);
+      
+      dispatch({
+        type: GET_DATA_BANK,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
   const getKelurahan = async ({ id }) => {
     dispatch({ type: GET_KELURAHAN_BEGIN });
     try {
@@ -581,6 +604,10 @@ const AppProvider = ({ children }) => {
 
   const toggleDetailProgressModal = () => {
     dispatch({ type: TOGGLE_DETAIL_PROGRESS_MODAL });
+  };
+
+  const toggleRiwayatTableModal = () => {
+    dispatch({ type: TOGGLE_RIWAYAT_TABLE_MODAL });
   };
 
   const toggleValidasiModal = () => {
@@ -666,6 +693,21 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
+  const getDataPencairan = async () => {
+    dispatch({ type: GET_DATA_PENCAIRAN_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getDataPencairan`);
+      
+      dispatch({
+        type: GET_DATA_PENCAIRAN,
+        payload: { data: data },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
   const getDataDashboardVerifikator = async () => {
     dispatch({ type: GET_DATA_DASHBOARD_VERIFIKATOR_BEGIN });
     try {
@@ -716,6 +758,7 @@ const AppProvider = ({ children }) => {
         getDataProgressKegiatan,
         getDataRiwayatPengajuan,
         ///////////////////////////////////////////////
+        getDataBank,
         getKelurahan,
         getKecamatan,
         getKota,
@@ -730,6 +773,7 @@ const AppProvider = ({ children }) => {
         toggleVerifikasiModal,
         toggleSuratKerjaModal,
         toggleProposalModal,
+        toggleRiwayatTableModal,
         ///////////////////////////////////////////////
         postVerifikasiFormProposal,
         postValidasiFormProposal,
@@ -737,6 +781,7 @@ const AppProvider = ({ children }) => {
         getDataDashboardVerifikator,
         getDataValidasi,
         getDataVerifikasi,
+        getDataPencairan,
       }}
     >
       {children}

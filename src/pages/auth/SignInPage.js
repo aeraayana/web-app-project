@@ -1,8 +1,7 @@
 import Wrapper from '../../wrappers/auth/SignInPageWrapper';
 import { useAppContext } from '../../context/appContext';
 import React, { useState, useEffect } from 'react';
-import { Navigate, useNavigate } from "react-router-dom";
-import { generateErrorMessage } from "../../configs/globalfunctions"
+import { useNavigate } from "react-router-dom";
 import DOCPanduan from '../../assets/Draft 3-User Guide Aplikasi Dana Masyarakat.pdf'
 
 import {
@@ -27,7 +26,7 @@ const initialState = {
 const SignInPage = () => {
     document.body.style = 'background-image: linear-gradient(145deg, var(--color-primary-dark), var(--color-primary-light));';
     
-    const { token, loginUser, isLoading, errorDetail, getRangeOpening, validDateRange } = useAppContext();
+    const { loginUser, isLoading, getRangeOpening } = useAppContext();
     const navigate = useNavigate();
     const [values, setValues] = useState( initialState );
     const [validate, setValidate] = useState(null);
@@ -65,9 +64,11 @@ const SignInPage = () => {
         // console.log(response);
         if( response ){
             if(["verifikator", "approver"].find((item) => item === JSON.parse(localStorage.getItem('user_data')).role_user)){
-                navigate('/layanan-masyarakat/admin')            
+                navigate('/layanan-masyarakat/admin');            
+            }else if("maker" === JSON.parse(localStorage.getItem('user_data')).role_user){
+                navigate('/layanan-masyarakat/');
             }else{
-                navigate('/layanan-masyarakat/')
+                navigate('/layanan-masyarakat/bpdlh');
             }
         }else{
             toast.error('username dan password salah, mohon periksa lagi', { position: toast.POSITION.TOP_CENTER })

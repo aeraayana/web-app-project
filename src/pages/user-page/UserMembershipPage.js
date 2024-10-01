@@ -13,7 +13,7 @@ import React, { useEffect, useState } from 'react';
 import circlePlusOutlineIcon from './../../assets/images/circle-plus-logo.png'
 import circlePlusSmallIcon from './../../assets/images/circle-plus-small.png'
 import CreateSubmissionModal from './local-components/CreateSubmissionModal';
-import { BrowserView, isMobile, MobileView } from 'react-device-detect';
+import { BrowserView, MobileView } from 'react-device-detect';
 import MobileWrapper from '../../wrappers/user-page/mobile/UserMembershipMobilePageWrapper';
 import { useAppContext } from '../../context/appContext';
 import DraftPengajuanCard from './local-components/DraftPengajuanCard';
@@ -21,6 +21,7 @@ import DetailKegiatanModal from './local-components/DetailKegiatanModal';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from '../../configs/constants';
+import RiwayatTableModal from './local-components/RiwayatTableModal';
 
 const UserMembershipPage = () => {
 
@@ -29,11 +30,18 @@ const UserMembershipPage = () => {
     const { 
         dataProgress,
         getDataProgressKegiatan,
+        
         showFormModal, 
         toggleFormModal, 
+        
         showDetailProgressModal,
         toggleDetailProgressModal,
+
+        showRiwayatTableModal,
+        toggleRiwayatTableModal,
+        
         validDateRange,
+        
         getRangeOpening,
         getDataDraft,
         dataDraft,
@@ -41,6 +49,7 @@ const UserMembershipPage = () => {
 
     const formData = new FormData();
     const [dataRab, setDataRab] = useState(null);
+    const [selectedData, setSelectedData] = useState([]);
 
     useEffect(() => {
         Promise.all([
@@ -95,10 +104,6 @@ const UserMembershipPage = () => {
             </div>
         )
     }
-    
-    // const handleOpenModal = () => {
-    //     toggleFormModal(!showFormModal);
-    // }
 
     useEffect(() => {
         axios.get(`${HOST_URL}getNotification`, {
@@ -109,7 +114,8 @@ const UserMembershipPage = () => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             }
         }).then((res) => {
-            if(res.data.length > 0 && res.data.data){
+            // console.log(res);
+            if(res.data.data.length > 0){
                 toast.success(
                     <div className="col-start-start w-full">
                         <span style={{ fontSize: 22 }} className="label">{res.data.data[0].data.message_header}</span>
@@ -166,6 +172,7 @@ const UserMembershipPage = () => {
                 <DetailKegiatanModal show={!showDetailProgressModal} onClose={toggleDetailProgressModal} data={dataProgress}/>
                 <CreateSubmissionModal dataDraft={dataRab} show={!showFormModal} onClose={toggleFormModal} index={index} setIndex={setIndex} /> 
                 <div className="row-center-end w-full">
+                    
                     <div className='col-start-start w-full'>
                         <span className='title-description'>Halo, </span>
                         <div>
@@ -183,8 +190,11 @@ const UserMembershipPage = () => {
                             })}
                         </span>
                     </div>
+                    
                 </div>
+                
                 <Spacing height="1rem"/>
+                
                 <div className='col-start-center w-full'>
                     <div className='w-full'>
                         <MembershipSubscriptionCard 
@@ -197,14 +207,18 @@ const UserMembershipPage = () => {
                             isBestValue={false}
                         />
                     </div>
+                    
                     <Spacing height="0.5rem"/>
+                    
                     <div className='w-full'>
                         <ButtonSolid onClick={() => handleOpenMobile()} hoverColor={'var(--color-primary-dark)'} 
                             thickness='0.0625rem' borderColor={'var(--color-disable)'} 
                             label={"Buat Pengajuan"} height={'70px'} width={'100%'} color="grey" 
                             iconPre={<img src={circlePlusSmallIcon} />} bgColor={"var(--color-disable-light)"} />
                     </div>
+                    
                     <Spacing height="0.5rem"/>
+                    
                     <div className='w-full'>
                         <MembershipSubscriptionCard 
                             name={"DRAFT PENGAJUAN"}
@@ -217,10 +231,13 @@ const UserMembershipPage = () => {
                     </div>
                     <Spacing height="1.5rem"/>
                 </div>
+                
                 <div className="row-start-end w-full">
                     <div className='col-start-start w-full'>
                         <span className='subtitle'>RIWAYAT KEGIATAN</span>
+                        
                         <Spacing height="0.5rem"/>
+                        
                         <InputTextSearch placeholder="Masukkan Kata Kunci..." width={"80%"} onKeyDown={(e) => 
                         {
                             if (e.key === "Enter") {
@@ -230,16 +247,22 @@ const UserMembershipPage = () => {
                             }
                         }}/>
                         <Spacing height="1.5rem"/>
+
                         <MembershipTable />
                     </div>
                 </div>
             </MobileWrapper>
+
         </MobileView>
+
         <BrowserView>
             <Wrapper>
                 <ToastContainer />
+                
+                <RiwayatTableModal show={!showRiwayatTableModal} onClose={toggleRiwayatTableModal} data={selectedData}/>
                 <DetailKegiatanModal show={!showDetailProgressModal} onClose={toggleDetailProgressModal} data={dataProgress}/>
                 <CreateSubmissionModal dataDraft={dataRab} show={!showFormModal} onClose={toggleFormModal} index={index} setIndex={setIndex} /> 
+                
                 <div className="row-start-between w-full">
                     <div className='col-start-start w-full'>
                         <div>
@@ -259,7 +282,9 @@ const UserMembershipPage = () => {
                         </span>
                     </div>
                 </div>
+                
                 <Spacing height="1rem"/>
+                
                 <div className='col-start-center w-full'>
                     <div className='row-between-start w-full'>
                         <MembershipSubscriptionCard 
@@ -290,10 +315,13 @@ const UserMembershipPage = () => {
                     </div>
                     <Spacing height="2.5rem"/>
                 </div>
+                
                 <div className="row-start-end w-full">
                     <div className='col-start-start w-full'>
                         <span className='subtitle'>RIWAYAT KEGIATAN</span>
+                        
                         <Spacing height="0.5rem"/>
+                        
                         <InputTextSearch placeholder="Masukkan Kata Kunci..." width="21.875rem" onKeyDown={(e) => 
                         {
                             if (e.key === "Enter") {
@@ -302,8 +330,10 @@ const UserMembershipPage = () => {
                                 // navigate("/search", { replace: true })
                             }
                         }}/>
+
                         <Spacing height="1.5rem"/>
-                        <MembershipTable />
+                        
+                        <MembershipTable selectedData={selectedData} setSelectedData={setSelectedData}/>
                     </div>
                 </div>
             </Wrapper>

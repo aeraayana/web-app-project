@@ -8,27 +8,27 @@ import {
 import { useEffect, useState } from "react";
 import MembershipSubscriptionCard from "./local-components/MembershipSubscriptionCard";
 import { useAppContext } from "../../context/appContext";
-import ValidateSubmissionFormModal from "./local-components/ValidateSubmissionFormModal";
 import PenyerapanDanaCard from "./local-components/PenyerapanDanaCard";
+import ValidateSubmissionFormModal from "./local-components/ValidateSubmissionFormModal";
 
-const UserAdminPage = () => {
-  const { dataVerifikasi, getDataValidasi, getDataVerifikasi, toggleVerifikasiModal, showVerifikasiModal, dataDashboard, getDataDashboardVerifikator } = useAppContext();
+const AdminHomePage = () => {
+  const { dataDashboard, 
+    getDataPencairan, 
+    getDataBank, 
+    dataPencairan, 
+    getDataDashboardVerifikator, 
+    toggleVerifikasiModal, 
+    showVerifikasiModal } = useAppContext();
   const [time, setTime] = useState(new Date());
 
   const [selectedData, setSelectedData] = useState(null);
 
   useEffect(() => {
-    if('approver' === JSON.parse(localStorage.getItem('user_data')).role_user){
       Promise.all([
-        getDataValidasi(),
+        getDataBank(),
+        getDataPencairan(),
         getDataDashboardVerifikator(),
       ])
-    } else {
-      Promise.all([
-        getDataVerifikasi(),
-        getDataDashboardVerifikator(),
-      ])
-    }
   }, [])
 
   const handleClick = (data) => {
@@ -36,10 +36,12 @@ const UserAdminPage = () => {
     toggleVerifikasiModal();
   }
 
+  console.log(selectedData)
+
   return (
     <Wrapper>
-      <ValidateSubmissionFormModal show={showVerifikasiModal} onClose={toggleVerifikasiModal} selectedData={selectedData}/>
-
+      <ValidateSubmissionFormModal show={showVerifikasiModal} onClose={toggleVerifikasiModal} selectedData={selectedData} />
+      
       <div style={{ height: '100%' }}>
         <div className="row-start-end w-full">
           <div className="col-start-start w-full">
@@ -81,14 +83,14 @@ const UserAdminPage = () => {
 
         <div className="row-start-start">
           <div className=" col-start-start w-full">
-            <h3 className="title-pengajuan-baru" style={{ width:'100%' }}>PENGAJUAN BARU</h3>
+            <h3 className="title-pengajuan-baru" style={{ width:'100%' }}>TERMIN I</h3>
             <Spacing height="1.25rem" />
             
             <ContainerCardSection secondary className='w-full'>
               <span className='page-number'>VERIFIKASI</span>
               <Spacing height="1.25rem" />
 
-              {dataVerifikasi?.data && dataVerifikasi?.data?.length > 0 ? dataVerifikasi.data.map((n) => (
+              {dataPencairan?.data && dataPencairan?.data?.length > 0 ? dataPencairan.data.map((n) => (
                 <div className="w-full" onClick={() => handleClick(n)}>
                   <UserAdminContainerCard
                     data={n}
@@ -110,7 +112,7 @@ const UserAdminPage = () => {
           <Spacing width="6.5rem" />
 
           <div className=" col-start-start w-full">
-            <h3 className="title-pra-kegiatan" style={{ width:'100%' }}>PRA-KEGIATAN</h3>
+            <h3 className="title-pra-kegiatan" style={{ width:'100%' }}>TERMIN II</h3>
             <Spacing height="1.25rem" />
 
             <ContainerCardSection secondary className={'w-full'}>
@@ -138,65 +140,18 @@ const UserAdminPage = () => {
           
           <Spacing width="6.5rem" />
 
-          <div className="col-start-start w-full">
-            <h3 className="title-kegiatan" style={{ width:'100%' }}>KEGIATAN</h3>
-            <Spacing height="1.25rem" />
-
-            <ContainerCardSection secondary className={'w-full'}>
-              <span className='page-number'>VERIFIKASI</span>
-              <Spacing height="1.25rem" />
-
-              {/* {dataVerifikasi?.data && dataVerifikasi?.data?.length > 0 ? dataVerifikasi.data.map((n) => (
-                <div className="w-full" onClick={() => handleClick(n)}>
-                  <UserAdminContainerCard
-                    data={n}
-                    BorderColor={"orange"} />
-                  <Spacing height={"1.25rem"}/>
-                </div>
-              )) : ( */}
-                <div className="description-subtitle">
-                  <p className="card-title"></p>
-                  <p className="card-subtitle">Belum ada data pengajuan</p>
-                  <p className='card-text-content'></p>
-                  <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
-                </div>
-              {/* )} */}
-
-            </ContainerCardSection>
+          <div className=" col-start-start w-full">
           </div>
-          
+
           <Spacing width="6.5rem" />
 
-          <div className="col-start-start w-full">
-            <h3 className="title-pasca-kegiatan" style={{ width:'100%' }}>PASCA KEGIATAN</h3>
-            <Spacing height="1.25rem" />
-
-            <ContainerCardSection secondary className={'w-full'}>    
-              <span className='page-number'>VERIFIKASI</span>
-              <Spacing height="1.25rem" />
-
-              {/* {dataVerifikasi?.data && dataVerifikasi?.data?.length > 0 ? dataVerifikasi.data.map((n) => (
-                <div className="w-full" onClick={() => handleClick(n)}>
-                  <UserAdminContainerCard
-                    data={n}
-                    BorderColor={"orange"} />
-                  <Spacing height={"1.25rem"}/>
-                </div>
-              )) : ( */}
-                <div className="description-subtitle">
-                  <p className="card-title"></p>
-                  <p className="card-subtitle">Belum ada data pengajuan</p>
-                  <p className='card-text-content'></p>
-                  <p style={{fontSize: "15px"}} className='fw-bold text-end'></p>
-                </div>
-              {/* )} */}
-
-            </ContainerCardSection>
+          <div className=" col-start-start w-full">
           </div>
+
         </div>
       </div>
     </Wrapper>
   );
 };
 
-export default UserAdminPage;
+export default AdminHomePage;

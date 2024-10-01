@@ -15,20 +15,31 @@ const Wrapper = styled(CFormInput)`
     }
 `
 
-const InputText = ({ id, name, type, isError, placeholder, className, onChange, width, height }) => {
+const InputText = ({ onInput, textAlign, disabled, defaultValue, id, type, name, errorMessage, placeholder, className, onChange, width, inputHeight, value, onBlur, onKeyDown }) => {
+    
+    const isError = errorMessage && errorMessage.length>0;
+
     return (
         <Wrapper id={id} 
             name={name} 
-            width={width}
-            height={height}
             type={type? type : "text"} 
             autoComplete="off" 
             placeholder={placeholder? placeholder : ""} 
             className={className} 
             onChange={onChange}
+            disabled={disabled}
+            onChangeCapture={onInput}
+            defaultValue={defaultValue}
+            value={value}
+            onBlur={onBlur}
+            onKeyDown={onKeyDown}
             style={{
-                backgroundColor: `${ isError? 'var(--color-error-light)' : 'none' }`,
-                border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : 'var(--color-black)'}`,
+                textAlign: textAlign,
+                width: width,
+                height: inputHeight,
+                color: `${ disabled? 'var(--color-disable)' : 'black'}`,
+                backgroundColor: `${ disabled? 'var(--color-disable-light)' : 'white' }`,
+                border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : !disabled? 'var(--color-black)' : 'var(--color-light-gray)'}`,
             }} >
         </Wrapper>
     )

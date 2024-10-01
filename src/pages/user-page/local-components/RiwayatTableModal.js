@@ -17,17 +17,18 @@ import { useAppContext } from "../../../context/appContext";
 import SuratKerjaModal from "./UploadSuratKerjaModal";
 import ViewProposalModal from "./ViewProposalModal";
 
-const DetailKegiatanModal = ({ show, onClose, data }) => {
+const RiwayatTableModal = ({ show, onClose, data }) => {
     
     const [dataForm, setDataForm] = React.useState([]);
+    const [showProposal, setShow] = React.useState(false);
 
+    // console.log(data);
     // console.log(show);
 
     const { 
         dataProgress, 
         toggleSuratKerjaModal, 
-        suratKerjaModal, 
-        toggleDetailProgressModal, 
+        toggleRiwayatTableModal,
         toggleProposalModal, 
         showProposalModal,
     } = useAppContext();
@@ -50,12 +51,12 @@ const DetailKegiatanModal = ({ show, onClose, data }) => {
 
     const handleOpen = () => {
         toggleSuratKerjaModal();
-        toggleDetailProgressModal();
+        toggleRiwayatTableModal();
     }
 
     const handleProposal = () => {
-        toggleProposalModal();
-        toggleDetailProgressModal();
+        setShow(!showProposal);
+        toggleRiwayatTableModal();
     }
 
     if(data.length === 0){
@@ -148,8 +149,8 @@ const DetailKegiatanModal = ({ show, onClose, data }) => {
                 </MobileWrapper>
             </MobileView>
             <BrowserView>
-                <ViewProposalModal show={showProposalModal} onClose={toggleProposalModal} selectedData={dataForm} />
-                <SuratKerjaModal show={suratKerjaModal} onClose={toggleSuratKerjaModal} data={data}/>
+                <ViewProposalModal show={showProposal} onClose={handleProposal} selectedData={dataForm} />
+                {/* <SuratKerjaModal show={suratKerjaModal} onClose={toggleSuratKerjaModal} data={data}/> */}
                 <Wrapper
                     size="lg"
                     scrollable
@@ -229,4 +230,4 @@ const DetailKegiatanModal = ({ show, onClose, data }) => {
     )
 }
 
-export default DetailKegiatanModal
+export default RiwayatTableModal

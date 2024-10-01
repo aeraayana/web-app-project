@@ -78,8 +78,6 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
     const [confirm, setConfirm] = React.useState(false);
     const [postData, setPostData] = React.useState([]);
 
-    // console.log(dataDraft);
-
     const formData = new FormData();
 
     const { 
@@ -223,13 +221,15 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
 
     const handleChangeQty = async (n, e, idx) => {
         let list = dataForm;
-        console.log(validDateRange)
         list.komponen_rab[n][idx][e.target.name] = e.target.value === '' ? 0 : parseInt(e.target.value.replace(r, ''));
         
         if( getTotal(postData, 'harga_unit', 'qty') >= parseInt(validDateRange?.data?.batas_pengajuan) ){
+            console.log(postData)
+            list.komponen_rab[n][idx][e.target.name] = postData[n][idx][e.target.name];
             toast.error('data tidak boleh lebih dari capping');
+            setPostData({ ...list.komponen_rab });
         }else{
-            setPostData({ ...list.komponen_rab })
+            setPostData({ ...list.komponen_rab });
         }
         
     }
@@ -1187,6 +1187,8 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                                     </div>
                                     
                                     <Spacing height="2.25rem" />   
+
+                                    <span className="description" style={{ color:'var(--color-error)', fontStyle: 'italic' }} >Nilai maksimal pada periode ini: {numFormat(validDateRange?.data?.batas_pengajuan)}</span>
                                     
                                     <CTable borderless>
                                         <CTableHead>
@@ -1278,6 +1280,9 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                                         <Spacing width={'4.45rem'}/>
                                         <span className="subtitle">{numFormat(getTotal(postData, 'harga_unit', 'qty'))}</span>
                                     </div>
+                                    {getTotal(postData, 'harga_unit', 'qty') >= parseInt(validDateRange?.data?.batas_pengajuan) && (
+                                        <span className="description" style={{ color:'var(--color-error)', fontStyle: 'italic' }} >Nilai total pengajuan tidak boleh melebihi batas maksimal</span>
+                                    )}
                                     <Spacing height="2.5rem" />
                                     
                                     <section className='col-center-center w-full'>
@@ -1289,7 +1294,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
                                         <Spacing height={'1.85rem'}/>
                                         <ButtonSolid 
                                             label="Kirim Pengajuan" 
-                                            disabled={!confirm}
+                                            disabled={!confirm || (getTotal(postData, 'harga_unit', 'qty') >= parseInt(validDateRange?.data?.batas_pengajuan)) }
                                             onClick={() => {
                                                 handleCloseForm();
                                                 toggleFormModal();

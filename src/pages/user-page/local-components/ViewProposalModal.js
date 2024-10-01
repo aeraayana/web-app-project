@@ -13,7 +13,9 @@ import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from "../../../configs/constant
 import { MoreVertOutlined } from "@mui/icons-material";
 import { Menu, MenuItem } from "@mui/material";
 
-const ViewProposalModal = ({ show, selectedData }) => {
+const ViewProposalModal = ({ show, onClose, selectedData }) => {
+
+    // console.log(show);
     const [dataForm, setDataForm] = React.useState(null);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorAttach, setAnchorAttach] = React.useState(null);
@@ -69,13 +71,12 @@ const ViewProposalModal = ({ show, selectedData }) => {
         if (newWindow) newWindow.opener = null;
     }
     
-    const { toggleProposalModal, showProposalModal, toggleDetailProgressModal } = useAppContext();
+    // const { toggleProposalModal, showProposalModal, toggleDetailProgressModal } = useAppContext();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
     
     const handleReturn = () => {
-        toggleProposalModal();
-        toggleDetailProgressModal();
+        onClose();
     }
 
     if(selectedData.length === 0){
@@ -84,8 +85,8 @@ const ViewProposalModal = ({ show, selectedData }) => {
                 size="lg"
                 scrollable
                 alignment="center"
-                visible={showProposalModal}
-                onClose={toggleProposalModal}
+                visible={show}
+                onClose={onClose}
             >
                 {show && (<CSpinner />)}
             </Wrapper>
@@ -99,8 +100,8 @@ const ViewProposalModal = ({ show, selectedData }) => {
                     size="lg"
                     scrollable
                     alignment="center"
-                    visible={showProposalModal}
-                    onClose={toggleProposalModal}
+                    visible={show}
+                    onClose={onClose}
                 >
                     <CModalHeader>
                         <CModalTitle className="title-description">

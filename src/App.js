@@ -24,6 +24,7 @@ import ProtectedUserEditRoute from './pages/ProtectedUserEditRoute'
 import UserAdminPage from './pages/user-page/UserAdminPage'
 import BasicDocument from './pages/user-page/export-items/DownloadProposal';
 import DocumentRab from './pages/user-page/export-items/DownloadRAB';
+import AdminHomePage from './pages/admin-page/AdminHomePage';
 
 
 
@@ -87,8 +88,8 @@ function App() {
                 {/* <Route path='/forgot-password' element={<ForgotPasswordPage />} /> */}
                 {/* <Route index element={<Stats />} />
                 <Route path='all-jobs' element={<AllJobs />} />
-                <Route path='add-job' element={<AddJob />} />
-                <Route path='profile' element={<Profile />} /> */}
+                <Route path='add-job' element={<AddJob />} /> */}
+                <Route path='/layanan-masyarakat/bpdlh' element={< AdminHomePage/>} />
             </Route>
             <Route path='/layanan-masyarakat/create-account' element={<CreateAccountPage />} />
             <Route path='/layanan-masyarakat/email-sent' element={<EmailSentPage />} />
