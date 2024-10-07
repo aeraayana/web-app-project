@@ -55,7 +55,7 @@ const SignInPage = () => {
     }, [])
 
     const actionCreateAccountClick = () => {
-        navigate("/layanan-masyarakat/create-account");        
+        navigate("/create-account");        
     }
 
     const actionSignInClick = async (e) => {
@@ -64,11 +64,11 @@ const SignInPage = () => {
         // console.log(response);
         if( response ){
             if(["verifikator", "approver"].find((item) => item === JSON.parse(localStorage.getItem('user_data')).role_user)){
-                navigate('/layanan-masyarakat/dashboard-admin');            
+                navigate('/dashboard-admin');            
             }else if("maker" === JSON.parse(localStorage.getItem('user_data')).role_user){
-                navigate('/layanan-masyarakat/');
+                navigate('/');
             }else{
-                navigate('/layanan-masyarakat/dashboard-bpdlh');
+                navigate('/dashboard-bpdlh');
             }
         }else{
             toast.error('username dan password salah, mohon periksa lagi', { position: toast.POSITION.TOP_CENTER })
@@ -77,11 +77,11 @@ const SignInPage = () => {
     }
 
     const actionLandingPageClick = () => {
-        navigate("/layanan-masyarakat/landing")
+        navigate("/landing")
     }
 
     const actionForgotPasswordClick = () => {
-        navigate("/layanan-masyarakat/forgot-password");
+        navigate("/forgot-password");
     }
 
     return (

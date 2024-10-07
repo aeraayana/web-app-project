@@ -37,7 +37,7 @@ const AdminSideBar = () => {
                         { ['verifikator', 'approver'].find((item) => item === user.role_user) ? (
                             <>
                                 <CNavItem className='fs-2'> 
-                                    <Link className='nav-link fs-2' to={'/layanan-masyarakat/dashboard-admin'}>
+                                    <Link className='nav-link fs-2' to={'/dashboard-admin'}>
                                         <HomeIcon sx={{ color: `${isActive[length - 1] === 'dashboard-admin' ? 'var(--color-primary)' : 'var(--color-black)'} `}}/> 
                                     </Link>
                                 </CNavItem>
@@ -49,7 +49,7 @@ const AdminSideBar = () => {
                         { "maker" === user.role_user ? (
                             <>
                                 <CNavItem className='fs-2'> 
-                                    <Link className='nav-link fs-2' to={'/layanan-masyarakat/'}>
+                                    <Link className='nav-link fs-2' to={'/'}>
                                         <HomeIcon sx={{ color: `${isActive[length - 1] === 'layanan-masyarakat'? 'var(--color-primary)' : 'var(--color-black)'} `}}/> 
                                     </Link>
                                 </CNavItem>
@@ -61,7 +61,7 @@ const AdminSideBar = () => {
                         { 'pmu-bpdlh' === user.role_user ? (
                             <>
                                 <CNavItem className='fs-2'> 
-                                    <Link className='nav-link fs-2' to={'/layanan-masyarakat/dashboard-bpdlh'}>
+                                    <Link className='nav-link fs-2' to={'/dashboard-bpdlh'}>
                                         <HomeIcon sx={{ color: `${isActive[length - 1] === 'dashboard-bpdlh'? 'var(--color-primary)' : 'var(--color-black)'} `}}/> 
                                     </Link>
                                 </CNavItem>
@@ -72,7 +72,7 @@ const AdminSideBar = () => {
 
                         { ['verifikator', 'approver', 'pmu-bpdlh'].find((item) => item === user.role_user) ? (
                             <CNavItem className='fs-2'> 
-                                <Link className='nav-link fs-2' to={'/layanan-masyarakat/riwayat-pengajuan'}>
+                                <Link className='nav-link fs-2' to={'/riwayat-pengajuan'}>
                                     <ArtTrackIcon sx={{ color: `${isActive[length - 1] === 'riwayat-pengajuan'? 'var(--color-primary)' : 'var(--color-black)'} `}}/>
                                 </Link>
                             </CNavItem>
@@ -81,7 +81,7 @@ const AdminSideBar = () => {
                         ) }
                         
                         <CNavItem className='fs-2'>
-                            <Link className='nav-link fs-2' to={'/layanan-masyarakat/downloads'}>
+                            <Link className='nav-link fs-2' to={'/downloads'}>
                                <FolderCopyIcon sx={{ color: `${isActive[length - 1] === 'downloads'? 'var(--color-primary)' : 'var(--color-black)'} `}}/>
                             </Link> 
                         </CNavItem>

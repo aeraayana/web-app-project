@@ -38,31 +38,31 @@ function App() {
     return (
     <HashRouter>
         <Routes>
-            <Route path='/layanan-masyarakat/' 
+            <Route path='/' 
                 element={
                     <ProtectedRoute> 
                         <UserLayoutPage />
                     </ProtectedRoute>
                 }>
 
-                <Route path='/layanan-masyarakat/dashboard-admin' element={<UserAdminPage />} />
+                <Route path='/dashboard-admin' element={<UserAdminPage />} />
                 <Route index element={<UserMembershipPage/>}></Route>
-                <Route path='/layanan-masyarakat/downloads' element={<UserHomePage />} />
-                <Route path='/layanan-masyarakat/laporan-pdf' element={<BasicDocument />}/>
-                <Route path='/layanan-masyarakat/laporan-rab/:id' element={<DocumentRab />}/>
-                <Route path='/layanan-masyarakat/riwayat-pengajuan' element={< AdminRiwayatPage/>} />
-                <Route path='/layanan-masyarakat/dashboard-bpdlh' element={< AdminHomePage/>} />
+                <Route path='/downloads' element={<UserHomePage />} />
+                <Route path='/laporan-pdf' element={<BasicDocument />}/>
+                <Route path='/laporan-rab/:id' element={<DocumentRab />}/>
+                <Route path='/riwayat-pengajuan' element={< AdminRiwayatPage/>} />
+                <Route path='/dashboard-bpdlh' element={< AdminHomePage/>} />
             </Route>
-            <Route path='/layanan-masyarakat/create-account' element={<CreateAccountPage />} />
-            <Route path='/layanan-masyarakat/email-sent' element={<EmailSentPage />} />
-            <Route path='/layanan-masyarakat/forgot-password' element={<ForgotPasswordPage />} />
-            <Route path='/layanan-masyarakat/sign-in' element={<SignInPage />} />
-            <Route path='/layanan-masyarakat/verify-email' element={<VerifyEmailPage />} />
-            <Route path='/layanan-masyarakat/landing' element={<LandingPage />} />
-            <Route path='/layanan-masyarakat/reset-password/:serial' element={<ResetPasswordPage />} />
-            <Route path='/layanan-masyarakat/verify-register/:serial' element={<VerifyRegisterPage />} />
+            <Route path='/create-account' element={<CreateAccountPage />} />
+            <Route path='/email-sent' element={<EmailSentPage />} />
+            <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+            <Route path='/sign-in' element={<SignInPage />} />
+            <Route path='/verify-email' element={<VerifyEmailPage />} />
+            <Route path='/landing' element={<LandingPage />} />
+            <Route path='/reset-password/:serial' element={<ResetPasswordPage />} />
+            <Route path='/verify-register/:serial' element={<VerifyRegisterPage />} />
 
-            <Route path='*' element={<Navigate to="/layanan-masyarakat/" />} />
+            <Route path='*' element={<Error />} />
         </Routes>
     </HashRouter>
     )

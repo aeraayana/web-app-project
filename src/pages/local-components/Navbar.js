@@ -20,7 +20,7 @@ const Navbar = ({ className, isLoggedIn, isUser, isAdmin }) => {
     const { token, toggleProfileModal, setSearch, logoutUser } = useAppContext();
 
     const actionSignInClick = () => {
-        navigate("/layanan-masyarakat/sign-in");    
+        navigate("/sign-in");    
         logoutUser();
     }
 

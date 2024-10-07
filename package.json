@@ -2,7 +2,7 @@
   "name": "my-hockey",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://uat.bpdlh.id/layanan-masyarakat/",
+  "homepage": "https://aeraayana.github.io/",
   "dependencies": {
     "@coreui/coreui": "^5.0.0-alpha.1",
     "@coreui/react": "^5.0.0-alpha.0",

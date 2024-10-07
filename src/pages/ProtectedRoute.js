@@ -5,7 +5,7 @@ const ProtectedRoute = ({ children }) => {
   const { token, userLoading } = useAppContext();
 
   if (!token) {
-    return <Navigate to='/layanan-masyarakat/sign-in' />;
+    return <Navigate to='/sign-in' />;
   }
   return children;
 };

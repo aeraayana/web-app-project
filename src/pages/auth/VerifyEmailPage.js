@@ -16,7 +16,7 @@ const VerifyEmailPage = () => {
 
     const actionOkayClick = (e) => {
         e.preventDefault();
-        navigate("/layanan-masyarakat/sign-in");        
+        navigate("/sign-in");        
     }
 
     return (

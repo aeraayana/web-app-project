@@ -45,7 +45,7 @@ const ResetPasswordPage = () => {
         }
         const success = await resetPassword({ password: password, password_confirmation: passwordConfirm, token: search[0], email: search[1].replace('%40', '@') });
         if( success ){
-            navigate("/layanan-masyarakat/sign-in");        
+            navigate("/sign-in");        
         }
     }
 

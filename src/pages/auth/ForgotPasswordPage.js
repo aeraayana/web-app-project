@@ -29,7 +29,7 @@ const ForgotPasswordPage = () => {
 
     const actionCancelClick = (e) => {
         e.preventDefault();
-        navigate('layanan-masyarakat/sign-in');        
+        navigate('/sign-in');        
     }
 
     const actionConfirmClick = async (e) => {
@@ -37,7 +37,7 @@ const ForgotPasswordPage = () => {
         const { email } = values;
         const success = await forgotPassword({ email: email });
         if( success ){
-            navigate('/layanan-masyarakat/email-sent');
+            navigate('/email-sent');
         }
     }
 

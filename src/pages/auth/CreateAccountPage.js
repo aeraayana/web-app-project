@@ -47,7 +47,7 @@ const CreateAccountPage = () => {
     // console.log(values)
 
     const actionSignInClick = () => {
-        navigate("layanan-masyarakat/sign-in");        
+        navigate("/sign-in");        
     }
 
     const handleChange = (e) => {
@@ -66,7 +66,7 @@ const CreateAccountPage = () => {
             category: namaKelompokMasyarakat, email: email, name: nama, identity_type: jenisId, identity_number: userId, phone_number: noTelp });
         if( success ){
             //console.log(success)
-            navigate("/layanan-masyarakat/");
+            navigate("/");
         }else{
             toast(
             <div className='col-center-center w-full'>
