@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/layanan-masyarakat/static/css/main.7e7e1f5a.css",
-    "main.js": "/layanan-masyarakat/static/js/main.833e817c.js",
+    "main.js": "/layanan-masyarakat/static/js/main.e04ff460.js",
     "static/media/Draft 3-User Guide Aplikasi Dana Masyarakat.pdf": "/layanan-masyarakat/static/media/Draft 3-User Guide Aplikasi Dana Masyarakat.55ae43a254938ab49561.pdf",
     "static/media/LDML_Panduan Pengguna Layanan Dana Masyarakat untuk Lingkungan.pdf": "/layanan-masyarakat/static/media/LDML_Panduan Pengguna Layanan Dana Masyarakat untuk Lingkungan.55ae43a254938ab49561.pdf",
     "static/media/hockey.png": "/layanan-masyarakat/static/media/hockey.6a55ebbfa228ec08391c.png",
@@ -57,10 +57,9 @@
     "static/media/OpenSans-Light.woff2": "/layanan-masyarakat/static/media/OpenSans-Light.b0c36ec467c5dc09f4e5.woff2",
     "static/media/OpenSans-ExtraBold.woff2": "/layanan-masyarakat/static/media/OpenSans-ExtraBold.62e59661197ab1636f77.woff2",
     "static/media/OpenSans-Bold.woff2": "/layanan-masyarakat/static/media/OpenSans-Bold.61042fe6058533e523f3.woff2",
-    "static/media/LDML_Dokumen Pertanggung Jawaban.docx": "/layanan-masyarakat/static/media/LDML_Dokumen Pertanggung Jawaban.df5a7580519b39c23cb9.docx",
-    "static/media/LDML_Perjanjian Kontrak Kerjasama.docx": "/layanan-masyarakat/static/media/LDML_Perjanjian Kontrak Kerjasama.7a7825b558c2a2edb228.docx",
     "static/media/not-found.svg": "/layanan-masyarakat/static/media/not-found.5eb3e64476624b8a49d7d75cc64a0d40.svg",
     "static/media/readMoreImg.svg": "/layanan-masyarakat/static/media/readMoreImg.bc7472aa9a5f8d4dd3b6ec55d62416fb.svg",
+    "static/media/DRAFT SURAT PERNYATAAN PENERIMA LAYANAN DANA MASYARAKAT 18092024 - Clean + safeguard REV (2).docx": "/layanan-masyarakat/static/media/DRAFT SURAT PERNYATAAN PENERIMA LAYANAN DANA MASYARAKAT 18092024 - Clean + safeguard REV (2).62017e22567cc06c72ac.docx",
     "static/media/main.svg": "/layanan-masyarakat/static/media/main.f1624efcba3ac7e36d1e54d5606200bb.svg",
     "static/media/water.png": "/layanan-masyarakat/static/media/water.f6a8290c9a7adc73bd33.png",
     "static/media/amico.png": "/layanan-masyarakat/static/media/amico.8784bcbc47a1686c4799.png",
@@ -76,11 +75,10 @@
     "static/media/icon-check.svg": "/layanan-masyarakat/static/media/icon-check.c3425eab864e7b0105777eceeec7644d.svg",
     "static/media/logo-star.svg": "/layanan-masyarakat/static/media/logo-star.706920c51e67ce26daebcc03ea71384c.svg",
     "static/media/logo-crown-primary.svg": "/layanan-masyarakat/static/media/logo-crown-primary.16c6562cb3cbe5807a66fa63a3eeb26a.svg",
-    "static/media/logo-crown.svg": "/layanan-masyarakat/static/media/logo-crown.95314c3740c0753a9dd0377cdef2718c.svg",
-    "static/media/logo-house.svg": "/layanan-masyarakat/static/media/logo-house.a478cb42e2b761b0254f294bf65a581f.svg"
+    "static/media/logo-crown.svg": "/layanan-masyarakat/static/media/logo-crown.95314c3740c0753a9dd0377cdef2718c.svg"
   },
   "entrypoints": [
     "static/css/main.7e7e1f5a.css",
-    "static/js/main.833e817c.js"
+    "static/js/main.e04ff460.js"
   ]
 }
