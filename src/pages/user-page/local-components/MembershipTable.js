@@ -77,14 +77,14 @@ const MembershipTable = ({ setSelectedData, selectedData }) => {
         }
     `;
 
-    const { dataRiwayat, getDataRiwayatPengajuan, toggleRiwayatTableModal } = useAppContext();
+    const { dataRiwayat, getDataRiwayatPengajuanUser, toggleRiwayatTableModal } = useAppContext();
 
     const handleClick = (e) => {
         setSelectedData({data: [e]});
         toggleRiwayatTableModal();
     }
 
-    React.useEffect(() => {getDataRiwayatPengajuan()}, []);
+    React.useEffect(() => {getDataRiwayatPengajuanUser()}, []);
 
     if (isMobile){
         return (

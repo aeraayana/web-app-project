@@ -133,6 +133,11 @@ const Wrapper = styled.main`
     paddingLeft: "1%";
     fontSize: "15px";
   }
+
+  .label {
+    font-size: var(--font-size-normal);
+    font-weight: 600;
+  }
 `;
 
 export default Wrapper;

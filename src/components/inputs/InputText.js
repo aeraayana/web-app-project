@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { CFormInput } from '@coreui/react';
 
 const Wrapper = styled(CFormInput)`
-    padding: 0.15rem;
+    padding: 0.75rem 1rem;
     font-family: var(--font-family-primary);
     font-size: var(--font-size-normal);
     font-weight: var(--font-weight-normal);

@@ -8,11 +8,18 @@ import { CLIENT_ID, CLIENT_ID_SECRET, HOST_URL } from "../../../configs/constant
 import { toast, ToastContainer } from "react-toastify";
 import Wrapper from "../../../wrappers/admin-page/AdminPageWrapper";
 
+const numFormat = (number) => {
+	return new Intl.NumberFormat("id-ID", { style: "decimal" }).format(number);
+};
+
+const r = new RegExp('[.]', 'g');
+
 const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
 
-    let initialState = {
-        pengajuan_kegiatan_id: selectedData?.id,
-    };
+    const [initialState, setInitialState] = React.useState({
+        pengajuan_kegiatan_id: '',
+        nilai_penyaluran: 0,
+    });
 
     const { bank } = useAppContext();
 
@@ -21,12 +28,26 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
     const handleChange = (e) => {
         let list = initialState;        
         list[e.target.name] = e.target.value;
+
+        setInitialState({ ...list });
+    }
+
+    const handleChangeQty = async (e) => {
+        let list = initialState;
+        list[e.target.name] = e.target.value === '' ? 0 : parseInt(e.target.value.replace(r, ''));
+        
+        setInitialState({ ...list });
     }
 
     const handleSetuju = async () => {
         try {
+            const formBody = {
+                ...initialState,
+                pengajuan_kegiatan_id: selectedData?.id,
+            }
+
             const response = await axios.post(
-                `${HOST_URL}detailInformasiPencairan`, initialState, {
+                `${HOST_URL}detailInformasiPencairan`, formBody, {
                 headers: {
                     Accept: 'application/json',
                     id: CLIENT_ID,
@@ -47,7 +68,7 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
             }
         } catch (error) {
             toast.error(
-                <div>s
+                <div>
                     <span className="description" style={{ fontWeight: 'bold', color:'white' }}>Terjadi kendala jaringan. [Parsing data failed]</span>
                 </div>, { position: toast.POSITION.TOP_CENTER, theme: 'colored' }
             );
@@ -175,7 +196,7 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
 
                         <ChoiceBoxStringWithPrompt 
                             className={'w-full'}
-                            prompt={"Provinsi"} 
+                            prompt={"Nama Bank"} 
                             options={bank?.data} 
                             id={"nama_bank"} 
                             height={'2.25rem'} 
@@ -188,7 +209,7 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                         <InputTextWithPrompt 
                             width={"100%"}
                             prompt={"Nomor Rekening Giro"} 
-                            type={"text"} 
+                            type={"number"} 
                             inputHeight={'2.25rem'} 
                             id={"nomor_rekening"} 
                             name={"nomor_rekening"}
@@ -214,10 +235,10 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                             width={"100%"}
                             type={"text"} 
                             inputHeight={'2.25rem'} 
-                            id={"alamat_kegiatan_ext"} 
-                            name={"alamat_kegiatan_ext"}
+                            id={"dana_yang_disetujui"} 
+                            name={"dana_yang_disetujui"}
                             disabled
-                            defaultValue={initialState?.alamat_kegiatan_ext} 
+                            defaultValue={numFormat(selectedData?.dana_yang_disetujui)} 
                             onBlur={(e) => handleChange(e)} />  
 
                         <Spacing height={"0.75rem"}/>
@@ -227,22 +248,22 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
                             width={"100%"}
                             type={"text"} 
                             inputHeight={'2.25rem'} 
-                            id={"alamat_kegiatan_ext"} 
-                            name={"alamat_kegiatan_ext"}
+                            id={"dana_yang_dicairkan"} 
+                            name={"dana_yang_dicairkan"}
                             disabled
-                            defaultValue={initialState?.alamat_kegiatan_ext} 
+                            defaultValue={selectedData?.dana_yang_dicairkan === 0 ? numFormat(selectedData?.dana_yang_disetujui) : numFormat(selectedData?.dana_yang_disetujui - selectedData?.dana_yang_dicairkan)} 
                             onBlur={(e) => handleChange(e)} />  
 
                         <Spacing height={"0.75rem"}/>
 
                         <span className='description'>Jumlah pencairan Termin I</span>
                         <InputTextSearch
-                            type="email"
+                            type="text"
                             id="nilai_penyaluran"
                             name="nilai_penyaluran"
-                            icon={<div className="description">{((initialState?.value - selectedData?.pencairan_disetujui)/selectedData?.pencairan_disetujui)?? 0}%</div>}
-                            value={initialState?.nilai_penyaluran}
-                            onChange={handleChange}
+                            icon={<div className="description">{Math.ceil(initialState?.nilai_penyaluran / selectedData?.dana_yang_disetujui * 100)?? 0}%</div>}
+                            value={numFormat(parseInt(initialState?.nilai_penyaluran))}
+                            onChange={(e) => handleChangeQty(e)}
                             className="w-full"/>
 
                         <Spacing height={"0.75rem"}/>
@@ -260,12 +281,18 @@ const ValidateSubmissionFormModal = ({ show, onClose, selectedData }) => {
 
                         <Spacing height={"2.75rem"}/>
 
-                        <div className="row-center-center w-full">
-                            
+                        <div className="col-center-center w-full">
+                            <div>
+                                {initialState?.nilai_penyaluran >= selectedData?.dana_yang_dicairkan && (
+                                    <span className="description" style={{ color:'var(--color-error)', fontStyle: 'italic' }} >Jumlah pencairan tidak boleh melebihi dana yang belum dicairkan</span>
+                                )}
+                            </div>
+
                             <ButtonSolid 
                                 label={'Konfirmasi Pengiriman'} 
                                 className={'w-full'} 
                                 width={'47%'} 
+                                disabled={(initialState?.nilai_penyaluran >= selectedData?.dana_yang_disetujui)}
                                 onClick={() => {
                                     handleSetuju();
                                 }}

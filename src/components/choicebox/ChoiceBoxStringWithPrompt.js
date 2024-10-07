@@ -34,7 +34,7 @@ const Wrapper = styled.div`
 `;
 
 const ChoiceBoxStringWithPrompt = ({ prompt, disabled, options, id, name, onChange, height, errorMessage, className, width, value, onBlur }) => {
-
+    
     const isError = errorMessage && errorMessage.length>0;
 
     return (

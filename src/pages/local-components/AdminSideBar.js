@@ -6,17 +6,24 @@ import {
     CNavItem,
     CSidebarNav
 } from '@coreui/react';
+import { Link, Navigate, useParams } from 'react-router-dom';
 
-import { Link, Navigate } from 'react-router-dom';
-import LogoHouse from '../../components/logo-icon/LogoHouse';
-import LogoDocument from '../../components/logo-icon/LogoDocument';
+import ArtTrackIcon from '@mui/icons-material/ArtTrack';
+import HomeIcon from '@mui/icons-material/Home';
+import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 
 const AdminSideBar = () => {
+
+    const isActive = window.location.hash.split('/');
+    const length = window.location.hash.split('/').length;
+
     const sidebarStyle = {
         '--cui-sidebar-width':'100%',
         '--cui-sidebar-toggler-indicator':'var(--color-primary-dark)',
         '--cui-sidebar-nav-link-hover-bg': 'var(--color-primary)',
         '--cui-sidebar-bg': 'var(--color-white)',
+        '--cui-sidebar-nav-link-icon-color': 'black',
+        '--cui-sidebar-nav-link-color': 'black',
         '--cui-sidebar-toggler-hover-bg': 'var(--color-primary)',
     }
     
@@ -28,21 +35,54 @@ const AdminSideBar = () => {
                 <CSidebar style={sidebarStyle}>
                     <CSidebarNav>
                         { ['verifikator', 'approver'].find((item) => item === user.role_user) ? (
+                            <>
+                                <CNavItem className='fs-2'> 
+                                    <Link className='nav-link fs-2' to={'/layanan-masyarakat/dashboard-admin'}>
+                                        <HomeIcon sx={{ color: `${isActive[length - 1] === 'dashboard-admin' ? 'var(--color-primary)' : 'var(--color-black)'} `}}/> 
+                                    </Link>
+                                </CNavItem>
+                            </>
+                        ) : (
+                            <></>
+                        )}
+
+                        { "maker" === user.role_user ? (
+                            <>
+                                <CNavItem className='fs-2'> 
+                                    <Link className='nav-link fs-2' to={'/layanan-masyarakat/'}>
+                                        <HomeIcon sx={{ color: `${isActive[length - 1] === 'layanan-masyarakat'? 'var(--color-primary)' : 'var(--color-black)'} `}}/> 
+                                    </Link>
+                                </CNavItem>
+                            </>
+                        ) : (
+                            <></>
+                        )}
+
+                        { 'pmu-bpdlh' === user.role_user ? (
+                            <>
+                                <CNavItem className='fs-2'> 
+                                    <Link className='nav-link fs-2' to={'/layanan-masyarakat/dashboard-bpdlh'}>
+                                        <HomeIcon sx={{ color: `${isActive[length - 1] === 'dashboard-bpdlh'? 'var(--color-primary)' : 'var(--color-black)'} `}}/> 
+                                    </Link>
+                                </CNavItem>
+                            </>
+                        ) : (
+                            <></>
+                        )}
+
+                        { ['verifikator', 'approver', 'pmu-bpdlh'].find((item) => item === user.role_user) ? (
                             <CNavItem className='fs-2'> 
-                                <Link className='nav-link fs-2' to={'/layanan-masyarakat/admin'}>
-                                    <LogoHouse /> 
+                                <Link className='nav-link fs-2' to={'/layanan-masyarakat/riwayat-pengajuan'}>
+                                    <ArtTrackIcon sx={{ color: `${isActive[length - 1] === 'riwayat-pengajuan'? 'var(--color-primary)' : 'var(--color-black)'} `}}/>
                                 </Link>
                             </CNavItem>
                         ) : (
-                            <CNavItem className='fs-2'> 
-                                <Link className='nav-link fs-2' to={'/layanan-masyarakat/'}>
-                                    <LogoHouse />
-                                </Link>
-                            </CNavItem>
-                        )}
+                            <></>
+                        ) }
+                        
                         <CNavItem className='fs-2'>
                             <Link className='nav-link fs-2' to={'/layanan-masyarakat/downloads'}>
-                               <LogoDocument />
+                               <FolderCopyIcon sx={{ color: `${isActive[length - 1] === 'downloads'? 'var(--color-primary)' : 'var(--color-black)'} `}}/>
                             </Link> 
                         </CNavItem>
                     </CSidebarNav>

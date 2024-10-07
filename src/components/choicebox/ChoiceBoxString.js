@@ -6,26 +6,17 @@ const Wrapper = styled(CFormSelect)`
     font-family: var(--font-family-primary);
     font-size: var(--font-size-normal);
     font-weight: var(--font-weight-normal);
-
-    &:focus{
-        outline: none !important;
-        border:1px solid var(--color-primary-dark);
-        background-color: var(--color-primary);
-    }
-`;
+`
 
 const ChoiceBoxString = ({ options, id, name, onChange, isError, width, height, className }) => {
-
-    const handleChoiceChange = (event) => {
-        onChange(event.target.value);
-    };
 
     const firstOption = options.length>0? options[0] : "";
 
     return (
-        <Wrapper id={id} name={name} aria-label={firstOption} onChange={handleChoiceChange}
+        <Wrapper id={id} name={name} aria-label={firstOption} onChange={onChange}
             style={{
                 height: `${ height? height : '3.85rem' }`,
+                width: `${ width? width: '2.25rem'}`,
                 border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : 'var(--color-black)'}`,
             }}>
             {options.map((option) => (

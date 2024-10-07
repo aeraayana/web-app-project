@@ -3,8 +3,6 @@ import { CFormInput, CInputGroup, CInputGroupText } from '@coreui/react';
 import { FaSearch } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom";
 
-const Wrapper = styled(CInputGroup)`
-`
 
 const InputTextWrapper = styled(CFormInput)`
     padding: 0.5rem 1rem;
@@ -13,7 +11,7 @@ const InputTextWrapper = styled(CFormInput)`
     font-weight: var(--font-weight-normal);
     border: 0.0625rem solid #CDCDCD;
     border-radius: 0.3125rem;
-    
+
 
     &:focus{
         outline: none !important;
@@ -21,8 +19,13 @@ const InputTextWrapper = styled(CFormInput)`
         box-shadow: 0 0 10px var(--color-primary);
     }
 `
+    
+const InputTextSearch = ({ icon, id, value, name, defaultValue, placeholder, onBlur, className, onChange, width, height, onKeyDown, errorMessage, disabled }) => {
 
-const InputTextSearch = ({ icon, id, name, placeholder, className, onChange, width, height, onKeyDown, errorMessage, disabled }) => {
+    const Wrapper = styled(CInputGroup)`
+        width: ${width};
+        height: ${height};
+    `
     const navigate = useNavigate();
     const isError = errorMessage && errorMessage.length>0;
 
@@ -38,16 +41,18 @@ const InputTextSearch = ({ icon, id, name, placeholder, className, onChange, wid
                 </CInputGroupText>
             )}
             
-            <InputTextWrapper id={id} 
+            <InputTextWrapper 
+                id={id} 
+                value={value}
                 name={name} 
                 autoComplete="off" 
                 placeholder={placeholder? placeholder : ""} 
                 className={className} 
+                defaultValue={defaultValue}
                 onChange={onChange}
+                onBlur={onBlur}
                 onKeyDown={onKeyDown}
                 style={{
-                    width: width,
-                    height: height,
                     border: `${ isError? '0.125rem' : '0.09375rem'} solid ${ isError? 'var(--color-error)' : !disabled? 'var(--color-black)' : 'var(--color-light-gray)'}`,
                 }} />
         </Wrapper>

@@ -64,11 +64,11 @@ const SignInPage = () => {
         // console.log(response);
         if( response ){
             if(["verifikator", "approver"].find((item) => item === JSON.parse(localStorage.getItem('user_data')).role_user)){
-                navigate('/layanan-masyarakat/admin');            
+                navigate('/layanan-masyarakat/dashboard-admin');            
             }else if("maker" === JSON.parse(localStorage.getItem('user_data')).role_user){
                 navigate('/layanan-masyarakat/');
             }else{
-                navigate('/layanan-masyarakat/bpdlh');
+                navigate('/layanan-masyarakat/dashboard-bpdlh');
             }
         }else{
             toast.error('username dan password salah, mohon periksa lagi', { position: toast.POSITION.TOP_CENTER })

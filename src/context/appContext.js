@@ -464,7 +464,7 @@ const AppProvider = ({ children }) => {
     clearAlert();
   }
 
-  const getDataRiwayatPengajuan = async () => {
+  const getDataRiwayatPengajuanUser = async () => {
     dispatch({ type: GET_RIWAYAT_PENGAJUAN_BEGIN });
     try {
       const { data } = await authFetch.get(`getDataRiwayatPengajuan`);
@@ -473,6 +473,23 @@ const AppProvider = ({ children }) => {
         type: GET_RIWAYAT_PENGAJUAN,
         payload: { data: data },
       });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  }
+
+  const getDataRiwayatPengajuanAdmin = async ({ flag='', search='', page='', perPage='', tahapanKegiatan='' }) => {
+    dispatch({ type: GET_RIWAYAT_PENGAJUAN_BEGIN });
+    try {
+      const { data } = await authFetch.get(`getRiwayatPengajuan?flag=${flag}&search=${search}&page=${page}&perPage=${perPage}&tahapanKegiatan=${tahapanKegiatan}`);
+      
+      dispatch({
+        type: GET_RIWAYAT_PENGAJUAN,
+        payload: { data: data },
+      });
+
+      return data;
     } catch (error) {
       logoutUser();
     }
@@ -756,7 +773,8 @@ const AppProvider = ({ children }) => {
         getSubTematikKegiatan,
         getPaketKategoriData,
         getDataProgressKegiatan,
-        getDataRiwayatPengajuan,
+        getDataRiwayatPengajuanUser,
+        getDataRiwayatPengajuanAdmin,
         ///////////////////////////////////////////////
         getDataBank,
         getKelurahan,

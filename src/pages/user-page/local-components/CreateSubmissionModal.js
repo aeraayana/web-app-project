@@ -224,7 +224,7 @@ const CreateSubmissionModal = ({ index, setIndex, dataDraft }) => {
         list.komponen_rab[n][idx][e.target.name] = e.target.value === '' ? 0 : parseInt(e.target.value.replace(r, ''));
         
         if( getTotal(postData, 'harga_unit', 'qty') >= parseInt(validDateRange?.data?.batas_pengajuan) ){
-            console.log(postData)
+            // console.log(postData)
             list.komponen_rab[n][idx][e.target.name] = postData[n][idx][e.target.name];
             toast.error('data tidak boleh lebih dari capping');
             setPostData({ ...list.komponen_rab });
