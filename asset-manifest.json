@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.3224d587.css",
-    "main.js": "/static/js/main.e3e43e36.js",
+    "main.js": "/static/js/main.c764b8a2.js",
     "static/media/Draft 3-User Guide Aplikasi Dana Masyarakat.pdf": "/static/media/Draft 3-User Guide Aplikasi Dana Masyarakat.55ae43a254938ab49561.pdf",
     "static/media/LDML_Panduan Pengguna Layanan Dana Masyarakat untuk Lingkungan.pdf": "/static/media/LDML_Panduan Pengguna Layanan Dana Masyarakat untuk Lingkungan.55ae43a254938ab49561.pdf",
     "static/media/hockey.png": "/static/media/hockey.6a55ebbfa228ec08391c.png",
@@ -79,6 +79,6 @@
   },
   "entrypoints": [
     "static/css/main.3224d587.css",
-    "static/js/main.e3e43e36.js"
+    "static/js/main.c764b8a2.js"
   ]
 }
